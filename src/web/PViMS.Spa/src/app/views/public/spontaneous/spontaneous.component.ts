@@ -772,6 +772,7 @@ export class SpontaneousComponent
   isGeneralInstructionsOpen: boolean = false;
   isSubmitReportOpen: boolean = false;
   
+  
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
     // Close other accordions if needed

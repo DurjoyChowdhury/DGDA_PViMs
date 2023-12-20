@@ -368,6 +368,197 @@
           <mat-card-header class="title-background">
             <mat-card-title class="mat_card_title"> C. SUSPECTED DRUG/VACCINE INFORMATION</mat-card-title>
           </mat-card-header>
+          <mat-card-content>
+            <mat-grid-list cols="4" rowHeight="80px" gutterSize="15px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Brand/ Trade Name</b></h3></mat-label>
+                  <input matInput placeholder="Enter Brand/ Trade Name" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Generic Name with strength</b></h3></mat-label>
+                  <input matInput placeholder="Enter Generic Name with strength" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Indication</b></h3></mat-label>
+                  <input matInput placeholder="Enter Indication" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list> 
+            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Medication Start Date/Vaccination Date</b></h3></mat-label>
+                  <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                  <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
+                  <mat-datepicker #eventStartDate></mat-datepicker>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>End Date/Vaccination Time</b></h3></mat-label>
+                  <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                  <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
+                  <mat-datepicker #eventStoppedDate></mat-datepicker>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Dose Form</b></h3></mat-label>
+                  <input matInput placeholder="Enter Dose Form" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Frequency (Daily Dose)</b></h3></mat-label>
+                  <input matInput placeholder="Enter Frequency (Daily Dose)" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Batch/Lot number</b></h3></mat-label>
+                  <input matInput placeholder="Enter Batch/Lot number" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Manufacturer</b></h3></mat-label>
+                  <input matInput placeholder="Enter Manufacturer" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field"> 
+                  <mat-label><h3><b>Diluent Information for vaccine</b></h3></mat-label>
+                  <input matInput placeholder="Enter Diluent Information for vaccine" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-card-content>
+          <hr>
+          <mat-card-header>
+            <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
+          </mat-card-header>
+          <hr>
+          <mat-card-content>
+           
+          </mat-card-content >
+          <mat-card-header class="title-background">
+            <mat-card-title class="mat_card_title"> D. REPORTER INFORMATION</mat-card-title>
+          </mat-card-header>
+          
+          <mat-card-header class="gap_between_header_top">
+            <mat-card-title class="mat_card_title"> Name & Address</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-grid-list cols="1" rowHeight="80px" gutterSize="10px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Reporter Name</b></h3></mat-label>
+                  <input matInput placeholder="Enter Reporter Name" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Select Division</b></h3></mat-label>
+                  <mat-select class="white_background_mat_input_container">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Select District</b></h3></mat-label>
+                  <mat-select class="white_background_mat_input_container">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Select Upazila</b></h3></mat-label>
+                  <mat-select class="white_background_mat_input_container">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Select Union</b></h3></mat-label>
+                  <mat-select class="white_background_mat_input_container">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list> 
+            <mat-grid-list cols="1" rowHeight="80px" gutterSize="15px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Post Office/ Village/ Road / House information</b></h3></mat-label>
+                  <input matInput placeholder="Enter Post Office/ Village/ Road / House information" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-card-content>
+          <mat-card-header class="gap_between_header_top">
+            <mat-card-title class="mat_card_title"> Other information</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-grid-list cols="3" rowHeight="80px" gutterSize="15px">
+              <mat-grid-tile>
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Email Address</b></h3></mat-label>
+                  <input matInput placeholder="Enter Email Address" class="white_background_mat_input_container">
+                </mat-form-field>
+              </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field class="custom-input-field">
+                <mat-label><h3><b>Phone Number</b></h3></mat-label>
+                <input matInput placeholder="Enter Phone Number" class="white_background_mat_input_container">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field class="custom-input-field">
+                <mat-label><h3><b>Occupation</b></h3></mat-label>
+                <input matInput placeholder="Enter Occupation" class="white_background_mat_input_container">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-list cols="3" rowHeight="80px" gutterSize="15px">
+            <mat-grid-tile>
+              <mat-form-field class="custom-input-field">
+                <mat-label><h3><b>Date of this report submission</b></h3></mat-label>
+                <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
+                <mat-datepicker #eventStartDate></mat-datepicker>
+              </mat-form-field>
+            </mat-grid-tile>
+            <!-- <mat-grid-tile>
+              <mat-form-field class="custom-input-field">
+                <mat-label><h3><b>Select Signature</b></h3></mat-label>
+                <input type="file" ng2FileSelect  class="white_background_mat_input_container">
+              </mat-form-field>
+            </mat-grid-tile>-->
+            <mat-grid-tile> 
+              
+            </mat-grid-tile>
+        </mat-grid-list>
+          </mat-card-content>
        </form>
       </mat-card>
     </div>
