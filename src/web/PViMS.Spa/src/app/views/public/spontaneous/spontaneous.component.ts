@@ -768,6 +768,19 @@ export class SpontaneousComponent
 
     return serial;
   }
-
+  //DC
+  isGeneralInstructionsOpen: boolean = false;
+  isSubmitReportOpen: boolean = false;
+  
+  toggleGeneralInstructions() {
+    this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
+    // Close other accordions if needed
+    this.isSubmitReportOpen = false;
+  }
+  toggleSubmitReport() {
+    this.isSubmitReportOpen = !this.isSubmitReportOpen;
+    // Close other accordions if needed
+    this.isGeneralInstructionsOpen = false;
+  }
   
 }

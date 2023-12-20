@@ -148,5 +148,50 @@ mat-step-header {
   color: red;
 }
 
+// DC
+.egret-navy .mat-card {
+  background: yellow;
+  margin: 0 rem;
+}
+.mat-card {
+  margin: 0rem;
+}
+.title-background {
+  background-color: rgb(115, 115, 201);
+  color: white; /* Set text color to ensure readability */
+}
+.mat_card_title {
+  margin-bottom: 0px !important;
+}
+/* Background color for the mat-input-container */
+.white_background_mat_input_container {
+  background-color: white !important;
+  height: 25px;
+}
+/* Style for the mat-form-field to adjust padding */
+.custom-input-field {
+  padding: 10px; /* Adjust the padding value as needed */
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
 
+/* Set width for the 50% input */
+.input-50 {
+  width: 100%; /* This will automatically take up 50% within the 2-column tile */
+}
+
+/* Set width for the 25% inputs */
+.input-25 {
+  width: 100%; /* This will automatically take up 25% within the 1-column tile */
+}
+/* Style for the half-container to create two equal halves */
+.half-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Set width for the 50% input in each half */
+.half-container .custom-input-field {
+  flex: 1; /* Each input field takes up equal space within the half-container */
+}
 
