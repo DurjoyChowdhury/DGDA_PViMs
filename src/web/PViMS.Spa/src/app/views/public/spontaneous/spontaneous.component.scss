@@ -166,7 +166,7 @@ mat-step-header {
 /* Background color for the mat-input-container */
 .white_background_mat_input_container {
   background-color: white !important;
-  height: 25px;
+  height: 35px;
 }
 /* Style for the mat-form-field to adjust padding */
 .custom-input-field {
@@ -194,4 +194,15 @@ mat-step-header {
 .half-container .custom-input-field {
   flex: 1; /* Each input field takes up equal space within the half-container */
 }
-
+// input.mat-input-element {
+//   margin-top: -1.0625em;
+// }
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  top: 2.2em;
+}
+.mat-form-field .mat-label {
+  font-size: 28px; // Adjust the font size as needed
+}
+.mat-select-value {
+  transform: translateY(1.25em); /* Adjust the translateY value as needed */
+}
