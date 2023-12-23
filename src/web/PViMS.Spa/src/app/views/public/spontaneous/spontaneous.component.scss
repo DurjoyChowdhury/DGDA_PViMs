@@ -148,17 +148,16 @@ mat-step-header {
   color: red;
 }
 
+
 // DC
-.egret-navy .mat-card {
-  background: yellow;
+.yellow-card {
+  background-color: #FFD700 !important;
   margin: 0 rem;
-}
-.mat-card {
-  margin: 0rem;
+  padding: 0;
 }
 .title-background {
-  background-color: rgb(115, 115, 201);
-  color: white; /* Set text color to ensure readability */
+  background-color: rgb(32, 32, 77);
+  color: rgb(247, 244, 252); /* Set text color to ensure readability */
 }
 .mat_card_title {
   margin-bottom: 0px !important;
@@ -166,46 +165,61 @@ mat-step-header {
 /* Background color for the mat-input-container */
 .white_background_mat_input_container {
   background-color: white !important;
-  height: 35px;
+  height: 35px !important;
+  border: none; /* Remove default input border */
+  border-radius: 5px; /* Match the border-radius of the parent */
+  padding: 5px; /* Adjust the padding inside the input */
+}::placeholder {
+  padding-left: 20px; /* Adjust the padding value as needed */
 }
 /* Style for the mat-form-field to adjust padding */
 .custom-input-field {
-  padding: 10px; /* Adjust the padding value as needed */
+  padding: 1%; /* Adjust the padding value as needed */
   width: 100%;
   box-sizing: border-box; /* Ensure padding is included in the width */
+  border-radius: 5px; /* Adjust the border-radius value for roundness */
+  overflow: hidden; /* Ensure the border-radius is applied to the input */
 }
 
-/* Set width for the 50% input */
-.input-50 {
-  width: 100%; /* This will automatically take up 50% within the 2-column tile */
-}
-
-/* Set width for the 25% inputs */
-.input-25 {
-  width: 100%; /* This will automatically take up 25% within the 1-column tile */
-}
-/* Style for the half-container to create two equal halves */
-.half-container {
-  display: flex;
-  width: 100%;
-}
-
-/* Set width for the 50% input in each half */
-.half-container .custom-input-field {
-  flex: 1; /* Each input field takes up equal space within the half-container */
-}
-// input.mat-input-element {
-//   margin-top: -1.0625em;
-// }
 .mat-form-field-appearance-legacy .mat-form-field-label {
-  top: 2.2em;
+  top: 2.1em;
 }
 .mat-form-field .mat-label {
-  font-size: 28px; // Adjust the font size as needed
+  font-size: 35px; // Adjust the font size as needed
 }
 .mat-select-value {
-  transform: translateY(1.25em); /* Adjust the translateY value as needed */
+  transform: translateY(2.25em); /* Adjust the translateY value as needed */
 }
 .gap_between_header_top{
   margin-top: 16px;
 }
+.container-fluid {
+  padding: 0% 5% 2% 5%;
+}
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 1em;
+}
+.footer-toolbar {
+  padding-left: 5%;
+  padding-right: 8%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.mat-card-actions, .mat-card-subtitle, .mat-card-content {
+  display: block;
+  margin-bottom: 0px;
+}
+
+// .logo-container {
+//   /* Add any additional styling for the logo container */
+// }
+
+// .copyright-container {
+//   /* Add any additional styling for the copyright container */
+// }
+

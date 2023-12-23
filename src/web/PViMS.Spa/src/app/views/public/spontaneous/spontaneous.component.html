@@ -1,154 +1,208 @@
-<div style="height: 5px">
+<div>
   <mat-progress-bar
     mode="indeterminate"
     color="primary"
     *ngIf="isBusy()"></mat-progress-bar>
 </div>
 
+<mat-toolbar foot color="primary" style="padding-left: 5%; padding-right: 8%;">
+  <!-- Left side with two logos -->
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div>
+      <img src="https://pvtracker.jbrsoft.com/build/images/pv-tracker-logo.png" alt="Logo 1" height="40" width="40">
+    </div>
+    <div>
+      <img src="https://pvtracker.jbrsoft.com/build/images/pvims-microservice-logo.png" alt="Logo 2" height="40" width="40">
+    </div>
+  </div>
+
+  <!-- Spacer to push the following content to the right -->
+  <span fxFlex></span>
+
+  <!-- Logout button on the right -->
+  <button mat-icon-button (click)="navigateLogInComponent()">
+    <mat-icon>login</mat-icon>
+    <span>LogIn</span>
+  </button>
+</mat-toolbar>
+
 <div class="form-wrap">
   <div fxLayout="row"
-  fxLayout.sm="column"
   fxLayoutWrap
   fxLayoutGap="0.1%"
-  fxLayoutAlign="start start">
-  <div fxFlex.gt-sm="100" fxFlex.lt-md="100" class="mat-elevation-z2 p-24">
-    <div class="text-left">
-      <h1 class="title center font-weight">
-        {{ 'Yellow Card' | translate }}
-      </h1>
-    </div>
-    <hr>
-    <div class="accordion">
-      <div class="accordion-item">
-        <mat-expansion-panel [(expanded)]="isGeneralInstructionsOpen">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h2>
-                <span (click)="toggleGeneralInstructions()">General instructions for completing the form</span>
-              </h2>
-            </mat-panel-title>
-            <!-- <mat-icon class="dropdown-icon">{{ isAccordion1Open ? 'expand_less' : 'expand_more' }}</mat-icon> -->
-          </mat-expansion-panel-header>
-          <div *ngIf="isGeneralInstructionsOpen">
-            <ul>
-              <li>Detailed information about each field can be found in the instructions available in the DGDA website. (www.dgda.gov.bd). </li>
-              <li>Fill in as much information as possible. Do not leave anything blank. If unknown, write "unknown" or "n/a" if not applicable.</li>
-            </ul>
-          </div>
-        </mat-expansion-panel>
+  fxLayoutAlign="start start" class="container-fluid">
+    <div fxFlex.gt-xs="100" fxFlex.gt-sm="100" fxFlex.gt-md="100" fxFlex.gt-lg="100">
+      <div class="text-left" style="padding: 1%;">
+        <h1 class="title center font-weight">
+          {{ 'Yellow Card' | translate }}
+        </h1>
       </div>
-      <div class="accordion-item">
-        <mat-expansion-panel [(expanded)]="isSubmitReportOpen">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h2>
-                <span (click)="toggleSubmitReport()">How to fill and submit the report?</span>
-              </h2>
-            </mat-panel-title>
-            <!-- <mat-icon class="dropdown-icon">{{ isAccordion1Open ? 'expand_less' : 'expand_more' }}</mat-icon> -->
-          </mat-expansion-panel-header>
-          <div *ngIf="isSubmitReportOpen">
-            <b> What to report: </b>
-            <ul>
-              <li> Adverse drug reactions/AEFI </li>
-              <li> Unknown or unexpected ADRs/AEFI </li>
-              <li> All suspected reactions to new drugs/vaccines </li>
-              <li> Unexpected therapeutic effects </li>
-              <li> All suspected drug/vaccine interactions </li>
-              <li> Product quality problems </li>
-              <li> Medication/vaccination errors </li>
-            </ul>
-            <ul>
-              <li> ADE/AEFI reports can be submitted through online in the DGDA website (www.dgda.gov.bd) </li>
-              <li> Hard copy of Yellow Card can also be filled and sent to the ADRM Cell by (i) email (adrmcell.dgda@gmail.com or (ii) post. In emergency cases or when forms are not readily available, it can be notified to the ADRM cell by phone. </li>
-              <li> N.B: Additional Page can be used for detailed information if needed</li>
-            </ul>
-            <b> ঔষধ ব্যবহারকারীদের নির্দেশনা: </b>
-            <ul>
-              <li> ১। নিবন্ধনকৃত চিকিৎসকের ব্যবস্থাপত্র অনুযায়ী সঠিক মাত্রায়, সঠিক পদ্ধতিতে পূর্ণকোর্স এন্টিবায়োটিক ব্যবহার করুন।  </li>
-              <li> ২। কোন ঔষধ ব্যবহার বিরূপ প্রতিক্রিয়া দেখা দিলে ঔষধ প্রশাসন অধিদপ্তরকে অবহিত করুন। </li>
-            </ul>
-            <b> Postal Address:</b>
-            <ul>
-              <li> ADRM Cell, Pharmacovigilance Department </li>
-              <li> Directorate General of Drug Administration </li>
-              <li> Aushad Bhavan, Mohakhali </li>
-              <li> Dhaka-1212, Bangladesh </li>
-            </ul>
-            <b> Contact Information: </b>
-            <ul>
-              <li> Tel: 02222-280803 </li>
-              <li> Cell No.: +8801728-349503</li>
-              <li> E-mail: adrmcell.dgda@gmail.com </li>
-            </ul>
-          </div>
-        </mat-expansion-panel>
-      </div>
-      <mat-card class="yellow-card">
-        <form>
-          <mat-card-header class="title-background">
-            <mat-card-title class="mat_card_title">A. PATIENT INFORMATION</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <!-- First input field taking up 50% -->
-              <mat-grid-tile colspan="2">
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Patient Name</b></h3></mat-label>
-                  <input matInput placeholder="Enter Patient name" class="input-50 white_background_mat_input_container">
-                </mat-form-field>
-              </mat-grid-tile>
-            
-              <!-- Second input field taking up 25% -->
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Patient Phone Number</b></h3></mat-label>
-                  <input matInput placeholder="Enter Patient Phone Number" class="input-25 white_background_mat_input_container">
-                </mat-form-field>
-              </mat-grid-tile>
-            
-              <!-- Third input field taking up 25% -->
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Patient Weight (KG)</b></h3></mat-label>
-                  <input matInput placeholder="Enter Patient Weight (KG)" class="input-25 white_background_mat_input_container">
-                </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="80px" gutterSize="10px">
-              <!-- First half (50%) -->
-              <mat-grid-tile>
-                <div class="half-container">
+      <hr>
+      <div class="accordion">
+        <div class="accordion-item">
+          <mat-expansion-panel [(expanded)]="isGeneralInstructionsOpen">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2>
+                  <span (click)="toggleGeneralInstructions()">General instructions for completing the form</span>
+                </h2>
+              </mat-panel-title>
+              <!-- <mat-icon class="dropdown-icon">{{ isAccordion1Open ? 'expand_less' : 'expand_more' }}</mat-icon> -->
+            </mat-expansion-panel-header>
+            <div *ngIf="isGeneralInstructionsOpen">
+              <ul>
+                <li>Detailed information about each field can be found in the instructions available in the DGDA website. (www.dgda.gov.bd). </li>
+                <li>Fill in as much information as possible. Do not leave anything blank. If unknown, write "unknown" or "n/a" if not applicable.</li>
+              </ul>
+            </div>
+          </mat-expansion-panel>
+        </div>
+        <div class="accordion-item">
+          <mat-expansion-panel [(expanded)]="isSubmitReportOpen">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2>
+                  <span (click)="toggleSubmitReport()">How to fill and submit the report?</span>
+                </h2>
+              </mat-panel-title>
+              <!-- <mat-icon class="dropdown-icon">{{ isAccordion1Open ? 'expand_less' : 'expand_more' }}</mat-icon> -->
+            </mat-expansion-panel-header>
+            <div *ngIf="isSubmitReportOpen">
+              <b> What to report: </b>
+              <ul>
+                <li> Adverse drug reactions/AEFI </li>
+                <li> Unknown or unexpected ADRs/AEFI </li>
+                <li> All suspected reactions to new drugs/vaccines </li>
+                <li> Unexpected therapeutic effects </li>
+                <li> All suspected drug/vaccine interactions </li>
+                <li> Product quality problems </li>
+                <li> Medication/vaccination errors </li>
+              </ul>
+              <ul>
+                <li> ADE/AEFI reports can be submitted through online in the DGDA website (www.dgda.gov.bd) </li>
+                <li> Hard copy of Yellow Card can also be filled and sent to the ADRM Cell by (i) email (adrmcell.dgda@gmail.com or (ii) post. In emergency cases or when forms are not readily available, it can be notified to the ADRM cell by phone. </li>
+                <li> N.B: Additional Page can be used for detailed information if needed</li>
+              </ul>
+              <b> ঔষধ ব্যবহারকারীদের নির্দেশনা: </b>
+              <ul>
+                <li> ১। নিবন্ধনকৃত চিকিৎসকের ব্যবস্থাপত্র অনুযায়ী সঠিক মাত্রায়, সঠিক পদ্ধতিতে পূর্ণকোর্স এন্টিবায়োটিক ব্যবহার করুন।  </li>
+                <li> ২। কোন ঔষধ ব্যবহার বিরূপ প্রতিক্রিয়া দেখা দিলে ঔষধ প্রশাসন অধিদপ্তরকে অবহিত করুন। </li>
+              </ul>
+              <b> Postal Address:</b>
+              <ul>
+                <li> ADRM Cell, Pharmacovigilance Department </li>
+                <li> Directorate General of Drug Administration </li>
+                <li> Aushad Bhavan, Mohakhali </li>
+                <li> Dhaka-1212, Bangladesh </li>
+              </ul>
+              <b> Contact Information: </b>
+              <ul>
+                <li> Tel: 02222-280803 </li>
+                <li> Cell No.: +8801728-349503</li>
+                <li> E-mail: adrmcell.dgda@gmail.com </li>
+              </ul>
+            </div>
+          </mat-expansion-panel>
+        </div>
+        <mat-card class="yellow-card">
+          <form>
+            <mat-card-header class="title-background">
+              <mat-card-title class="mat_card_title">A. PATIENT INFORMATION</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div fxLayout="row" fxLayout.lt-md="column">
+                <!-- First input field taking up 50% -->
+                <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Age - Year</b></h3></mat-label>
-                    <input matInput placeholder="Enter Age - Year" class="white_background_mat_input_container">
-                  </mat-form-field>
-            
-                  <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Age - Month</b></h3></mat-label>
-                    <input matInput placeholder="Enter Age - Month" class="white_background_mat_input_container">
-                  </mat-form-field>
-            
-                  <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Age - Days</b></h3></mat-label>
-                    <input matInput placeholder="Enter Age - Days" class="white_background_mat_input_container">
+                    <mat-label><h3><b>Patient Name</b></h3></mat-label>
+                    <input matInput placeholder="Enter Patient name" class="input-50 white_background_mat_input_container">
                   </mat-form-field>
                 </div>
-              </mat-grid-tile>
-            
-              <!-- Second half (50%) -->
-              <mat-grid-tile>
-                <div class="half-container">
+              
+                <!-- Second input field taking up 25% -->
+                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Select Gender</b></h3></mat-label>
+                    <mat-label><h3><b>Patient Phone Number</b></h3></mat-label>
+                    <input matInput placeholder="Enter Patient Phone Number" class="input-25 white_background_mat_input_container">
+                  </mat-form-field>
+                </div>
+              
+                <!-- Third input field taking up 25% -->
+                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>Patient Weight (KG)</b></h3></mat-label>
+                    <input matInput placeholder="Enter Patient Weight (KG)" class="input-25 white_background_mat_input_container">
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <div fxLayout="row" fxLayout.lt-md="column">
+                <!-- First half (50%) -->
+                <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                  <div fxLayout="row" fxLayout.lt-md="column">
+                    <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Age - Year</b></h3></mat-label>
+                        <input matInput placeholder="Enter Age - Year" class="white_background_mat_input_container" >
+                      </mat-form-field>
+                    </div>
+                
+                    <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Age - Month</b></h3></mat-label>
+                        <input matInput placeholder="Enter Age - Month" class="white_background_mat_input_container">
+                      </mat-form-field>
+                    </div>
+                
+                    <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Age - Days</b></h3></mat-label>
+                        <input matInput placeholder="Enter Age - Days" class="white_background_mat_input_container">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Second half (50%) -->
+                <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                  <div fxLayout="row" fxLayout.lt-md="column">
+                    <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Select Gender</b></h3></mat-label>
+                        <mat-select class="white_background_mat_input_container">
+                          <mat-option value="option1">Option 1</mat-option>
+                          <mat-option value="option2">Option 2</mat-option>
+                          <mat-option value="option3">Option 3</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Select Pregnant Status</b></h3></mat-label>
+                        <mat-select class="white_background_mat_input_container">
+                          <mat-option value="option1">Option 1</mat-option>
+                          <mat-option value="option2">Option 2</mat-option>
+                          <mat-option value="option3">Option 3</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlex="25%" fxLayout.lt-md="100%">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>Select Division</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container">
                       <mat-option value="option1">Option 1</mat-option>
                       <mat-option value="option2">Option 2</mat-option>
                       <mat-option value="option3">Option 3</mat-option>
                     </mat-select>
                   </mat-form-field>
+                </div>
+                <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Select Pregnant Status</b></h3></mat-label>
+                    <mat-label><h3><b>Select District</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container">
                       <mat-option value="option1">Option 1</mat-option>
                       <mat-option value="option2">Option 2</mat-option>
@@ -156,105 +210,85 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Select Division</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Select District</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Select Upazila</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Select Union</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list> 
-            <mat-grid-list cols="1" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+                <div fxFlex="25%" fxLayout.lt-md="100%">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>Select Upazila</b></h3></mat-label>
+                    <mat-select class="white_background_mat_input_container">
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2">Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="25%" fxLayout.lt-md="100%">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>Select Union</b></h3></mat-label>
+                    <mat-select class="white_background_mat_input_container">
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2">Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div fxLayout="column">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Post Office/ Village/ Road / House information</b></h3></mat-label>
                   <input matInput placeholder="Post Office/ Village/ Road / House information" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-        </mat-card-content>
+              </div>
+          </mat-card-content>
           <mat-card-header class="title-background">
             <mat-card-title class="mat_card_title"> B. SUSPECTED ADVERSE EVENT INFORMATION</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Type of event</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Specify</b></h3></mat-label>
-                  <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container">
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="2">
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                <div fxLayout="row" fxLayout.lt-md="column">
+                  <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                    <mat-form-field class="custom-input-field">
+                      <mat-label><h3><b>Type of event</b></h3></mat-label>
+                      <mat-select class="white_background_mat_input_container">
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option value="option2">Option 2</mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+              
+                  <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                    <mat-form-field class="custom-input-field">
+                      <mat-label><h3><b>Specify</b></h3></mat-label>
+                      <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex.gt-md="50" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Describe event including relevant tests and laboratory results</b></h3></mat-label>
                   <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results" class="white_background_mat_input_container"></textarea>
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Event Start date</b></h3></mat-label>
                   <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
                   <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
                   <mat-datepicker #eventStartDate></mat-datepicker>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Event Stopped date</b></h3></mat-label>
                   <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" class="white_background_mat_input_container">
                   <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
                   <mat-datepicker #eventStoppedDate></mat-datepicker>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Was the adverse event treated?</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -263,16 +297,16 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Specify</b></h3></mat-label>
                   <input matInput placeholder="If Yes, Please Specify" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Action taken after reaction</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -281,8 +315,8 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="3">
+              </div>
+              <div fxFlex="75%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Did reaction subside after stopping / reducing the dose of the suspected product?</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -291,10 +325,10 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile colspan="2">
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Did reaction appear after reintroducing the suspected product?</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -303,8 +337,8 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Seriousness of the adverse event</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -313,8 +347,8 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>If serious, please select</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -323,10 +357,10 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile colspan="2">
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Outcomes attributed to the adverse event</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -335,19 +369,18 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="2">
+              </div>
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>If fatal, please select date of death</b></h3></mat-label>
                   <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date" class="white_background_mat_input_container">
                   <mat-datepicker-toggle matSuffix [for]="dateOfDeath"></mat-datepicker-toggle>
                   <mat-datepicker #dateOfDeath></mat-datepicker>
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-  
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile colspan="2">
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Other relevant history: (pre-existing medical history)</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -356,116 +389,151 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="2">
+              </div>
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Specify</b></h3></mat-label>
                   <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </mat-card-content>
           <mat-card-header class="title-background">
             <mat-card-title class="mat_card_title"> C. SUSPECTED DRUG/VACCINE INFORMATION</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Brand/ Trade Name</b></h3></mat-label>
                   <input matInput placeholder="Enter Brand/ Trade Name" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Generic Name with strength</b></h3></mat-label>
                   <input matInput placeholder="Enter Generic Name with strength" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="2">
+              </div>
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Indication</b></h3></mat-label>
                   <input matInput placeholder="Enter Indication" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list> 
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Medication Start Date/Vaccination Date</b></h3></mat-label>
-                  <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
-                  <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
-                  <mat-datepicker #eventStartDate></mat-datepicker>
+                  <input matInput [matDatepicker]="vaccinationStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                  <mat-datepicker-toggle matSuffix [for]="vaccinationStartDate"></mat-datepicker-toggle>
+                  <mat-datepicker #vaccinationStartDate></mat-datepicker>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>End Date/Vaccination Time</b></h3></mat-label>
-                  <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" class="white_background_mat_input_container">
-                  <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
-                  <mat-datepicker #eventStoppedDate></mat-datepicker>
+                  <input matInput [matDatepicker]="vaccinationEndDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                  <mat-datepicker-toggle matSuffix [for]="vaccinationEndDate"></mat-datepicker-toggle>
+                  <mat-datepicker #vaccinationEndDate></mat-datepicker>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Dose Form</b></h3></mat-label>
                   <input matInput placeholder="Enter Dose Form" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Frequency (Daily Dose)</b></h3></mat-label>
                   <input matInput placeholder="Enter Frequency (Daily Dose)" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Batch/Lot number</b></h3></mat-label>
                   <input matInput placeholder="Enter Batch/Lot number" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile colspan="2">
+              </div>
+              <div fxFlex="50%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Manufacturer</b></h3></mat-label>
                   <input matInput placeholder="Enter Manufacturer" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field"> 
                   <mat-label><h3><b>Diluent Information for vaccine</b></h3></mat-label>
                   <input matInput placeholder="Enter Diluent Information for vaccine" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </mat-card-content>
-          <hr>
           <mat-card-header>
             <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
           </mat-card-header>
-          <hr>
-          <mat-card-content>
-           
-          </mat-card-content >
+          <mat-card-content >
+            <div fxLayout="row"  fxLayout.lt-md="column" *ngFor="let section of formAddSections; let i = index">
+              <div fxFlex="18%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Brand/ Trade Name</b></h3></mat-label>
+                  <input matInput placeholder="Enter Brand/ Trade Name" [(ngModel)]="section.field1" class="white_background_mat_input_container" name="field1">
+                </mat-form-field>
+              </div>
+              <div fxFlex="18%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Generic Name</b></h3></mat-label>
+                  <input matInput placeholder="Enter Generic Name" [(ngModel)]="section.field2" class="white_background_mat_input_container" name="field2">
+                </mat-form-field>
+              </div>
+              <div fxFlex="18%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Dose form</b></h3></mat-label>
+                  <input matInput placeholder="Enter Dose form" [(ngModel)]="section.field3" class="white_background_mat_input_container" name="field3">
+                </mat-form-field>
+              </div>
+              <div fxFlex="18%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Indication</b></h3></mat-label>
+                  <input matInput placeholder="Enter Indication" [(ngModel)]="section.field4" class="white_background_mat_input_container" name="field4">
+                </mat-form-field>
+              </div>
+              <div fxFlex="18%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Strength & Frequency</b></h3></mat-label>
+                  <input matInput placeholder="Enter Strength & Frequency" [(ngModel)]="section.field5" class="white_background_mat_input_container" name="field5">
+                </mat-form-field>
+              </div>
+              <div fxFlex="10%" fxLayout.lt-md="100%" style="padding-top: 1.5%;">
+                <!-- Add button in the first row -->
+                <button *ngIf="i === 0" mat-raised-button color="primary"  (click)="addFormSection()">Add</button>
+                  
+                <!-- Remove button in subsequent rows -->
+                <button *ngIf="i !== 0" mat-raised-button color="warn" (click)="removeFormSection(i)">Remove</button>
+              </div>
+            </div>
+          </mat-card-content>
           <mat-card-header class="title-background">
             <mat-card-title class="mat_card_title"> D. REPORTER INFORMATION</mat-card-title>
           </mat-card-header>
-          
           <mat-card-header class="gap_between_header_top">
             <mat-card-title class="mat_card_title"> Name & Address</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-grid-list cols="1" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="100%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Reporter Name</b></h3></mat-label>
                   <input matInput placeholder="Enter Reporter Name" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="4" rowHeight="80px" gutterSize="10px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Select Division</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -474,8 +542,8 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Select District</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -484,18 +552,16 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Select Upazila</b></h3></mat-label>
-                  <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile>
+              </div>
+              <div fxFlex="25%" fxLayout.lt-md="100%"><mat-form-field class="custom-input-field">
+                <mat-label><h3><b>Select Upazila</b></h3></mat-label>
+                <mat-select class="white_background_mat_input_container">
+                  <mat-option value="option1">Option 1</mat-option>
+                  <mat-option value="option2">Option 2</mat-option>
+                  <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field></div>
+              <div fxFlex="25%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Select Union</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
@@ -504,64 +570,90 @@
                     <mat-option value="option3">Option 3</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list> 
-            <mat-grid-list cols="1" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="100%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Post Office/ Village/ Road / House information</b></h3></mat-label>
                   <input matInput placeholder="Enter Post Office/ Village/ Road / House information" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </mat-card-content>
-          <mat-card-header class="gap_between_header_top">
+          <mat-card-header>
             <mat-card-title class="mat_card_title"> Other information</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-grid-list cols="3" rowHeight="80px" gutterSize="15px">
-              <mat-grid-tile>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="33.33%" fxLayout.lt-md="100%">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Email Address</b></h3></mat-label>
                   <input matInput placeholder="Enter Email Address" class="white_background_mat_input_container">
                 </mat-form-field>
-              </mat-grid-tile>
-            <mat-grid-tile>
-              <mat-form-field class="custom-input-field">
-                <mat-label><h3><b>Phone Number</b></h3></mat-label>
-                <input matInput placeholder="Enter Phone Number" class="white_background_mat_input_container">
-              </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <mat-form-field class="custom-input-field">
-                <mat-label><h3><b>Occupation</b></h3></mat-label>
-                <input matInput placeholder="Enter Occupation" class="white_background_mat_input_container">
-              </mat-form-field>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <mat-grid-list cols="3" rowHeight="80px" gutterSize="15px">
-            <mat-grid-tile>
-              <mat-form-field class="custom-input-field">
-                <mat-label><h3><b>Date of this report submission</b></h3></mat-label>
-                <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
-                <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
-                <mat-datepicker #eventStartDate></mat-datepicker>
-              </mat-form-field>
-            </mat-grid-tile>
-            <!-- <mat-grid-tile>
-              <mat-form-field class="custom-input-field">
-                <mat-label><h3><b>Select Signature</b></h3></mat-label>
-                <input type="file" ng2FileSelect  class="white_background_mat_input_container">
-              </mat-form-field>
-            </mat-grid-tile>-->
-            <mat-grid-tile> 
-              
-            </mat-grid-tile>
-        </mat-grid-list>
+              </div>
+              <div fxFlex="33.33%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Phone Number</b></h3></mat-label>
+                  <input matInput placeholder="Enter Phone Number" class="white_background_mat_input_container">
+                </mat-form-field>
+              </div>
+              <div fxFlex="33.33%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Occupation</b></h3></mat-label>
+                  <input matInput placeholder="Enter Occupation" class="white_background_mat_input_container">
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="33.33%" fxLayout.lt-md="100%">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Date of this report submission</b></h3></mat-label>
+                  <input matInput [matDatepicker]="reportSubmissionDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                  <mat-datepicker-toggle matSuffix [for]="reportSubmissionDate"></mat-datepicker-toggle>
+                  <mat-datepicker #reportSubmissionDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
           </mat-card-content>
-       </form>
-      </mat-card>
+          <hr>
+          <mat-card-content>
+            <div fxLayout="row"  fxLayout.lt-md="column">
+              <div fxFlex="33.33%" fxLayout.lt-md="100%">
+                  <button mat-raised-button color="primary" (click)="submitReport()">Submit Report</button>
+              </div>
+              <div fxFlex="33.33%" fxLayout.lt-md="100%"></div>
+              <div fxFlex="33.33%" fxLayout.lt-md="100%"></div>
+            </div>
+          </mat-card-content>
+          <hr>
+          </form>
+        </mat-card>
+      </div>
     </div>
-   </div>
   </div>
+  <footer style="padding-bottom: 70px;">
+    <mat-toolbar color="primary" class="footer-toolbar">
+      <div class="footer-content">
+        <div class="logo-container">
+          <img src="https://pvtracker.jbrsoft.com/build/images/usaid-logo.png" alt="USAID Logo" height="40">
+        </div>
+        <div class="copyright-container">
+          <p>&copy; <script>document.write(new Date().getFullYear())</script> 2023 <a href="https://jbrsoft.com/" target="_blank">JBRSOFT</a>.</p>
+        </div>
+      </div>
+    </mat-toolbar>
+  </footer>
 </div>
+
+
+
+
+
+
+
+  
+
+
+
+

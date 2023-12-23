@@ -771,7 +771,10 @@ export class SpontaneousComponent
   //DC
   isGeneralInstructionsOpen: boolean = false;
   isSubmitReportOpen: boolean = false;
-  
+  formAddSections = [
+    { field1: '', field2: '', field3: '',field4: '',field5: '' } // Initial set of fields
+  ];
+  currentYear: number = new Date().getFullYear();
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
@@ -783,5 +786,21 @@ export class SpontaneousComponent
     // Close other accordions if needed
     this.isGeneralInstructionsOpen = false;
   }
-  
+  addFormSection() {
+    // Clone the first section and add it to the formSections array
+    const newSection = Object.assign({}, this.formAddSections[0]);
+    this.formAddSections.push(newSection);
+  }
+
+  removeFormSection(index: number) {
+    // Remove the section at the specified index
+    this.formAddSections.splice(index, 1);
+  }
+  submitReport(){
+
+  }
+  navigateLogInComponent() {
+    // Navigate to the 'other' route, assuming you have defined this route in your routing configuration
+    this._router.navigate(['/app-signin']);
+  }
 }
