@@ -193,30 +193,24 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Division</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDivision($event)">
+                      <mat-option *ngFor="let division of divisionList" [value]="division.selectedkey">{{ division.selectedValue }}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select District</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDistrict($event)">
+                      <mat-option *ngFor="let district of districtList" [value]="district.selectedkey">{{district.selectedValue}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Upazila</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                    <mat-select class="white_background_mat_input_container" >
+                      <mat-option *ngFor="let thana of thanaList" [value]="thana.selectedkey">{{thana.selectedValue}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -224,9 +218,7 @@
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Union</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container">
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2">Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
+                      <!-- <mat-option *ngFor="let item of element.selectionDataItems" [value]=" item.selectionKey">{{item.value | translate}}</mat-option> -->
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -619,11 +611,18 @@
           <hr>
           <mat-card-content>
             <div fxLayout="row"  fxLayout.lt-md="column">
-              <div fxFlex="33.33%" fxLayout.lt-md="100%">
-                  <button mat-raised-button color="primary" (click)="submitReport()">Submit Report</button>
+              <div fxFlex="50%" fxLayout.lt-md="100%">
+                <div fxLayout="row">
+                  <div>
+                    <button mat-raised-button color="primary" (click)="submitReport()">Submit Report</button>
+                  </div>
+                  <div style="padding-left: 10px;">
+                    <button mat-raised-button color="warn" (click)="navigateCancelComponent()">Cancel</button>
+                  </div>
+                </div>
               </div>
-              <div fxFlex="33.33%" fxLayout.lt-md="100%"></div>
-              <div fxFlex="33.33%" fxLayout.lt-md="100%"></div>
+              <div fxFlex="25%" fxLayout.lt-md="100%"></div>
+              <div fxFlex="25%" fxLayout.lt-md="100%"></div>
             </div>
           </mat-card-content>
           <hr>

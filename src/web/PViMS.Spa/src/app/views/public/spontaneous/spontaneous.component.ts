@@ -803,4 +803,7 @@ export class SpontaneousComponent
     // Navigate to the 'other' route, assuming you have defined this route in your routing configuration
     this._router.navigate(['/app-signin']);
   }
+  navigateCancelComponent(): void {
+    this._router.navigate([_routes.security.landing]);
+  }
 }
