@@ -154,6 +154,7 @@ mat-step-header {
   background-color: #FFD700 !important;
   margin: 0 rem;
   padding: 0;
+  margin: 0rem;
 }
 .title-background {
   background-color: rgb(32, 32, 77);
@@ -174,11 +175,12 @@ mat-step-header {
 }
 /* Style for the mat-form-field to adjust padding */
 .custom-input-field {
-  padding: 1%; /* Adjust the padding value as needed */
+  padding: 5px; /* Adjust the padding value as needed */
   width: 100%;
   box-sizing: border-box; /* Ensure padding is included in the width */
   border-radius: 5px; /* Adjust the border-radius value for roundness */
   overflow: hidden; /* Ensure the border-radius is applied to the input */
+  height: 62px;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
