@@ -88,6 +88,10 @@ export class SpontaneousComponent
   public typeOfEventList: { selectionKey: string; value: string }[];
   public adverseEventTreatedList: { selectionKey: string; value: string }[];
   public actionTakenAfterReactionList: { selectionKey: string; value: string }[];
+  public pregnantList: { selectionKey: string; value: string }[];
+  public didReactionSubsideList: { selectionKey: string; value: string }[];
+  public didReactionAppearList: { selectionKey: string; value: string }[];
+  public seriousnessAdverseList: { selectionKey: string; value: string }[];
 
   protected isMedDateNotAvailable: string;
   protected isEventDateNotAvailable: string;
@@ -175,6 +179,10 @@ export class SpontaneousComponent
           self.loadTypeOfEvent();
           self.loadAdverseEventTreated();
           self.loadActionTakenAfterReaction();
+          self.loadpregnantList();
+          self.loaddidReactionSubside();
+          self.loaddidReactionAppear();
+          self.loadseriousnessAdverse();
           //DC
           self.prepareFormArray();
           
@@ -791,6 +799,7 @@ export class SpontaneousComponent
   currentYear: number = new Date().getFullYear();
   typeOfEvent: string;
   advEventTreated: string;
+  pregnantStatus: string;
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
@@ -841,5 +850,29 @@ export class SpontaneousComponent
     if(this.datasetCategories !== null){
       this.actionTakenAfterReactionList = this.datasetCategories[1].datasetElements[20].selectionDataItems;
      }
+  }
+  loadpregnantList(): void{
+    if(this.datasetCategories !== null){
+      this.pregnantList = this.datasetCategories[0].datasetElements[14].selectionDataItems;
+     }
+  }
+  loaddidReactionSubside(): void{
+    if(this.datasetCategories !== null){
+      this.didReactionSubsideList = this.datasetCategories[1].datasetElements[21].selectionDataItems;
+     }
+  }
+  loaddidReactionAppear(): void{
+    if(this.datasetCategories !== null){
+      this.didReactionAppearList = this.datasetCategories[1].datasetElements[22].selectionDataItems;
+     }
+  }
+  loadseriousnessAdverse(): void{
+   this.seriousnessAdverseList.push({ selectionKey: "Not Serious", value: "Not Serious" });
+   this.seriousnessAdverseList.push({ selectionKey: "Serious", value: "Serious" });
+
+
+    // if(this.datasetCategories !== null){
+    //   this.seriousnessAdverseList = this.datasetCategories[1].datasetElements[23].selectionDataItems;
+    //  }
   }
 }

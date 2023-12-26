@@ -169,7 +169,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Gender</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)">
+                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)" [(ngModel)]="pregnantStatus" name="pregnantStatus">
                           <mat-option *ngFor="let gender of genderList" [value]="gender.selectionKey">{{gender.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -177,10 +177,8 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Pregnant Status</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container">
-                          <mat-option value="option1">Option 1</mat-option>
-                          <mat-option value="option2">Option 2</mat-option>
-                          <mat-option value="option3">Option 3</mat-option>
+                        <mat-select class="white_background_mat_input_container" [disabled]="pregnantStatus !== 'Female'">
+                          <mat-option *ngFor="let pregnant of pregnantList" [value]="pregnant.selectionKey">{{pregnant.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
@@ -303,9 +301,7 @@
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Did reaction subside after stopping / reducing the dose of the suspected product?</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
+                    <mat-option *ngFor="let didReaction of didReactionSubsideList" [value]="didReaction.selectionKey">{{didReaction.value}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -315,9 +311,7 @@
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Did reaction appear after reintroducing the suspected product?</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
+                    <mat-option *ngFor="let didRctnAppear of didReactionAppearList" [value]="didRctnAppear.selectionKey">{{didRctnAppear.value}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -325,9 +319,7 @@
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Seriousness of the adverse event</b></h3></mat-label>
                   <mat-select class="white_background_mat_input_container">
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2">Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
+                    <mat-option *ngFor="let seriousnessAdv of seriousnessAdverseList" [value]="seriousnessAdv.selectionKey">{{seriousnessAdv.value}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
