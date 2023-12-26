@@ -80,9 +80,15 @@ export class SpontaneousComponent
   protected eventInformation: string[];
   protected relevantHistory: string[];
   protected outcomeOfAdverseEvent: string;
+
   public divisionList: { selectedkey: string; selectedValue: string }[];
   public districtList: { selectedkey: string; selectedValue: string }[];
   public thanaList: { selectedkey: string; selectedValue: string }[];
+  public genderList: { selectionKey: string; value: string }[];
+  public typeOfEventList: { selectionKey: string; value: string }[];
+  public adverseEventTreatedList: { selectionKey: string; value: string }[];
+  public actionTakenAfterReactionList: { selectionKey: string; value: string }[];
+
   protected isMedDateNotAvailable: string;
   protected isEventDateNotAvailable: string;
   protected medEndDateMin: any;
@@ -128,6 +134,7 @@ export class SpontaneousComponent
 
     self.loadDataset();
     self.loadDivisions();
+
     self.adverseEventTreatment = 'Yes';
     self.currentDate = today;
     self.isAgeNotAvailable = true;
@@ -163,7 +170,14 @@ export class SpontaneousComponent
           self.datasetCategories = result.datasetCategories;
           self.datasetId = result.id;
 
+          //DC
+          self.loadGender();
+          self.loadTypeOfEvent();
+          self.loadAdverseEventTreated();
+          self.loadActionTakenAfterReaction();
+          //DC
           self.prepareFormArray();
+          
         },
         error => {
           self.handleError(error, error.statusText);
@@ -775,6 +789,8 @@ export class SpontaneousComponent
     { field1: '', field2: '', field3: '',field4: '',field5: '' } // Initial set of fields
   ];
   currentYear: number = new Date().getFullYear();
+  typeOfEvent: string;
+  advEventTreated: string;
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
@@ -805,5 +821,25 @@ export class SpontaneousComponent
   }
   navigateCancelComponent(): void {
     this._router.navigate([_routes.security.landing]);
+  }
+  loadGender(): void{
+    if(this.datasetCategories !== null){
+     this.genderList = this.datasetCategories[0].datasetElements[13].selectionDataItems;
+    }
+  }
+  loadTypeOfEvent(): void{
+    if(this.datasetCategories !== null){
+      this.typeOfEventList = this.datasetCategories[1].datasetElements[0].selectionDataItems;
+     }
+  }
+  loadAdverseEventTreated(): void{
+    if(this.datasetCategories !== null){
+      this.adverseEventTreatedList = this.datasetCategories[1].datasetElements[18].selectionDataItems;
+     }
+  }
+  loadActionTakenAfterReaction(): void{
+    if(this.datasetCategories !== null){
+      this.actionTakenAfterReactionList = this.datasetCategories[1].datasetElements[20].selectionDataItems;
+     }
   }
 }
