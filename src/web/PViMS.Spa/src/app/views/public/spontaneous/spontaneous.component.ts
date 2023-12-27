@@ -92,6 +92,12 @@ export class SpontaneousComponent
   public didReactionSubsideList: { selectionKey: string; value: string }[];
   public didReactionAppearList: { selectionKey: string; value: string }[];
   public seriousnessAdverseList: { selectionKey: string; value: string }[];
+  public outcomeAttributedList: { selectionKey: string; value: string }[];
+  public otherRelevantHistoryList: { selectionKey: string; value: string }[];
+  public sourceOfReportingList: { selectionKey: string; value: string }[];
+  public reportingTypeList: { selectionKey: string; value: string }[];
+  public occupationList: { selectionKey: string; value: string }[];
+  public companyNameList: { selectionKey: string; value: string }[];
 
   protected isMedDateNotAvailable: string;
   protected isEventDateNotAvailable: string;
@@ -183,6 +189,12 @@ export class SpontaneousComponent
           self.loaddidReactionSubside();
           self.loaddidReactionAppear();
           self.loadseriousnessAdverse();
+          self.loadoutcomeAttributed();
+          self.loadotherRelevantHistory();
+          self.loadsourceOfReporting();
+          self.loadreportingType();
+          self.loadoccupation();
+          self.loadcompanyName();
           //DC
           self.prepareFormArray();
           
@@ -791,7 +803,7 @@ export class SpontaneousComponent
     return serial;
   }
   //DC
-  isGeneralInstructionsOpen: boolean = false;
+  isGeneralInstructionsOpen: boolean = true;
   isSubmitReportOpen: boolean = false;
   formAddSections = [
     { field1: '', field2: '', field3: '',field4: '',field5: '' } // Initial set of fields
@@ -800,6 +812,11 @@ export class SpontaneousComponent
   typeOfEvent: string;
   advEventTreated: string;
   pregnantStatus: string;
+  seriousnessAdverse: string;
+  outcomeAttributed: string;
+  otherRelevantHistory: string;
+  sourceOfReporting: string;
+  reportingType: string;
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
@@ -867,12 +884,42 @@ export class SpontaneousComponent
      }
   }
   loadseriousnessAdverse(): void{
-   this.seriousnessAdverseList.push({ selectionKey: "Not Serious", value: "Not Serious" });
-   this.seriousnessAdverseList.push({ selectionKey: "Serious", value: "Serious" });
-
-
-    // if(this.datasetCategories !== null){
-    //   this.seriousnessAdverseList = this.datasetCategories[1].datasetElements[23].selectionDataItems;
-    //  }
+    if(this.datasetCategories !== null){
+      this.seriousnessAdverseList = this.datasetCategories[1].datasetElements[23].selectionDataItems;
+     }
+     if (this.seriousnessAdverseList.length > 0) {
+      // Remove the first element from the array
+      this.seriousnessAdverseList.shift();
+    }
+  }
+  loadoutcomeAttributed(): void{
+    if(this.datasetCategories !== null){
+      this.outcomeAttributedList = this.datasetCategories[1].datasetElements[24].selectionDataItems;
+     }
+  }
+  loadotherRelevantHistory(): void{
+    if(this.datasetCategories !== null){
+      this.otherRelevantHistoryList = this.datasetCategories[1].datasetElements[26].selectionDataItems;
+     }
+  }
+  loadsourceOfReporting(): void{
+    if(this.datasetCategories !== null){
+      this.sourceOfReportingList = this.datasetCategories[3].datasetElements[0].selectionDataItems;
+     }
+  }
+  loadreportingType(): void{
+    if(this.datasetCategories !== null){
+      this.reportingTypeList = this.datasetCategories[3].datasetElements[1].selectionDataItems;
+     }
+  }
+  loadoccupation(): void{
+    if(this.datasetCategories !== null){
+      this.occupationList = this.datasetCategories[3].datasetElements[6].selectionDataItems;
+     }
+  }
+  loadcompanyName(): void{
+    if(this.datasetCategories !== null){
+      this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
+     }
   }
 }
