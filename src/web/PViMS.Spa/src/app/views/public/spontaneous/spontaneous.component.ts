@@ -839,7 +839,17 @@ export class SpontaneousComponent
     this.formAddSections.splice(index, 1);
   }
   submitReport(){
+    let allModels: any[] = [];
 
+      // const arrayControl = <FormArray>this.viewModelForm.controls['formArray'];
+      // arrayControl.controls.forEach(formGroup => {
+      //   allModels.push(formGroup.value);
+      // });
+
+      if (this.viewModelForm.valid){
+        allModels = this.viewModelForm.value;
+      }
+      var a = 1;
   }
   navigateLogInComponent() {
     // Navigate to the 'other' route, assuming you have defined this route in your routing configuration
