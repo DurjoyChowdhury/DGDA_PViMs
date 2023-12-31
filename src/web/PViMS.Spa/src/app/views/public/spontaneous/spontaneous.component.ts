@@ -71,6 +71,7 @@ export class SpontaneousComponent
   public datasetCategories: DatasetCategoryViewModel[] = [];
 
   public viewModelForm: FormGroup;
+  public viewModelFormNew: FormGroup;
   public formArray: FormArray;
   protected genderValue: string;
   protected adverseEventTreatment: string;
@@ -157,6 +158,40 @@ export class SpontaneousComponent
     self.isMedDateNotAvailable = 'Yes';
     self.isEventDateNotAvailable = 'Yes';
     self.medEndDateMin = '';
+
+    this.viewModelFormNew = this._formBuilder.group({
+      patientName:'',
+      patientPhoneNumber:'',
+      patientWeight:'',
+      patientAgeYear:'',
+      patientAgeMonth:'',
+      patientAgeDays:'',
+      patientGender:'',
+      patientPregnantStatus:'',
+      patientDivision:'',
+      patientDistrict:'',
+      patientUpazila:'',
+      patientAddress:'',
+
+      suspectedType:'',
+      suspectedTypeSpecify:'',
+      suspectedLaboratoryResults:'',
+      suspectedEventStartDate:'',
+      suspectedEventStoppedDate:'',
+      suspectedEventTreated:'',
+      suspectedEventTreatedSpecify:'',
+      suspectedAfterReaction:'',
+      suspectedProduct:'',
+      suspectedAppearAfter:'',
+      suspectedAdverseEvent:'',
+      suspectedIfSerious:'',
+      suspectedAttributedEvent:'',
+      suspectedDateOfDeath:'',
+      suspectedOtherRevevant:'',
+      suspectedOtherRevevantSpecify:'',
+
+    });
+    var a= 1;
   }
 
   ngAfterViewInit(): void {
@@ -841,16 +876,87 @@ export class SpontaneousComponent
   submitReport(){
     let allModels: any[] = [];
 
-      // const arrayControl = <FormArray>this.viewModelForm.controls['formArray'];
-      // arrayControl.controls.forEach(formGroup => {
-      //   allModels.push(formGroup.value);
-      // });
-
-      if (this.viewModelForm.valid){
-        allModels = this.viewModelForm.value;
-      }
+    allModels.push(this.porcessPatientInformation());
+    allModels.push(this.processSuspectedInformation());
       var a = 1;
   }
+  porcessPatientInformation(){
+    const staticPatient = {
+      elements: {
+        "103": null,
+        "104": null,
+        "105": null,
+        "106": null,
+        "107": null,
+        "109": null,
+        "110": null,
+        "111": null,
+        "145": null,
+        "148": null,
+        "149": null,
+        "150": null,
+        "295": null,
+        "296": null,
+        "307": null,
+      },
+    };
+
+    staticPatient.elements["105"] = this.viewModelFormNew.get('patientName').value; 
+    staticPatient.elements["106"] = this.viewModelFormNew.get('patientPhoneNumber').value; 
+    staticPatient.elements["109"] = this.viewModelFormNew.get('patientWeight').value; 
+    staticPatient.elements["107"] = this.viewModelFormNew.get('patientAgeYear').value; 
+    staticPatient.elements["295"] = this.viewModelFormNew.get('patientAgeMonth').value; 
+    staticPatient.elements["296"] = this.viewModelFormNew.get('patientAgeDays').value; 
+    staticPatient.elements["110"] = this.viewModelFormNew.get('patientGender').value;
+    staticPatient.elements["111"] = this.viewModelFormNew.get('patientPregnantStatus').value; 
+    staticPatient.elements["148"] = this.viewModelFormNew.get('patientDivision').value; 
+    staticPatient.elements["149"] = this.viewModelFormNew.get('patientDistrict').value; 
+    staticPatient.elements["150"] = this.viewModelFormNew.get('patientUpazila').value; 
+    staticPatient.elements["145"] = this.viewModelFormNew.get('patientAddress').value; 
+
+    return staticPatient;
+  }
+
+  processSuspectedInformation(){
+    const staticPatient = {
+      elements: {
+        "112": null,
+        "298": null,
+        "122": null,
+        "123": null,
+        "124": null,
+        "125": null,
+        "126": null,
+        "127": null,
+        "128": null,
+        "129": null,
+        "130": null,
+        "131": null,
+        "156": null,
+        "132": null,
+        "153": null,
+      },
+    };
+    staticPatient.elements["112"] = this.viewModelFormNew.get('suspectedType').value; 
+    staticPatient.elements["298"] = this.viewModelFormNew.get('suspectedTypeSpecify').value; 
+    staticPatient.elements["122"] = this.viewModelFormNew.get('suspectedLaboratoryResults').value;
+    staticPatient.elements["123"] = this.viewModelFormNew.get('suspectedEventStartDate').value;
+    staticPatient.elements["124"] = this.viewModelFormNew.get('suspectedEventStoppedDate').value;
+    staticPatient.elements["125"] = this.viewModelFormNew.get('suspectedEventTreated').value;
+    staticPatient.elements["126"] = this.viewModelFormNew.get('suspectedEventTreatedSpecify').value;
+    staticPatient.elements["127"] = this.viewModelFormNew.get('suspectedAfterReaction').value;
+    staticPatient.elements["128"] = this.viewModelFormNew.get('suspectedProduct').value;
+    staticPatient.elements["129"] = this.viewModelFormNew.get('suspectedAppearAfter').value;
+    staticPatient.elements["130"] = this.viewModelFormNew.get('suspectedAdverseEvent').value;
+
+    staticPatient.elements["131"] = this.viewModelFormNew.get('suspectedAttributedEvent').value;
+    staticPatient.elements["156"] = this.viewModelFormNew.get('suspectedDateOfDeath').value;
+    staticPatient.elements["132"] = this.viewModelFormNew.get('suspectedOtherRevevant').value;
+    staticPatient.elements["153"] = this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value;
+
+    return staticPatient;
+  }
+  
   navigateLogInComponent() {
     // Navigate to the 'other' route, assuming you have defined this route in your routing configuration
     this._router.navigate(['/app-signin']);

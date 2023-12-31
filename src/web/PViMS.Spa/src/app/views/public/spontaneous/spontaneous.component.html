@@ -105,7 +105,7 @@
           </mat-expansion-panel>
         </div>
         <mat-card class="yellow-card">
-          <form >
+          <form [formGroup]="viewModelFormNew" (ngSubmit)="submitReport()">
             <mat-card-header class="title-background">
               <mat-card-title class="mat_card_title">A. PATIENT INFORMATION</mat-card-title>
             </mat-card-header>
@@ -115,7 +115,7 @@
                 <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Patient Name</b></h3></mat-label>
-                    <input matInput placeholder="Enter Patient name" class="input-50 white_background_mat_input_container">
+                    <input matInput placeholder="Enter Patient name" class="input-50 white_background_mat_input_container" formControlName="patientName">
                   </mat-form-field>
                 </div>
               
@@ -123,7 +123,7 @@
                 <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Patient Phone Number</b></h3></mat-label>
-                    <input matInput type="number" placeholder="Enter Patient Phone Number" class="input-25 white_background_mat_input_container">
+                    <input matInput type="number" placeholder="Enter Patient Phone Number" class="input-25 white_background_mat_input_container" formControlName="patientPhoneNumber">
                   </mat-form-field>
                 </div>
               
@@ -131,7 +131,7 @@
                 <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Patient Weight (KG)</b></h3></mat-label>
-                    <input matInput type="number" placeholder="Enter Patient Weight (KG)" class="input-25 white_background_mat_input_container">
+                    <input matInput type="number" placeholder="Enter Patient Weight (KG)" class="input-25 white_background_mat_input_container" formControlName="patientWeight">
                   </mat-form-field>
                 </div>
               </div>
@@ -143,21 +143,21 @@
                     <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Year</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container" >
+                        <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container" formControlName="patientAgeYear">
                       </mat-form-field>
                     </div>
                 
                     <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Month</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container">
+                        <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container" formControlName="patientAgeMonth">
                       </mat-form-field>
                     </div>
                 
                     <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Days</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container">
+                        <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container" formControlName="patientAgeDays">
                       </mat-form-field>
                     </div>
                   </div>
@@ -169,7 +169,8 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Gender</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)" [(ngModel)]="pregnantStatus" name="pregnantStatus">
+                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)" [(ngModel)]="pregnantStatus" 
+                        name="pregnantStatus" formControlName="patientGender">
                           <mat-option *ngFor="let gender of genderList" [value]="gender.selectionKey">{{gender.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -177,7 +178,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Pregnant Status</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" [disabled]="pregnantStatus !== 'Female'">
+                        <mat-select class="white_background_mat_input_container" [disabled]="pregnantStatus !== 'Female'" formControlName="patientPregnantStatus">
                           <mat-option *ngFor="let pregnant of pregnantList" [value]="pregnant.selectionKey">{{pregnant.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -189,7 +190,7 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Division</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDivision($event)">
+                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDivision($event)" formControlName="patientDivision">
                       <mat-option *ngFor="let division of divisionList" [value]="division.selectedkey">{{ division.selectedValue }}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -197,7 +198,7 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select District</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDistrict($event)">
+                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDistrict($event)" formControlName="patientDistrict">
                       <mat-option *ngFor="let district of districtList" [value]="district.selectedkey">{{district.selectedValue}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -205,7 +206,7 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Upazila</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" >
+                    <mat-select class="white_background_mat_input_container" formControlName="patientUpazila">
                       <mat-option *ngFor="let thana of thanaList" [value]="thana.selectedkey">{{thana.selectedValue}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -214,7 +215,6 @@
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Union</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container">
-                      <!-- <mat-option *ngFor="let item of element.selectionDataItems" [value]=" item.selectionKey">{{item.value | translate}}</mat-option> -->
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -222,7 +222,8 @@
               <div fxLayout="column">
                 <mat-form-field class="custom-input-field">
                   <mat-label><h3><b>Post Office/ Village/ Road / House information</b></h3></mat-label>
-                  <input matInput placeholder="Post Office/ Village/ Road / House information" class="white_background_mat_input_container">
+                  <input matInput placeholder="Post Office/ Village/ Road / House information" 
+                  class="white_background_mat_input_container" formControlName="patientAddress">
                 </mat-form-field>
               </div>
             </mat-card-content>
@@ -236,7 +237,8 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Type of event</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" [(ngModel)]="typeOfEvent" name="typeOfEvent">
+                        <mat-select class="white_background_mat_input_container" [(ngModel)]="typeOfEvent" name="typeOfEvent" 
+                        formControlName="suspectedType">
                           <mat-option *ngFor="let tyEvent of typeOfEventList" [value]="tyEvent.selectionKey">{{tyEvent.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -244,7 +246,8 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Specify</b></h3></mat-label>
-                        <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" [disabled]="typeOfEvent !== 'Others'">
+                        <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
+                        [disabled]="typeOfEvent !== 'Others'" formControlName="suspectedTypeSpecify">
                       </mat-form-field>
                     </div>
                   </div>
@@ -252,7 +255,8 @@
                 <div fxFlex.gt-md="50" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Describe event including relevant tests and laboratory results</b></h3></mat-label>
-                    <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results" class="white_background_mat_input_container"></textarea>
+                    <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results" 
+                    class="white_background_mat_input_container" formControlName="suspectedLaboratoryResults"></textarea>
                   </mat-form-field>
                 </div>
               </div>
@@ -260,7 +264,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Event Start date</b></h3></mat-label>
-                    <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                    <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" 
+                    class="white_background_mat_input_container" formControlName="suspectedEventStartDate">
                     <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
                     <mat-datepicker #eventStartDate></mat-datepicker>
                   </mat-form-field>
@@ -268,7 +273,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Event Stopped date</b></h3></mat-label>
-                    <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" class="white_background_mat_input_container">
+                    <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" 
+                    class="white_background_mat_input_container" formControlName="suspectedEventStoppedDate">
                     <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
                     <mat-datepicker #eventStoppedDate></mat-datepicker>
                   </mat-form-field>
@@ -276,7 +282,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Was the adverse event treated?</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [(ngModel)]="advEventTreated" name="advEventTreated">
+                    <mat-select class="white_background_mat_input_container" 
+                    [(ngModel)]="advEventTreated" name="advEventTreated" formControlName="suspectedEventTreated">
                       <mat-option *ngFor="let adEventTreated of adverseEventTreatedList" [value]="adEventTreated.selectionKey">{{adEventTreated.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -284,7 +291,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Specify</b></h3></mat-label>
-                    <input matInput placeholder="If Yes, Please Specify" class="white_background_mat_input_container" [disabled]="advEventTreated !== 'Yes'">
+                    <input matInput placeholder="If Yes, Please Specify" class="white_background_mat_input_container"
+                     [disabled]="advEventTreated !== 'Yes'" formControlName="suspectedEventTreatedSpecify">
                   </mat-form-field>
                 </div>
               </div>
@@ -292,15 +300,16 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Action taken after reaction</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
-                      <mat-option *ngFor="let acTakenAfterRc of actionTakenAfterReactionList" [value]="acTakenAfterRc.selectionKey">{{acTakenAfterRc.value}}</mat-option>
+                    <mat-select class="white_background_mat_input_container" formControlName="suspectedAfterReaction">
+                      <mat-option *ngFor="let acTakenAfterRc of actionTakenAfterReactionList" 
+                      [value]="acTakenAfterRc.selectionKey">{{acTakenAfterRc.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="75%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Did reaction subside after stopping / reducing the dose of the suspected product?</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
+                    <mat-select class="white_background_mat_input_container" formControlName="suspectedProduct">
                       <mat-option *ngFor="let didReaction of didReactionSubsideList" [value]="didReaction.selectionKey">{{didReaction.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -310,7 +319,7 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Did reaction appear after reintroducing the suspected product?</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container">
+                    <mat-select class="white_background_mat_input_container" formControlName="suspectedAppearAfter">
                       <mat-option *ngFor="let didRctnAppear of didReactionAppearList" [value]="didRctnAppear.selectionKey">{{didRctnAppear.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -318,7 +327,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Seriousness of the adverse event</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [(ngModel)]="seriousnessAdverse" name="seriousnessAdverse">
+                    <mat-select class="white_background_mat_input_container" [(ngModel)]="seriousnessAdverse" 
+                    name="seriousnessAdverse" formControlName="suspectedAdverseEvent">
                       <mat-option value="Not Serious">Not Serious</mat-option>
                       <mat-option value="Serious">Serious</mat-option>
                     </mat-select>
@@ -327,7 +337,8 @@
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>If serious, please select</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [disabled]="seriousnessAdverse !== 'Serious'">
+                    <mat-select class="white_background_mat_input_container" 
+                    [disabled]="seriousnessAdverse !== 'Serious'" formControlName="suspectedIfSerious">
                       <mat-option *ngFor="let seriousnessAdv of seriousnessAdverseList" [value]="seriousnessAdv.selectionKey" >{{seriousnessAdv.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -337,7 +348,8 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Outcomes attributed to the adverse event</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [(ngModel)]="outcomeAttributed" name="outcomeAttributed">
+                    <mat-select class="white_background_mat_input_container" [(ngModel)]="outcomeAttributed" 
+                    name="outcomeAttributed" formControlName="suspectedAttributedEvent">
                       <mat-option *ngFor="let outcmAttributed of outcomeAttributedList" [value]="outcmAttributed.selectionKey">{{outcmAttributed.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -345,7 +357,9 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>If fatal, please select date of death</b></h3></mat-label>
-                    <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date" class="white_background_mat_input_container" [disabled]="outcomeAttributed !== 'Fatal'">
+                    <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date" 
+                    class="white_background_mat_input_container" [disabled]="outcomeAttributed !== 'Fatal'" 
+                    formControlName="suspectedDateOfDeath">
                     <mat-datepicker-toggle matSuffix [for]="dateOfDeath"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfDeath></mat-datepicker>
                   </mat-form-field>
@@ -355,7 +369,8 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Other relevant history: (pre-existing medical history)</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [(ngModel)]="otherRelevantHistory" name="otherRelevantHistory">
+                    <mat-select class="white_background_mat_input_container" [(ngModel)]="otherRelevantHistory" 
+                    name="otherRelevantHistory" formControlName="suspectedOtherRevevant">
                       <mat-option *ngFor="let otherRvntHstry of otherRelevantHistoryList" [value]="otherRvntHstry.selectionKey">{{otherRvntHstry.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -363,7 +378,8 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Specify</b></h3></mat-label>
-                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" [disabled]="otherRelevantHistory !== 'Others (Please specify)'">
+                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
+                    [disabled]="otherRelevantHistory !== 'Others (Please specify)'" formControlName="suspectedOtherRevevantSpecify">
                   </mat-form-field>
                 </div>
               </div>
@@ -628,7 +644,7 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <div fxLayout="row">
                     <div>
-                      <button mat-raised-button color="primary" (click)="submitReport()">Submit Report</button>
+                      <button mat-raised-button color="primary" type="submit">Submit Report</button>
                     </div>
                     <div style="padding-left: 10px;">
                       <button mat-raised-button color="warn" (click)="navigateCancelComponent()">Cancel</button>
