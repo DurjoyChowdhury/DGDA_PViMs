@@ -135,15 +135,21 @@
                   </mat-form-field>
                 </div>
               </div>
-              
+              <div fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlex.gt-md="100" fxFlex.lt-md="100">
+                  <!-- <mat-form-field class="custom-input-field"> -->
+                    <mat-checkbox formControlName="isChecked" (click)="ageNotApplicableIsCheck()" [(ngModel)]="ageSelectionStatus"  name="ageSelectionStatus">Age Not Available</mat-checkbox>
+                  <!-- </mat-form-field> -->
+                </div>
+              </div>
               <div fxLayout="row" fxLayout.lt-md="column">
                 <!-- First half (50%) -->
                 <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="33.33" fxFlex.lt-md="100">
-                      <mat-form-field class="custom-input-field">
+                      <mat-form-field class="custom-input-field" >
                         <mat-label><h3><b>Age - Year</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container" formControlName="patientAgeYear">
+                        <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container" formControlName="patientAgeYear" [disabled]="!ageSelectionStatus">
                       </mat-form-field>
                     </div>
                 
@@ -169,8 +175,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Gender</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)" [(ngModel)]="pregnantStatus" 
-                        name="pregnantStatus" formControlName="patientGender">
+                        <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeGender($event)"  formControlName="patientGender">
                           <mat-option *ngFor="let gender of genderList" [value]="gender.selectionKey">{{gender.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -178,7 +183,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Pregnant Status</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" [disabled]="pregnantStatus !== 'Female'" formControlName="patientPregnantStatus">
+                        <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('patientGender').value !== 'Female'" formControlName="patientPregnantStatus">
                           <mat-option *ngFor="let pregnant of pregnantList" [value]="pregnant.selectionKey">{{pregnant.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -237,8 +242,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Type of event</b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" [(ngModel)]="typeOfEvent" name="typeOfEvent" 
-                        formControlName="suspectedType">
+                        <mat-select class="white_background_mat_input_container" formControlName="suspectedType">
                           <mat-option *ngFor="let tyEvent of typeOfEventList" [value]="tyEvent.selectionKey">{{tyEvent.value}}</mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -247,7 +251,7 @@
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Specify</b></h3></mat-label>
                         <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
-                        [disabled]="typeOfEvent !== 'Others'" formControlName="suspectedTypeSpecify">
+                       [disabled]="viewModelFormNew.get('suspectedType').value !== 'Others'" formControlName="suspectedTypeSpecify">
                       </mat-form-field>
                     </div>
                   </div>

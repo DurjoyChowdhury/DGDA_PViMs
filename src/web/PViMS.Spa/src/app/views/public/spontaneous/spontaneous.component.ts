@@ -163,6 +163,7 @@ export class SpontaneousComponent
       patientName:'',
       patientPhoneNumber:'',
       patientWeight:'',
+      isChecked:'',
       patientAgeYear:'',
       patientAgeMonth:'',
       patientAgeDays:'',
@@ -191,7 +192,6 @@ export class SpontaneousComponent
       suspectedOtherRevevantSpecify:'',
 
     });
-    var a= 1;
   }
 
   ngAfterViewInit(): void {
@@ -852,16 +852,17 @@ export class SpontaneousComponent
   otherRelevantHistory: string;
   sourceOfReporting: string;
   reportingType: string;
+  ageSelectionStatus : boolean = true;
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
     // Close other accordions if needed
-    this.isSubmitReportOpen = false;
+    this.isSubmitReportOpen = true;
   }
   toggleSubmitReport() {
     this.isSubmitReportOpen = !this.isSubmitReportOpen;
     // Close other accordions if needed
-    this.isGeneralInstructionsOpen = false;
+    this.isGeneralInstructionsOpen = true;
   }
   addFormSection() {
     // Clone the first section and add it to the formSections array
@@ -1037,5 +1038,10 @@ export class SpontaneousComponent
     if(this.datasetCategories !== null){
       this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
+  }
+  ageNotApplicableIsCheck(){
+    var a= 1;
+   this.ageSelectionStatus = !this.ageSelectionStatus;
+   var aa = 1;
   }
 }
