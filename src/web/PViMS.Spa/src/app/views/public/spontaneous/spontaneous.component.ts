@@ -143,6 +143,8 @@ export class SpontaneousComponent
       formArray: this._formBuilder.array([]),
     });
 
+
+
     self.loadDataset();
     self.loadDivisions();
 
@@ -160,6 +162,9 @@ export class SpontaneousComponent
     self.medEndDateMin = '';
 
     this.viewModelFormNew = this._formBuilder.group({
+
+      sections: this._formBuilder.array([]),
+
       patientName:'',
       patientPhoneNumber:'',
       patientWeight:'',
@@ -190,6 +195,18 @@ export class SpontaneousComponent
       suspectedDateOfDeath:'',
       suspectedOtherRevevant:'',
       suspectedOtherRevevantSpecify:'',
+
+
+      reporterCompanyName:'',
+      reporterDateOfReportSubmission:'',
+      reporterOccupation:'',
+      reporterPhoneNumber:'',
+      reporterEmailAddress:'',
+      reporterAddress:'',
+      reporterName:'',
+      reporterInitialReportId:'',
+      reporterReportType:'',
+      reporterSourceOfReporting:'',
 
     });
   }
@@ -1043,5 +1060,37 @@ export class SpontaneousComponent
     var a= 1;
    this.ageSelectionStatus = !this.ageSelectionStatus;
    var aa = 1;
+  }
+  desableField : boolean = true;
+
+  debugSuspectedType() {
+    const value = this.viewModelFormNew.get('suspectedType').value;
+    console.log('Suspected Type Value:', value);
+    if(value !== 'Others') {
+      this.desableField=true;
+    }
+    else{
+      this.desableField=false;
+    }
+  }
+  get formAddSectionsNew(): FormArray {
+    return this.viewModelFormNew.get('sections') as FormArray;
+  }
+
+  addFormSectionNew() {
+    this.formAddSectionsNew.push(this.createFormSection());
+  }
+
+  removeFormSectionNew(index: number) {
+    this.formAddSectionsNew.removeAt(index);
+  }
+  createFormSection() {
+    return this._formBuilder.group({
+      field1: '',
+      field2: '',
+      field3: '',
+      field4: '',
+      field5: '',
+    });
   }
 }
