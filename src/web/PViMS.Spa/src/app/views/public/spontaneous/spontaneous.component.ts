@@ -106,6 +106,7 @@ export class SpontaneousComponent
   protected eventEndDateMin: any;
   protected sourceOfReport: string;
   protected reportType: string;
+  isMobileView: boolean;
 
   constructor(
     protected _activatedRoute: ActivatedRoute,
@@ -130,6 +131,7 @@ export class SpontaneousComponent
         }
       }
     );
+    this.isMobileView = window.innerWidth < 768; 
   }
 
   currentScreenWidth: string = '';
@@ -168,10 +170,10 @@ export class SpontaneousComponent
       patientName:'',
       patientPhoneNumber:'',
       patientWeight:'',
-      isChecked:'',
-      patientAgeYear:'',
-      patientAgeMonth:'',
-      patientAgeDays:'',
+      isChecked: true,
+      patientAgeYear:{ disabled: true, value: '' },
+      patientAgeMonth:{ disabled: true, value: '' },
+      patientAgeDays:{ disabled: true, value: '' },
       patientGender:'',
       patientPregnantStatus:'',
       patientDivision:'',
@@ -180,7 +182,7 @@ export class SpontaneousComponent
       patientAddress:'',
 
       suspectedType:'',
-      suspectedTypeSpecify:'',
+      suspectedTypeSpecify:{ disabled: true, value: '' },
       suspectedLaboratoryResults:'',
       suspectedEventStartDate:'',
       suspectedEventStoppedDate:'',
@@ -209,6 +211,18 @@ export class SpontaneousComponent
       reporterSourceOfReporting:'',
 
     });
+
+      // Subscribe to changes in the 'suspectedType' control
+    this.viewModelFormNew.get('suspectedType').valueChanges.subscribe((value) => {
+      const specifyControl = this.viewModelFormNew.get('suspectedTypeSpecify');
+
+      if (value === 'Others') {
+        specifyControl.enable(); // Enable the control
+      } else {
+        specifyControl.disable(); // Disable the control
+      }
+    });
+    
   }
 
   ngAfterViewInit(): void {
@@ -869,7 +883,7 @@ export class SpontaneousComponent
   otherRelevantHistory: string;
   sourceOfReporting: string;
   reportingType: string;
-  ageSelectionStatus : boolean = true;
+  
   
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
@@ -892,11 +906,16 @@ export class SpontaneousComponent
     this.formAddSections.splice(index, 1);
   }
   submitReport(){
-    let allModels: any[] = [];
+    if (this.viewModelFormNew.valid){
+      let allModels: any[] = [];
 
     allModels.push(this.porcessPatientInformation());
     allModels.push(this.processSuspectedInformation());
+    }
+    else{
       var a = 1;
+    }
+      
   }
   porcessPatientInformation(){
     const staticPatient = {
@@ -1056,23 +1075,7 @@ export class SpontaneousComponent
       this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
   }
-  ageNotApplicableIsCheck(){
-    var a= 1;
-   this.ageSelectionStatus = !this.ageSelectionStatus;
-   var aa = 1;
-  }
-  desableField : boolean = true;
-
-  debugSuspectedType() {
-    const value = this.viewModelFormNew.get('suspectedType').value;
-    console.log('Suspected Type Value:', value);
-    if(value !== 'Others') {
-      this.desableField=true;
-    }
-    else{
-      this.desableField=false;
-    }
-  }
+ 
   get formAddSectionsNew(): FormArray {
     return this.viewModelFormNew.get('sections') as FormArray;
   }

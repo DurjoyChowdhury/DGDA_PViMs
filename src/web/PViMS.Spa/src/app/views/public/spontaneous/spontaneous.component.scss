@@ -224,4 +224,8 @@ mat-step-header {
 // .copyright-container {
 //   /* Add any additional styling for the copyright container */
 // }
+.required-mark {
+  color: red;  /* Customize the color of the required mark */
+  margin-left: 4px;  /* Adjust the spacing between label and mark */
+}
 
