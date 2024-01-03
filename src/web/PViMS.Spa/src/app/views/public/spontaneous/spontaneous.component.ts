@@ -184,10 +184,11 @@ export class SpontaneousComponent
       suspectedType:'',
       suspectedTypeSpecify:{ disabled: true, value: '' },
       suspectedLaboratoryResults:'',
-      suspectedEventStartDate:'',
-      suspectedEventStoppedDate:'',
+      suspectedEventStartDate:{ disabled: true, value: '' },
+      suspectedEventStoppedDate:{ disabled: true, value: '' },
+      isCheckedEventDate: true,
       suspectedEventTreated:'',
-      suspectedEventTreatedSpecify:'',
+      suspectedEventTreatedSpecify:{ disabled: true, value: '' },
       suspectedAfterReaction:'',
       suspectedProduct:'',
       suspectedAppearAfter:'',
@@ -196,7 +197,7 @@ export class SpontaneousComponent
       suspectedAttributedEvent:'',
       suspectedDateOfDeath:'',
       suspectedOtherRevevant:'',
-      suspectedOtherRevevantSpecify:'',
+      suspectedOtherRevevantSpecify:{ disabled: true, value: '' },
 
 
       reporterCompanyName:'',
@@ -217,6 +218,16 @@ export class SpontaneousComponent
       const specifyControl = this.viewModelFormNew.get('suspectedTypeSpecify');
 
       if (value === 'Others') {
+        specifyControl.enable(); // Enable the control
+      } else {
+        specifyControl.disable(); // Disable the control
+      }
+    });
+
+    this.viewModelFormNew.get('suspectedEventTreated').valueChanges.subscribe((value) => {
+      const specifyControl = this.viewModelFormNew.get('suspectedEventTreatedSpecify');
+
+      if (value === 'Yes') {
         specifyControl.enable(); // Enable the control
       } else {
         specifyControl.disable(); // Disable the control
