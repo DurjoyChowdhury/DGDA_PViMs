@@ -195,9 +195,21 @@ export class SpontaneousComponent
       suspectedAdverseEvent:'',
       suspectedIfSerious:'',
       suspectedAttributedEvent:'',
-      suspectedDateOfDeath:'',
+      suspectedDateOfDeath:{ disabled: true, value: '' },
       suspectedOtherRevevant:'',
       suspectedOtherRevevantSpecify:{ disabled: true, value: '' },
+
+      suspectedBrandTradeName:'',
+      suspectedGenericName:'',
+      suspectedIndication:'',
+      suspectedMedicationStartDate:{ disabled: true, value: '' },
+      suspectedMedicationEndDate:{ disabled: true, value: '' },
+      suspectedDiluentInformation:'',
+      suspectedEnterDoseForm:'',
+      suspectedFrequencyDailyDose:'',
+      suspectedBatchLotNumber:'',
+      suspectedManufacturer:'',
+      isCheckedVaccination:true,
 
 
       reporterCompanyName:'',
@@ -207,9 +219,9 @@ export class SpontaneousComponent
       reporterEmailAddress:'',
       reporterAddress:'',
       reporterName:'',
-      reporterInitialReportId:'',
+      reporterInitialReportId:{ disabled: true, value: '' },
       reporterReportType:'',
-      reporterSourceOfReporting:'',
+      reporterSourceOfReporting:''
 
     });
 
@@ -233,7 +245,28 @@ export class SpontaneousComponent
         specifyControl.disable(); // Disable the control
       }
     });
+
+    this.viewModelFormNew.get('suspectedOtherRevevant').valueChanges.subscribe((value) => {
+      const specifyControl = this.viewModelFormNew.get('suspectedOtherRevevantSpecify');
+
+      if (value === 'Others (Please specify)') {
+        specifyControl.enable(); // Enable the control
+      } else {
+        specifyControl.disable(); // Disable the control
+      }
+    });
+
+    this.viewModelFormNew.get('reporterReportType').valueChanges.subscribe((value) => {
+      const specifyControl = this.viewModelFormNew.get('reporterInitialReportId');
+
+      if (value === 'Follow-up report') {
+        specifyControl.enable(); // Enable the control
+      } else {
+        specifyControl.disable(); // Disable the control
+      }
+    });
     
+   // this.initForm();
   }
 
   ngAfterViewInit(): void {
@@ -1086,17 +1119,32 @@ export class SpontaneousComponent
       this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
   }
+
+  initForm() {
+    this.viewModelFormNew = this._formBuilder.group({
+      sections: this._formBuilder.array([]),
+    });
+  }
  
-  get formAddSectionsNew(): FormArray {
-    return this.viewModelFormNew.get('sections') as FormArray;
+  get sections() {
+    return (this.viewModelFormNew.get('sections') as FormArray).controls;
   }
 
+
   addFormSectionNew() {
-    this.formAddSectionsNew.push(this.createFormSection());
+    const newSection = this._formBuilder.group({
+      field1: [''],
+      field2: [''],
+      field3: [''],
+      field4: [''],
+      field5: [''],
+    });
+
+    (this.viewModelFormNew.get('sections') as FormArray).push(newSection);
   }
 
   removeFormSectionNew(index: number) {
-    this.formAddSectionsNew.removeAt(index);
+    (this.viewModelFormNew.get('sections') as FormArray).removeAt(index);
   }
   createFormSection() {
     return this._formBuilder.group({
