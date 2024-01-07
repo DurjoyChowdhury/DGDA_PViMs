@@ -219,7 +219,7 @@ export class SpontaneousComponent
       reporterDateOfReportSubmission:'',
       reporterOccupation:'',
       reporterPhoneNumber:'',
-      reporterEmailAddress:'',
+      reporterEmailAddress:['',[Validators.email]],
       reporterAddress:'',
       reporterName:'',
       reporterInitialReportId:{ disabled: true, value: '' },
@@ -1120,6 +1120,7 @@ export class SpontaneousComponent
     staticPatient.elements["156"] = this.viewModelFormNew.get('suspectedDateOfDeath').value!== "" ? this.viewModelFormNew.get('suspectedDateOfDeath').value : null;
     staticPatient.elements["132"] = this.viewModelFormNew.get('suspectedOtherRevevant').value!== "" ? this.viewModelFormNew.get('suspectedOtherRevevant').value : null;
     staticPatient.elements["153"] = this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value!== "" ? this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value : null;
+    staticPatient.elements["299"] = this.viewModelFormNew.get('suspectedDiluentInformation').value!== "" ? this.viewModelFormNew.get('suspectedDiluentInformation').value : null;
 
     return staticPatient;
   }
@@ -1139,11 +1140,11 @@ export class SpontaneousComponent
       const sectionGroup = sectionsFormArray.at(i) as FormGroup;
     
       // Access values of individual form controls within each section
-      const brandValue = sectionGroup.get('brand').value;
-      const genericNameValue = sectionGroup.get('genericName').value;
-      const doseFormValue = sectionGroup.get('doseForm').value;
-      const indicationValue = sectionGroup.get('indication').value;
-      const strengthAndFrequencyValue = sectionGroup.get('strengthAndFrequency').value;
+      var brandValue = sectionGroup.get('brand').value;
+      var genericNameValue = sectionGroup.get('genericName').value;
+      var doseFormValue = sectionGroup.get('doseForm').value;
+      var indicationValue = sectionGroup.get('indication').value;
+      var strengthAndFrequencyValue = sectionGroup.get('strengthAndFrequency').value;
     
       // Push values into staticPatient.elements["134"]
       staticPatient.elements["134"].push({
