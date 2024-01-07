@@ -82,6 +82,7 @@ export class SpontaneousComponent
   protected relevantHistory: string[];
   protected outcomeOfAdverseEvent: string;
 
+  public eventInformationList: { selectionKey: string; value: string }[];
   public divisionList: { selectedkey: string; selectedValue: string }[];
   public districtList: { selectedkey: string; selectedValue: string }[];
   public thanaList: { selectedkey: string; selectedValue: string }[];
@@ -165,7 +166,7 @@ export class SpontaneousComponent
 
     this.viewModelFormNew = this._formBuilder.group({
 
-      sections: this._formBuilder.array([]),
+      sections: this._formBuilder.array([this.newSection]),
 
       patientName:'',
       patientPhoneNumber:'',
@@ -198,6 +199,8 @@ export class SpontaneousComponent
       suspectedDateOfDeath:{ disabled: true, value: '' },
       suspectedOtherRevevant:'',
       suspectedOtherRevevantSpecify:{ disabled: true, value: '' },
+      suspectedEventInformation:new FormControl([]),
+      suspectedEventInformationSpecify:{ disabled: true, value: '' },
 
       suspectedBrandTradeName:'',
       suspectedGenericName:'',
@@ -225,15 +228,22 @@ export class SpontaneousComponent
 
     });
 
-      // Subscribe to changes in the 'suspectedType' control
-    this.viewModelFormNew.get('suspectedType').valueChanges.subscribe((value) => {
+    
+    this.viewModelFormNew.get('suspectedType').valueChanges.subscribe((selectedValues) => {
       const specifyControl = this.viewModelFormNew.get('suspectedTypeSpecify');
-
-      if (value === 'Others') {
+    
+      // Check if 'Others' is included in the selected values array
+      const isOthersSelected = selectedValues.includes('Others');
+    
+      if (isOthersSelected) {
         specifyControl.enable(); // Enable the control
+        specifyControl.setValidators([Validators.required]); // Add the required validator
       } else {
         specifyControl.disable(); // Disable the control
+        specifyControl.clearValidators(); // Clear any validators
       }
+    
+      specifyControl.updateValueAndValidity(); // Update the control's validation state
     });
 
     this.viewModelFormNew.get('suspectedEventTreated').valueChanges.subscribe((value) => {
@@ -245,15 +255,22 @@ export class SpontaneousComponent
         specifyControl.disable(); // Disable the control
       }
     });
-
-    this.viewModelFormNew.get('suspectedOtherRevevant').valueChanges.subscribe((value) => {
+    
+    this.viewModelFormNew.get('suspectedOtherRevevant').valueChanges.subscribe((selectedValues) => {
       const specifyControl = this.viewModelFormNew.get('suspectedOtherRevevantSpecify');
-
-      if (value === 'Others (Please specify)') {
+    
+      // Check if 'Others' is included in the selected values array
+      const isOthersSelected = selectedValues.includes('Others (Please specify)');
+    
+      if (isOthersSelected) {
         specifyControl.enable(); // Enable the control
+        specifyControl.setValidators([Validators.required]); // Add the required validator
       } else {
         specifyControl.disable(); // Disable the control
+        specifyControl.clearValidators(); // Clear any validators
       }
+    
+      specifyControl.updateValueAndValidity(); // Update the control's validation state
     });
 
     this.viewModelFormNew.get('reporterReportType').valueChanges.subscribe((value) => {
@@ -265,8 +282,24 @@ export class SpontaneousComponent
         specifyControl.disable(); // Disable the control
       }
     });
+
+    this.viewModelFormNew.get('suspectedEventInformation').valueChanges.subscribe((selectedValues) => {
+      const specifyControl = this.viewModelFormNew.get('suspectedEventInformationSpecify');
     
-   // this.initForm();
+      // Check if 'Others' is included in the selected values array
+      const isOthersSelected = selectedValues.includes('Others');
+    
+      if (isOthersSelected) {
+        specifyControl.enable(); // Enable the control
+        specifyControl.setValidators([Validators.required]); // Add the required validator
+      } else {
+        specifyControl.disable(); // Disable the control
+        specifyControl.clearValidators(); // Clear any validators
+      }
+    
+      specifyControl.updateValueAndValidity(); // Update the control's validation state
+    });
+    
   }
 
   ngAfterViewInit(): void {
@@ -305,6 +338,7 @@ export class SpontaneousComponent
           self.loadreportingType();
           self.loadoccupation();
           self.loadcompanyName();
+          self.loadEventInformation();
           //DC
           self.prepareFormArray();
           
@@ -915,9 +949,7 @@ export class SpontaneousComponent
   //DC
   isGeneralInstructionsOpen: boolean = true;
   isSubmitReportOpen: boolean = false;
-  formAddSections = [
-    { field1: '', field2: '', field3: '',field4: '',field5: '' } // Initial set of fields
-  ];
+
   currentYear: number = new Date().getFullYear();
   typeOfEvent: string;
   advEventTreated: string;
@@ -939,26 +971,46 @@ export class SpontaneousComponent
     // Close other accordions if needed
     this.isGeneralInstructionsOpen = true;
   }
-  addFormSection() {
-    // Clone the first section and add it to the formSections array
-    const newSection = Object.assign({}, this.formAddSections[0]);
-    this.formAddSections.push(newSection);
-  }
+ 
 
-  removeFormSection(index: number) {
-    // Remove the section at the specified index
-    this.formAddSections.splice(index, 1);
-  }
   submitReport(){
-    if (this.viewModelFormNew.valid){
-      let allModels: any[] = [];
-
-    allModels.push(this.porcessPatientInformation());
-    allModels.push(this.processSuspectedInformation());
+    if (
+      confirm(
+        'The information provided here are true to the best of my knowledge'
+      ) == true
+    ) 
+    {
+      if (this.viewModelFormNew.valid){
+        let self = this;
+      self.setBusy(true);
+        let allModels: any[] = [];
+  
+      allModels.push(this.porcessPatientInformation());
+      allModels.push(this.processSuspectedInformation());
+      allModels.push(this.processMedicineVaccineInformation());
+      allModels.push(this.processRepoterInformation());
+     
+      self.datasetService
+          .saveSpontaneousInstance(self.datasetId, allModels)
+          .subscribe(
+            result => {
+              self.notify('Report created successfully', 'Spontaneous Report');
+              self._router.navigate([_routes.public.submissionSuccess], {
+                state: {
+                  serialId: result.patient_identifier,
+                  currentDate: result.report_date,
+                  reportId: result.report_id,
+                  workflowId: '4096D0A3-45F7-4702-BDA1-76AEDE41B986',
+                },
+              });
+            },
+            error => {
+              self.handleError(error, 'Error saving spontaneous report');
+            }
+          );
+      }
     }
-    else{
-      var a = 1;
-    }
+    
       
   }
   porcessPatientInformation(){
@@ -982,18 +1034,21 @@ export class SpontaneousComponent
       },
     };
 
-    staticPatient.elements["105"] = this.viewModelFormNew.get('patientName').value; 
-    staticPatient.elements["106"] = this.viewModelFormNew.get('patientPhoneNumber').value; 
-    staticPatient.elements["109"] = this.viewModelFormNew.get('patientWeight').value; 
-    staticPatient.elements["107"] = this.viewModelFormNew.get('patientAgeYear').value; 
-    staticPatient.elements["295"] = this.viewModelFormNew.get('patientAgeMonth').value; 
-    staticPatient.elements["296"] = this.viewModelFormNew.get('patientAgeDays').value; 
+    staticPatient.elements["103"] = this.generateSerialId(); 
+    staticPatient.elements["104"] = moment(); 
+    staticPatient.elements["105"] = this.viewModelFormNew.get('patientName').value!== "" ? this.viewModelFormNew.get('patientName').value : null; 
+    staticPatient.elements["106"] = this.viewModelFormNew.get('patientPhoneNumber').value!== "" ? this.viewModelFormNew.get('patientPhoneNumber').value : null; 
+    staticPatient.elements["109"] = this.viewModelFormNew.get('patientWeight').value!== "" ? this.viewModelFormNew.get('patientWeight').value : null; 
+    staticPatient.elements["107"] = this.viewModelFormNew.get('patientAgeYear').value!== "" ? this.viewModelFormNew.get('patientAgeYear').value : 0; 
+    staticPatient.elements["295"] = this.viewModelFormNew.get('patientAgeMonth').value!== "" ? this.viewModelFormNew.get('patientAgeMonth').value : 0; 
+    staticPatient.elements["296"] = this.viewModelFormNew.get('patientAgeDays').value!== "" ? this.viewModelFormNew.get('patientAgeDays').value : 0;
     staticPatient.elements["110"] = this.viewModelFormNew.get('patientGender').value;
-    staticPatient.elements["111"] = this.viewModelFormNew.get('patientPregnantStatus').value; 
-    staticPatient.elements["148"] = this.viewModelFormNew.get('patientDivision').value; 
-    staticPatient.elements["149"] = this.viewModelFormNew.get('patientDistrict').value; 
-    staticPatient.elements["150"] = this.viewModelFormNew.get('patientUpazila').value; 
-    staticPatient.elements["145"] = this.viewModelFormNew.get('patientAddress').value; 
+    staticPatient.elements["111"] = this.viewModelFormNew.get('patientPregnantStatus').value !== "" ? this.viewModelFormNew.get('patientPregnantStatus').value : null; 
+    staticPatient.elements["148"] = this.viewModelFormNew.get('patientDivision').value!== "" ? this.viewModelFormNew.get('patientDivision').value : null;
+    staticPatient.elements["149"] = this.viewModelFormNew.get('patientDistrict').value!== "" ? this.viewModelFormNew.get('patientDistrict').value : null; 
+    staticPatient.elements["150"] = this.viewModelFormNew.get('patientUpazila').value!== "" ? this.viewModelFormNew.get('patientUpazila').value : null; 
+    staticPatient.elements["145"] = this.viewModelFormNew.get('patientAddress').value!== "" ? this.viewModelFormNew.get('patientAddress').value : null; 
+    staticPatient.elements["307"] = this.viewModelFormNew.get('isChecked').value; 
 
     return staticPatient;
   }
@@ -1001,8 +1056,16 @@ export class SpontaneousComponent
   processSuspectedInformation(){
     const staticPatient = {
       elements: {
-        "112": null,
-        "298": null,
+        "112": [],
+        "113": null,
+        "114": null,
+        "115": null,
+        "116": null,
+        "117": null,
+        "118": null,
+        "119": null,
+        "120": null,
+        "121": null,
         "122": null,
         "123": null,
         "124": null,
@@ -1011,33 +1074,121 @@ export class SpontaneousComponent
         "127": null,
         "128": null,
         "129": null,
-        "130": null,
+        "130": [],
         "131": null,
-        "156": null,
-        "132": null,
+        "132": [],
         "153": null,
+        "156": null,
+        "298": null,
+        "299": null,
+        "301": [],
+        "302": null,
+        "306": null,
+        "308": null,
       },
     };
-    staticPatient.elements["112"] = this.viewModelFormNew.get('suspectedType').value; 
-    staticPatient.elements["298"] = this.viewModelFormNew.get('suspectedTypeSpecify').value; 
-    staticPatient.elements["122"] = this.viewModelFormNew.get('suspectedLaboratoryResults').value;
-    staticPatient.elements["123"] = this.viewModelFormNew.get('suspectedEventStartDate').value;
-    staticPatient.elements["124"] = this.viewModelFormNew.get('suspectedEventStoppedDate').value;
-    staticPatient.elements["125"] = this.viewModelFormNew.get('suspectedEventTreated').value;
-    staticPatient.elements["126"] = this.viewModelFormNew.get('suspectedEventTreatedSpecify').value;
-    staticPatient.elements["127"] = this.viewModelFormNew.get('suspectedAfterReaction').value;
-    staticPatient.elements["128"] = this.viewModelFormNew.get('suspectedProduct').value;
-    staticPatient.elements["129"] = this.viewModelFormNew.get('suspectedAppearAfter').value;
-    staticPatient.elements["130"] = this.viewModelFormNew.get('suspectedAdverseEvent').value;
-
-    staticPatient.elements["131"] = this.viewModelFormNew.get('suspectedAttributedEvent').value;
-    staticPatient.elements["156"] = this.viewModelFormNew.get('suspectedDateOfDeath').value;
-    staticPatient.elements["132"] = this.viewModelFormNew.get('suspectedOtherRevevant').value;
-    staticPatient.elements["153"] = this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value;
+    staticPatient.elements["112"] = this.viewModelFormNew.get('suspectedType').value!== "" ? this.viewModelFormNew.get('suspectedType').value : null; 
+    staticPatient.elements["298"] = this.viewModelFormNew.get('suspectedTypeSpecify').value!== "" ? this.viewModelFormNew.get('suspectedTypeSpecify').value : null; 
+    staticPatient.elements["113"] = this.viewModelFormNew.get('suspectedBrandTradeName').value!== "" ? this.viewModelFormNew.get('suspectedBrandTradeName').value : null; 
+    staticPatient.elements["114"] = this.viewModelFormNew.get('suspectedGenericName').value!== "" ? this.viewModelFormNew.get('suspectedGenericName').value : null; 
+    staticPatient.elements["115"] = this.viewModelFormNew.get('suspectedIndication').value!== "" ? this.viewModelFormNew.get('suspectedIndication').value : null; 
+    staticPatient.elements["116"] = this.viewModelFormNew.get('suspectedMedicationStartDate').value!== "" ? this.viewModelFormNew.get('suspectedMedicationStartDate').value : null; 
+    staticPatient.elements["117"] = this.viewModelFormNew.get('suspectedMedicationEndDate').value!== "" ? this.viewModelFormNew.get('suspectedMedicationEndDate').value : null; 
+    staticPatient.elements["306"] = this.viewModelFormNew.get('isCheckedVaccination').value; 
+    staticPatient.elements["118"] = this.viewModelFormNew.get('suspectedEnterDoseForm').value!== "" ? this.viewModelFormNew.get('suspectedEnterDoseForm').value : null; 
+    staticPatient.elements["119"] = this.viewModelFormNew.get('suspectedFrequencyDailyDose').value;
+    staticPatient.elements["120"] = this.viewModelFormNew.get('suspectedBatchLotNumber').value!== "" ? this.viewModelFormNew.get('suspectedBatchLotNumber').value : null;
+    staticPatient.elements["121"] = this.viewModelFormNew.get('suspectedManufacturer').value!== "" ? this.viewModelFormNew.get('suspectedManufacturer').value : null;
+    staticPatient.elements["301"] = this.viewModelFormNew.get('suspectedEventInformation').value!== "" ? this.viewModelFormNew.get('suspectedEventInformation').value : null;
+    staticPatient.elements["302"] = this.viewModelFormNew.get('suspectedEventInformationSpecify').value!== "" ? this.viewModelFormNew.get('suspectedEventInformationSpecify').value : null;
+    staticPatient.elements["122"] = this.viewModelFormNew.get('suspectedLaboratoryResults').value!== "" ? this.viewModelFormNew.get('suspectedLaboratoryResults').value : null;
+    staticPatient.elements["123"] = this.viewModelFormNew.get('suspectedEventStartDate').value!== "" ? this.viewModelFormNew.get('suspectedEventStartDate').value : null;
+    staticPatient.elements["124"] = this.viewModelFormNew.get('suspectedEventStoppedDate').value!== "" ? this.viewModelFormNew.get('suspectedEventStoppedDate').value : null;
+    staticPatient.elements["308"] = this.viewModelFormNew.get('isCheckedEventDate').value;
+    staticPatient.elements["125"] = this.viewModelFormNew.get('suspectedEventTreated').value!== "" ? this.viewModelFormNew.get('suspectedEventTreated').value : null;
+    staticPatient.elements["126"] = this.viewModelFormNew.get('suspectedEventTreatedSpecify').value!== "" ? this.viewModelFormNew.get('suspectedEventTreatedSpecify').value : null;
+    staticPatient.elements["127"] = this.viewModelFormNew.get('suspectedAfterReaction').value!== "" ? this.viewModelFormNew.get('suspectedAfterReaction').value : null;
+    staticPatient.elements["128"] = this.viewModelFormNew.get('suspectedProduct').value!== "" ? this.viewModelFormNew.get('suspectedProduct').value : null;
+    staticPatient.elements["129"] = this.viewModelFormNew.get('suspectedAppearAfter').value!== "" ? this.viewModelFormNew.get('suspectedAppearAfter').value : null;
+    if(this.viewModelFormNew.get('suspectedAdverseEvent').value =='Not Serious'){
+      staticPatient.elements["130"] = this.viewModelFormNew.get('suspectedAdverseEvent').value!== "" ? this.viewModelFormNew.get('suspectedAdverseEvent').value : null;
+    }
+    else{
+      staticPatient.elements["130"] = this.viewModelFormNew.get('suspectedIfSerious').value!== "" ? this.viewModelFormNew.get('suspectedIfSerious').value : null;
+    }
+    staticPatient.elements["131"] = this.viewModelFormNew.get('suspectedAttributedEvent').value!== "" ? this.viewModelFormNew.get('suspectedAttributedEvent').value : null;
+    staticPatient.elements["156"] = this.viewModelFormNew.get('suspectedDateOfDeath').value!== "" ? this.viewModelFormNew.get('suspectedDateOfDeath').value : null;
+    staticPatient.elements["132"] = this.viewModelFormNew.get('suspectedOtherRevevant').value!== "" ? this.viewModelFormNew.get('suspectedOtherRevevant').value : null;
+    staticPatient.elements["153"] = this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value!== "" ? this.viewModelFormNew.get('suspectedOtherRevevantSpecify').value : null;
 
     return staticPatient;
   }
-  
+
+  processMedicineVaccineInformation(){
+    const staticPatient = {
+      elements: {
+        "134": [],
+      },
+    };
+    
+    // Assuming your form is named 'yourForm'
+    const sectionsFormArray = this.viewModelFormNew.get('sections') as FormArray;
+    
+    // Loop through each section
+    for (let i = 0; i < sectionsFormArray.length; i++) {
+      const sectionGroup = sectionsFormArray.at(i) as FormGroup;
+    
+      // Access values of individual form controls within each section
+      const brandValue = sectionGroup.get('brand').value;
+      const genericNameValue = sectionGroup.get('genericName').value;
+      const doseFormValue = sectionGroup.get('doseForm').value;
+      const indicationValue = sectionGroup.get('indication').value;
+      const strengthAndFrequencyValue = sectionGroup.get('strengthAndFrequency').value;
+    
+      // Push values into staticPatient.elements["134"]
+      staticPatient.elements["134"].push({
+        "1": brandValue,
+        "2": genericNameValue,
+        "3": doseFormValue,
+        "4": indicationValue,
+        "5": strengthAndFrequencyValue,
+      });
+    }
+    
+    return staticPatient;
+    
+  }
+  processRepoterInformation(){
+    const staticPatient = {
+      elements: {
+        "135": null,
+        "136": null,
+        "137": null,
+        "138": null,
+        "140": null,
+        "151": null,
+        "152": null,
+        "300": null,
+        "303": null,
+        "304": null,
+        "305": null,
+      },
+    };
+    staticPatient.elements["300"] = this.viewModelFormNew.get('reporterSourceOfReporting').value!== "" ? this.viewModelFormNew.get('reporterSourceOfReporting').value : null; 
+    staticPatient.elements["303"] = this.viewModelFormNew.get('reporterReportType').value!== "" ? this.viewModelFormNew.get('reporterReportType').value : null; 
+    staticPatient.elements["304"] = this.viewModelFormNew.get('reporterInitialReportId').value!== "" ? this.viewModelFormNew.get('reporterInitialReportId').value : null; 
+    staticPatient.elements["135"] = this.viewModelFormNew.get('reporterName').value!== "" ? this.viewModelFormNew.get('reporterName').value : null; 
+    staticPatient.elements["136"] = this.viewModelFormNew.get('reporterPhoneNumber').value!== "" ? this.viewModelFormNew.get('reporterPhoneNumber').value : null; 
+    staticPatient.elements["136"] = this.viewModelFormNew.get('reporterEmailAddress').value!== "" ? this.viewModelFormNew.get('reporterEmailAddress').value : null; 
+    staticPatient.elements["138"] = this.viewModelFormNew.get('reporterOccupation').value!== "" ? this.viewModelFormNew.get('reporterOccupation').value : null; 
+    staticPatient.elements["151"] = this.viewModelFormNew.get('reporterAddress').value!== "" ? this.viewModelFormNew.get('reporterAddress').value : null; 
+    staticPatient.elements["152"] = this.viewModelFormNew.get('reporterCompanyName').value!== "" ? this.viewModelFormNew.get('reporterCompanyName').value : null; 
+    staticPatient.elements["140"] = this.viewModelFormNew.get('reporterDateOfReportSubmission').value!== "" ? this.viewModelFormNew.get('reporterDateOfReportSubmission').value : null; 
+
+    return staticPatient;
+    
+  }
+
   navigateLogInComponent() {
     // Navigate to the 'other' route, assuming you have defined this route in your routing configuration
     this._router.navigate(['/app-signin']);
@@ -1109,6 +1260,11 @@ export class SpontaneousComponent
       this.reportingTypeList = this.datasetCategories[3].datasetElements[1].selectionDataItems;
      }
   }
+  loadEventInformation():void{
+    if(this.datasetCategories !==null){
+      this.eventInformationList = this.datasetCategories[1].datasetElements[12].selectionDataItems;
+    }
+  }
   loadoccupation(): void{
     if(this.datasetCategories !== null){
       this.occupationList = this.datasetCategories[3].datasetElements[6].selectionDataItems;
@@ -1119,40 +1275,22 @@ export class SpontaneousComponent
       this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
   }
-
-  initForm() {
-    this.viewModelFormNew = this._formBuilder.group({
-      sections: this._formBuilder.array([]),
-    });
+  newSection = this._formBuilder.group({
+    brand: ['', Validators.required],
+    genericName: ['', Validators.required],
+    doseForm: ['', Validators.required],
+    indication: ['', Validators.required],
+    strengthAndFrequency: ['', Validators.required],
+  });
+  
+  get sectionsFormArray() {
+    return this.viewModelFormNew.get('sections') as FormArray;
   }
- 
-  get sections() {
-    return (this.viewModelFormNew.get('sections') as FormArray).controls;
-  }
-
-
   addFormSectionNew() {
-    const newSection = this._formBuilder.group({
-      field1: [''],
-      field2: [''],
-      field3: [''],
-      field4: [''],
-      field5: [''],
-    });
-
-    (this.viewModelFormNew.get('sections') as FormArray).push(newSection);
+    this.sectionsFormArray.push(this.newSection);
   }
-
   removeFormSectionNew(index: number) {
-    (this.viewModelFormNew.get('sections') as FormArray).removeAt(index);
+    this.sectionsFormArray.removeAt(index);
   }
-  createFormSection() {
-    return this._formBuilder.group({
-      field1: '',
-      field2: '',
-      field3: '',
-      field4: '',
-      field5: '',
-    });
-  }
+  
 }
