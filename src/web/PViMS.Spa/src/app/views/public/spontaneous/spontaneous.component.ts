@@ -46,6 +46,14 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 const moment = _moment;
 
+const INITIAL_NEW_SECTION = {
+  brand: ['', Validators.required],
+  genericName: ['', Validators.required],
+  doseForm: ['', Validators.required],
+  indication: ['', Validators.required],
+  strengthAndFrequency: ['', Validators.required],
+};
+
 @Component({
   templateUrl: './spontaneous.component.html',
   styleUrls: ['./spontaneous.component.scss'],
@@ -166,7 +174,7 @@ export class SpontaneousComponent
 
     this.viewModelFormNew = this._formBuilder.group({
 
-      sections: this._formBuilder.array([this.newSection]),
+      sections: this._formBuilder.array([this._formBuilder.group({...INITIAL_NEW_SECTION})]),
 
       patientName:'',
       patientPhoneNumber:'',
@@ -213,6 +221,7 @@ export class SpontaneousComponent
       suspectedBatchLotNumber:'',
       suspectedManufacturer:'',
       isCheckedVaccination:true,
+      isCheckedConcomutant:true,
 
 
       reporterCompanyName:'',
@@ -1276,19 +1285,14 @@ export class SpontaneousComponent
       this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
   }
-  newSection = this._formBuilder.group({
-    brand: ['', Validators.required],
-    genericName: ['', Validators.required],
-    doseForm: ['', Validators.required],
-    indication: ['', Validators.required],
-    strengthAndFrequency: ['', Validators.required],
-  });
+  
   
   get sectionsFormArray() {
     return this.viewModelFormNew.get('sections') as FormArray;
   }
   addFormSectionNew() {
-    this.sectionsFormArray.push(this.newSection);
+    const newSection = this._formBuilder.group({...INITIAL_NEW_SECTION});
+    this.sectionsFormArray.push(newSection);
   }
   removeFormSectionNew(index: number) {
     this.sectionsFormArray.removeAt(index);

@@ -171,7 +171,7 @@ mat-step-header {
   border-radius: 5px; /* Match the border-radius of the parent */
   padding: 5px; /* Adjust the padding inside the input */
 }::placeholder {
-  padding-left: 20px; /* Adjust the padding value as needed */
+  padding: 10px; /* Adjust the padding value as needed */
 }
 /* Style for the mat-form-field to adjust padding */
 .custom-input-field {
@@ -182,9 +182,24 @@ mat-step-header {
   overflow: hidden; /* Ensure the border-radius is applied to the input */
   height: 62px;
 }
+.custom-input-field-textaria {
+  padding: 5px; /* Adjust the padding value as needed */
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  border-radius: 5px; /* Adjust the border-radius value for roundness */
+  overflow: hidden; /* Ensure the border-radius is applied to the input */
+}
+.white_background_mat_input_container_textaria {
+  background-color: white !important;
+  border: none; /* Remove default input border */
+  border-radius: 5px; /* Match the border-radius of the parent */
+  padding: 2% 5%; /* Adjust the padding inside the input */
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-  top: 2.1em;
+  top: 1.8em;
 }
 .mat-form-field .mat-label {
   font-size: 35px; // Adjust the font size as needed
@@ -192,9 +207,9 @@ mat-step-header {
 .mat-select-value {
   transform: translateY(1.00em); /* Adjust the translateY value as needed */
 }
-.gap_between_header_top{
-  margin-top: 16px;
-}
+// .gap_between_header_top{
+//   margin-top: 16px;
+// }
 .container-fluid {
   padding: 0% 5% 2% 5%;
 }
@@ -216,14 +231,6 @@ mat-step-header {
   display: block;
   margin-bottom: 0px;
 }
-
-// .logo-container {
-//   /* Add any additional styling for the logo container */
-// }
-
-// .copyright-container {
-//   /* Add any additional styling for the copyright container */
-// }
 .required-mark {
   color: red;  /* Customize the color of the required mark */
   margin-left: 4px;  /* Adjust the spacing between label and mark */
