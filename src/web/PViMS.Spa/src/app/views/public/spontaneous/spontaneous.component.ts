@@ -47,11 +47,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 const moment = _moment;
 
 const INITIAL_NEW_SECTION = {
-  brand: ['', Validators.required],
-  genericName: ['', Validators.required],
-  doseForm: ['', Validators.required],
-  indication: ['', Validators.required],
-  strengthAndFrequency: ['', Validators.required],
+  brand: [''],
+  genericName: [''],
+  doseForm: [''],
+  indication: [''],
+  strengthAndFrequency: [''],
 };
 
 @Component({
@@ -174,7 +174,8 @@ export class SpontaneousComponent
 
     this.viewModelFormNew = this._formBuilder.group({
 
-      sections: this._formBuilder.array([this._formBuilder.group({...INITIAL_NEW_SECTION})]),
+      //sections: this._formBuilder.array([this._formBuilder.group({...INITIAL_NEW_SECTION})]),
+      sections: this._formBuilder.array([]),
 
       patientName:'',
       patientPhoneNumber:'',
@@ -1296,6 +1297,18 @@ export class SpontaneousComponent
   }
   removeFormSectionNew(index: number) {
     this.sectionsFormArray.removeAt(index);
+  }
+  isCheckedConcomutantEvent(){
+    if(!this.viewModelFormNew.get('isCheckedConcomutant').value){
+      const sectionsFormArray = this.viewModelFormNew.get('sections') as FormArray;
+      for (let i = 0; i < sectionsFormArray.length; i++) {
+        var a = sectionsFormArray.length;
+        this.sectionsFormArray.removeAt(i);
+      }
+    }
+    else{
+      (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
+    }
   }
   
 }

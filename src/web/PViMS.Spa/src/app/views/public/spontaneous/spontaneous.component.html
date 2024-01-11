@@ -550,45 +550,60 @@
                 <div>
                   <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
                 </div>
-                <div>
-                  <mat-checkbox formControlName="isCheckedConcomutant">Age Not Available</mat-checkbox>
+                <div style="padding-left: 40px;"> 
+                  <mat-checkbox formControlName="isCheckedConcomutant" (click)="isCheckedConcomutantEvent()">Age Not Available</mat-checkbox>
                 </div>
               </div>
             </mat-card-header>
 
 
-            <mat-card-content>
+            <mat-card-content *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value">
               <div formArrayName="sections">
                 <div fxLayout="row" fxLayout.lt-md="column"  *ngFor="let section of sectionsFormArray.controls; let i = index" [formGroupName]="i">
               
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Brand/ Trade Name</b></h3></mat-label>
-                      <input matInput placeholder="Enter Brand/ Trade Name" formControlName="brand" class="white_background_mat_input_container">
+                      <mat-label><h3><b>Brand/ Trade Name
+                        <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
+                      </b></h3></mat-label>
+                      <input matInput placeholder="Enter Brand/ Trade Name" formControlName="brand" class="white_background_mat_input_container"
+                      [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Generic Name</b></h3></mat-label>
-                      <input matInput placeholder="Enter Generic Name" formControlName="genericName" class="white_background_mat_input_container" >
+                      <mat-label><h3><b>Generic Name
+                        <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
+                      </b></h3></mat-label>
+                      <input matInput placeholder="Enter Generic Name" formControlName="genericName" class="white_background_mat_input_container"
+                      [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Dose form</b></h3></mat-label>
-                      <input matInput placeholder="Enter Dose form" formControlName="doseForm" class="white_background_mat_input_container" >
+                      <mat-label><h3><b>Dose form
+                        <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
+                      </b></h3></mat-label>
+                      <input matInput placeholder="Enter Dose form" formControlName="doseForm" class="white_background_mat_input_container" 
+                      [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Indication</b></h3></mat-label>
-                      <input matInput placeholder="Enter Indication" formControlName="indication" class="white_background_mat_input_container" >
+                      <mat-label><h3><b>Indication
+                        <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
+                      </b></h3></mat-label>
+                      <input matInput placeholder="Enter Indication" formControlName="indication" class="white_background_mat_input_container" 
+                      [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Strength & Frequency</b></h3></mat-label>
-                      <input matInput placeholder="Enter Strength & Frequency" formControlName="strengthAndFrequency"  class="white_background_mat_input_container" >
+                      <mat-label><h3><b>Strength & Frequency
+                        <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
+                      </b></h3></mat-label>
+                      <input matInput placeholder="Enter Strength & Frequency" formControlName="strengthAndFrequency"  class="white_background_mat_input_container"
+                      [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
                   <div fxFlex="10%" fxLayout.lt-md="100%" style="padding-top: 1.5%;">
