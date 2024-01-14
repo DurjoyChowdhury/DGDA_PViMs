@@ -235,4 +235,6 @@ mat-step-header {
   color: red;  /* Customize the color of the required mark */
   margin-left: 4px;  /* Adjust the spacing between label and mark */
 }
-
+.mat-form-field .mat-form-field-required-marker {
+  display: none;
+}

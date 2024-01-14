@@ -322,8 +322,11 @@ export class SpontaneousComponent
 
     // Add custom validator for date range
     // this.viewModelFormNew.setValidators(this.dateRangeValidator);
-
+   // this.isCheckedEventDateValidity(this.viewModelFormNew.get('isCheckedEventDate').value);
     // Subscribe to changes in isCheckedEventDate
+
+    //this.isCheckedEventDateValidity(this.viewModelFormNew.get('isCheckedEventDate').value);
+    
     this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
       this.isCheckedEventDateValidity(isChecked);
     });

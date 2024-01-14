@@ -261,7 +261,7 @@
                     </div>
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedType').value.includes('Others')">*</span></b></h3></mat-label>
+                        <mat-label><h3><b>If others, Please Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedType').value.includes('Others')">*</span></b></h3></mat-label>
                         <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
                         [disabled]="!viewModelFormNew.get('suspectedType').value.includes('Others')" 
                         formControlName="suspectedTypeSpecify" [required]="viewModelFormNew.get('suspectedType').value.includes('Others')">
@@ -367,7 +367,7 @@
                 </div>
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedEventInformation').value.includes('Others')">*</span></b></h3></mat-label>
+                    <mat-label><h3><b>If others, Please Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedEventInformation').value.includes('Others')">*</span></b></h3></mat-label>
                     <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
                     [disabled]="!viewModelFormNew.get('suspectedEventInformation').value.includes('Others')" 
                     formControlName="suspectedEventInformationSpecify" [required]="viewModelFormNew.get('suspectedEventInformation').value.includes('Others')">
@@ -407,8 +407,10 @@
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Outcomes attributed to the adverse event</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" formControlName="suspectedAttributedEvent">
+                    <mat-label><h3><b>Outcomes attributed to the adverse event
+                      <span class="required-mark">*</span>
+                    </b></h3></mat-label>
+                    <mat-select class="white_background_mat_input_container" formControlName="suspectedAttributedEvent" required>
                       <mat-option *ngFor="let outcmAttributed of outcomeAttributedList" [value]="outcmAttributed.selectionKey">{{outcmAttributed.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -454,8 +456,8 @@
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Brand/ Trade Name</b></h3></mat-label>
-                    <input matInput placeholder="Enter Brand/ Trade Name" class="white_background_mat_input_container" formControlName="suspectedBrandTradeName">
+                    <mat-label><h3><b>Brand/Trade name</b></h3></mat-label>
+                    <input matInput placeholder="Enter Brand/Trade name" class="white_background_mat_input_container" formControlName="suspectedBrandTradeName">
                   </mat-form-field>
                 </div>
                 <div fxFlex="25%" fxLayout.lt-md="100%">
@@ -513,8 +515,8 @@
                   <div fxLayout="row"  fxLayout.lt-md="column">
                     <div fxFlex="50%" fxLayout.lt-md="100%">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Dose Form</b></h3></mat-label>
-                        <input matInput placeholder="Enter Dose Form" class="white_background_mat_input_container" formControlName="suspectedEnterDoseForm">
+                        <mat-label><h3><b>Dosage Form</b></h3></mat-label>
+                        <input matInput placeholder="Enter Dosage Form" class="white_background_mat_input_container" formControlName="suspectedEnterDoseForm">
                       </mat-form-field>
                     </div>
                     <div fxFlex="50%" fxLayout.lt-md="100%">
@@ -586,10 +588,10 @@
                   </div>
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
-                      <mat-label><h3><b>Dose form
+                      <mat-label><h3><b>Dosage Form
                         <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
                       </b></h3></mat-label>
-                      <input matInput placeholder="Enter Dose form" formControlName="doseForm" class="white_background_mat_input_container" 
+                      <input matInput placeholder="Enter Dosage Form" formControlName="doseForm" class="white_background_mat_input_container" 
                       [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
@@ -734,10 +736,10 @@
                 </div>
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Phone Number
+                    <mat-label><h3><b>Mobile phone
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <input type="number" matInput placeholder="Enter Phone Number" class="white_background_mat_input_container" formControlName="reporterPhoneNumber" required>
+                    <input type="number" matInput placeholder="Enter Mobile phone" class="white_background_mat_input_container" formControlName="reporterPhoneNumber" required>
                   </mat-form-field>
                 </div>
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
