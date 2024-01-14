@@ -118,6 +118,7 @@ export class SpontaneousComponent
   public reportingTypeList: { selectionKey: string; value: string }[];
   public occupationList: { selectionKey: string; value: string }[];
   public companyNameList: { selectionKey: string; value: string }[];
+  public organaizationNameList: { selectionKey: string; value: string }[];
 
   protected isMedDateNotAvailable: string;
   protected isEventDateNotAvailable: string;
@@ -236,6 +237,7 @@ export class SpontaneousComponent
 
 
       reporterCompanyName:'',
+      reporterOrganization:'',
       reporterDateOfReportSubmission:{disabled: false, value: new Date()},
       reporterOccupation:'',
       reporterPhoneNumber:'',
@@ -396,6 +398,7 @@ export class SpontaneousComponent
           self.loadreportingType();
           self.loadoccupation();
           self.loadcompanyName();
+          self.loadOrganizationName();
           self.loadEventInformation();
           //DC
           self.prepareFormArray();
@@ -1238,11 +1241,12 @@ export class SpontaneousComponent
     staticPatient.elements["304"] = this.viewModelFormNew.get('reporterInitialReportId').value!== "" ? this.viewModelFormNew.get('reporterInitialReportId').value : null; 
     staticPatient.elements["135"] = this.viewModelFormNew.get('reporterName').value!== "" ? this.viewModelFormNew.get('reporterName').value : null; 
     staticPatient.elements["136"] = this.viewModelFormNew.get('reporterPhoneNumber').value!== "" ? this.viewModelFormNew.get('reporterPhoneNumber').value : null; 
-    staticPatient.elements["136"] = this.viewModelFormNew.get('reporterEmailAddress').value!== "" ? this.viewModelFormNew.get('reporterEmailAddress').value : null; 
+    staticPatient.elements["137"] = this.viewModelFormNew.get('reporterEmailAddress').value!== "" ? this.viewModelFormNew.get('reporterEmailAddress').value : null; 
     staticPatient.elements["138"] = this.viewModelFormNew.get('reporterOccupation').value!== "" ? this.viewModelFormNew.get('reporterOccupation').value : null; 
     staticPatient.elements["151"] = this.viewModelFormNew.get('reporterAddress').value!== "" ? this.viewModelFormNew.get('reporterAddress').value : null; 
-    staticPatient.elements["152"] = this.viewModelFormNew.get('reporterCompanyName').value!== "" ? this.viewModelFormNew.get('reporterCompanyName').value : null; 
+    staticPatient.elements["152"] = this.viewModelFormNew.get('reporterOrganization').value!== "" ? this.viewModelFormNew.get('reporterOrganization').value : null; 
     staticPatient.elements["140"] = this.viewModelFormNew.get('reporterDateOfReportSubmission').value!== "" ? this.viewModelFormNew.get('reporterDateOfReportSubmission').value : null; 
+    staticPatient.elements["305"] = this.viewModelFormNew.get('reporterCompanyName').value!== "" ? this.viewModelFormNew.get('reporterCompanyName').value : null;
 
     return staticPatient;
     
@@ -1331,7 +1335,12 @@ export class SpontaneousComponent
   }
   loadcompanyName(): void{
     if(this.datasetCategories !== null){
-      this.companyNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
+      this.companyNameList = this.datasetCategories[3].datasetElements[9].selectionDataItems;
+     }
+  }
+  loadOrganizationName():void{
+    if(this.datasetCategories !== null){
+      this.organaizationNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
      }
   }
   
