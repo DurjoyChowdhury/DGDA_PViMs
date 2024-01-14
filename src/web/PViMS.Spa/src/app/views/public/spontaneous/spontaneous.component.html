@@ -288,8 +288,7 @@
                           <span *ngIf="viewModelFormNew.get('isCheckedEventDate').value === false" class="required-mark">*</span></b></h3></mat-label>
                         <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" 
                         class="white_background_mat_input_container" formControlName="suspectedEventStartDate"
-                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
-                        [required]="!viewModelFormNew.get('isCheckedEventDate').value">
+                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value">
                         <mat-datepicker-toggle matSuffix [for]="eventStartDate"></mat-datepicker-toggle>
                         <mat-datepicker #eventStartDate></mat-datepicker>
                       </mat-form-field>
@@ -301,8 +300,7 @@
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" 
                         class="white_background_mat_input_container" formControlName="suspectedEventStoppedDate"
-                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
-                        [required]="!viewModelFormNew.get('isCheckedEventDate').value">
+                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value">
                         <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
                         <mat-datepicker #eventStoppedDate></mat-datepicker>
                       </mat-form-field>

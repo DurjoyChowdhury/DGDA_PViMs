@@ -204,9 +204,9 @@ export class SpontaneousComponent
       suspectedType:'',
       suspectedTypeSpecify:{ disabled: true, value: '' },
       suspectedLaboratoryResults:'',
-      suspectedEventStartDate:{ disabled: true, value: '' , validators: []},
-      suspectedEventStoppedDate:{ disabled: true, value: '' , validators: []},
-      isCheckedEventDate: true,
+      suspectedEventStartDate: [null, []],
+      suspectedEventStoppedDate:[null, []],
+      isCheckedEventDate: [true],
       suspectedEventTreated:'',
       suspectedEventTreatedSpecify:{ disabled: true, value: '' },
       suspectedAfterReaction:'',
@@ -224,14 +224,14 @@ export class SpontaneousComponent
       suspectedBrandTradeName:'',
       suspectedGenericName:'',
       suspectedIndication:'',
-      suspectedMedicationStartDate:{ disabled: true, value: '' },
-      suspectedMedicationEndDate:{ disabled: true, value: '' },
+      suspectedMedicationStartDate:[null, []],
+      suspectedMedicationEndDate:[null, []],
+      isCheckedVaccination:true,
       suspectedDiluentInformation:'',
       suspectedEnterDoseForm:'',
       suspectedFrequencyDailyDose:'',
       suspectedBatchLotNumber:'',
       suspectedManufacturer:'',
-      isCheckedVaccination:true,
       isCheckedConcomutant:true,
 
 
@@ -320,15 +320,42 @@ export class SpontaneousComponent
       specifyControl.updateValueAndValidity(); // Update the control's validation state
     });
 
-    // Add custom validator for date range
-    // this.viewModelFormNew.setValidators(this.dateRangeValidator);
-   // this.isCheckedEventDateValidity(this.viewModelFormNew.get('isCheckedEventDate').value);
-    // Subscribe to changes in isCheckedEventDate
-
-    //this.isCheckedEventDateValidity(this.viewModelFormNew.get('isCheckedEventDate').value);
-    
     this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
-      this.isCheckedEventDateValidity(isChecked);
+      const startDateControl = this.viewModelFormNew.get('suspectedEventStartDate');
+      const endDateControl = this.viewModelFormNew.get('suspectedEventStoppedDate');
+
+      if (!isChecked) {
+        // If checkbox is unchecked, set validators
+        startDateControl.setValidators([Validators.required, this.validatesuspectedEventStartDate.bind(this)]);
+        endDateControl.setValidators([Validators.required, this.validatesuspectedEventStoppedDate.bind(this)]);
+      } else {
+        // If checkbox is checked, clear validators
+        startDateControl.clearValidators();
+        endDateControl.clearValidators();
+      }
+
+      // Update the validity of the controls
+      startDateControl.updateValueAndValidity();
+      endDateControl.updateValueAndValidity();
+    });
+
+    this.viewModelFormNew.get('isCheckedVaccination').valueChanges.subscribe((isChecked) => {
+      const startDateControl = this.viewModelFormNew.get('suspectedMedicationStartDate');
+      const endDateControl = this.viewModelFormNew.get('suspectedMedicationEndDate');
+
+      if (!isChecked) {
+        // If checkbox is unchecked, set validators
+        startDateControl.setValidators([Validators.required, this.validatesuspectedMedicationStartDate.bind(this)]);
+        endDateControl.setValidators([Validators.required, this.validatesuspectedMedicationEndDate.bind(this)]);
+      } else {
+        // If checkbox is checked, clear validators
+        startDateControl.clearValidators();
+        endDateControl.clearValidators();
+      }
+
+      // Update the validity of the controls
+      startDateControl.updateValueAndValidity();
+      endDateControl.updateValueAndValidity();
     });
 
   }
@@ -1331,30 +1358,43 @@ export class SpontaneousComponent
       (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
     }
   }
-  isCheckedEventDateValidity(isChecked: boolean): void{
-    // Subscribe to changes in isCheckedEventDate
-    this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
-      const startDateControl = this.viewModelFormNew.get('suspectedEventStartDate');
-      const stoppedDateControl = this.viewModelFormNew.get('suspectedEventStoppedDate');
+ 
+  private validatesuspectedEventStartDate(control: AbstractControl): { [key: string]: boolean } | null {
+    const startDate = control.value;
+    const endDate = this.viewModelFormNew?.get('suspectedEventStoppedDate')?.value;
 
-      if (isChecked) {
-        startDateControl.clearValidators();
-        stoppedDateControl.clearValidators();
-      } else {
-        startDateControl.setValidators([Validators.required]);
-        stoppedDateControl.setValidators([Validators.required]);
-      }
+    if (startDate && endDate && startDate > endDate) {
+      return { 'invalidStartDate': true };
+    }
 
-      startDateControl.updateValueAndValidity();
-      stoppedDateControl.updateValueAndValidity();
-    });
+    return null;
   }
-  dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
-    const startDate = control.get('suspectedEventStartDate').value;
-    const endDate = control.get('suspectedEventStoppedDate').value;
+  private validatesuspectedEventStoppedDate(control: AbstractControl): { [key: string]: boolean } | null {
+    const endDate = control.value;
+    const startDate = this.viewModelFormNew?.get('suspectedEventStartDate')?.value;
 
-    if (endDate && startDate && startDate > endDate) {
-      return { 'dateRangeError': true };
+    if (endDate && startDate && endDate < startDate) {
+      return { 'invalidEndDate': true };
+    }
+
+    return null;
+  }
+  private validatesuspectedMedicationStartDate(control: AbstractControl): { [key: string]: boolean } | null {
+    const startDate = control.value;
+    const endDate = this.viewModelFormNew?.get('suspectedMedicationEndDate')?.value;
+
+    if (startDate && endDate && startDate > endDate) {
+      return { 'invalidStartDate': true };
+    }
+
+    return null;
+  }
+  private validatesuspectedMedicationEndDate(control: AbstractControl): { [key: string]: boolean } | null {
+    const endDate = control.value;
+    const startDate = this.viewModelFormNew?.get('suspectedMedicationStartDate')?.value;
+
+    if (endDate && startDate && endDate < startDate) {
+      return { 'invalidEndDate': true };
     }
 
     return null;
