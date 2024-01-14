@@ -116,8 +116,8 @@
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="100" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Patient Name</b></h3></mat-label>
-                        <input matInput placeholder="Enter Patient name" class="input-50 white_background_mat_input_container" formControlName="patientName">
+                        <mat-label><h3><b>Name/Initial</b></h3></mat-label>
+                        <input matInput placeholder="Enter Name/Initial" class="input-50 white_background_mat_input_container" formControlName="patientName">
                       </mat-form-field>
                     </div>
                   </div>
@@ -126,8 +126,10 @@
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Patient Phone Number</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Patient Phone Number" class="input-25 white_background_mat_input_container" formControlName="patientPhoneNumber">
+                        <mat-label><h3><b>Contact Number
+                          <span class="required-mark">*</span>
+                        </b></h3></mat-label>
+                        <input matInput type="number" placeholder="Enter Contact Number" class="input-25 white_background_mat_input_container" formControlName="patientPhoneNumber" required>
                       </mat-form-field>
                     </div>
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
@@ -269,9 +271,11 @@
                 </div>
                 <div fxFlex.gt-md="50" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field-textaria">
-                    <mat-label><h3><b>Describe event including relevant tests and laboratory results</b></h3></mat-label>
+                    <mat-label><h3><b>Describe event including relevant tests and laboratory results
+                      <span class="required-mark">*</span>
+                    </b></h3></mat-label>
                     <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results" 
-                    class="white_background_mat_input_container_textaria" formControlName="suspectedLaboratoryResults"></textarea>
+                    class="white_background_mat_input_container_textaria" formControlName="suspectedLaboratoryResults" required></textarea>
                   </mat-form-field>
                 </div>
               </div>
@@ -304,8 +308,9 @@
                       </mat-form-field>
                     </div>
                     <div fxFlex="33.33%" fxLayout.lt-md="100%">
-                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'">
-                        <mat-checkbox formControlName="isCheckedEventDate">Age Not Available</mat-checkbox>
+                      <!-- <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'"> -->
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '12%'">
+                        <mat-checkbox formControlName="isCheckedEventDate">Event Date Not Available</mat-checkbox>
                       </div>
                     </div>
                   </div>

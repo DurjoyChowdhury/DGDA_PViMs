@@ -53,6 +53,16 @@ const INITIAL_NEW_SECTION = {
   indication: [''],
   strengthAndFrequency: [''],
 };
+export function endDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  const startDate = control.get('suspectedEventStartDate')?.value;
+  const endDate = control.get('suspectedEventStoppedDate')?.value;
+
+  if (startDate && endDate && startDate > endDate) {
+    return { 'invalidEndDate': true };
+  }
+
+  return null;
+}
 
 @Component({
   templateUrl: './spontaneous.component.html',
@@ -194,8 +204,8 @@ export class SpontaneousComponent
       suspectedType:'',
       suspectedTypeSpecify:{ disabled: true, value: '' },
       suspectedLaboratoryResults:'',
-      suspectedEventStartDate:{ disabled: true, value: '' },
-      suspectedEventStoppedDate:{ disabled: true, value: '' },
+      suspectedEventStartDate:{ disabled: true, value: '' , validators: []},
+      suspectedEventStoppedDate:{ disabled: true, value: '' , validators: []},
       isCheckedEventDate: true,
       suspectedEventTreated:'',
       suspectedEventTreatedSpecify:{ disabled: true, value: '' },
@@ -226,7 +236,7 @@ export class SpontaneousComponent
 
 
       reporterCompanyName:'',
-      reporterDateOfReportSubmission:'',
+      reporterDateOfReportSubmission:{disabled: false, value: new Date()},
       reporterOccupation:'',
       reporterPhoneNumber:'',
       reporterEmailAddress:['',[Validators.email]],
@@ -309,7 +319,15 @@ export class SpontaneousComponent
     
       specifyControl.updateValueAndValidity(); // Update the control's validation state
     });
-    
+
+    // Add custom validator for date range
+    // this.viewModelFormNew.setValidators(this.dateRangeValidator);
+
+    // Subscribe to changes in isCheckedEventDate
+    this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
+      this.isCheckedEventDateValidity(isChecked);
+    });
+
   }
 
   ngAfterViewInit(): void {
@@ -1309,6 +1327,34 @@ export class SpontaneousComponent
     else{
       (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
     }
+  }
+  isCheckedEventDateValidity(isChecked: boolean): void{
+    // Subscribe to changes in isCheckedEventDate
+    this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
+      const startDateControl = this.viewModelFormNew.get('suspectedEventStartDate');
+      const stoppedDateControl = this.viewModelFormNew.get('suspectedEventStoppedDate');
+
+      if (isChecked) {
+        startDateControl.clearValidators();
+        stoppedDateControl.clearValidators();
+      } else {
+        startDateControl.setValidators([Validators.required]);
+        stoppedDateControl.setValidators([Validators.required]);
+      }
+
+      startDateControl.updateValueAndValidity();
+      stoppedDateControl.updateValueAndValidity();
+    });
+  }
+  dateRangeValidator(control: FormGroup): { [key: string]: boolean } | null {
+    const startDate = control.get('suspectedEventStartDate').value;
+    const endDate = control.get('suspectedEventStoppedDate').value;
+
+    if (endDate && startDate && startDate > endDate) {
+      return { 'dateRangeError': true };
+    }
+
+    return null;
   }
   
 }
