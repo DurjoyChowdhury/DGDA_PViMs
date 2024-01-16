@@ -1408,5 +1408,27 @@ export class SpontaneousComponent
 
     return null;
   }
+  getMinEventStoppedDate(): Date | null {
+    const startDate = this.viewModelFormNew.get('suspectedEventStartDate').value;
+  
+    // Return null if startDate is not selected or if isCheckedEventDate is true
+    if (!startDate || this.viewModelFormNew.get('isCheckedEventDate').value) {
+      return null;
+    }
+  
+    // Return startDate to set it as the minimum date for suspectedEventStoppedDate
+    return startDate;
+  }
+  getMinvaccinationEndDate(): Date | null {
+    const startDate = this.viewModelFormNew.get('suspectedMedicationStartDate').value;
+  
+    // Return null if startDate is not selected or if isCheckedVaccination is true
+    if (!startDate || this.viewModelFormNew.get('isCheckedVaccination').value) {
+      return null;
+    }
+  
+    // Return startDate to set it as the minimum date for suspectedMedicationEndDate
+    return startDate;
+  }
   
 }

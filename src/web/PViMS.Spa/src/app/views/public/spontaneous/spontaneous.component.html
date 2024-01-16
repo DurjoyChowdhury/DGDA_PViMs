@@ -300,7 +300,8 @@
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" 
                         class="white_background_mat_input_container" formControlName="suspectedEventStoppedDate"
-                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value">
+                        [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
+                        [min]="getMinEventStoppedDate()">
                         <mat-datepicker-toggle matSuffix [for]="eventStoppedDate"></mat-datepicker-toggle>
                         <mat-datepicker #eventStoppedDate></mat-datepicker>
                       </mat-form-field>
@@ -497,7 +498,8 @@
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="vaccinationEndDate" placeholder="Choose a date" class="white_background_mat_input_container" formControlName="suspectedMedicationEndDate"
                         [disabled]="viewModelFormNew.get('isCheckedVaccination').value"
-                        [required]="!viewModelFormNew.get('isCheckedVaccination').value">
+                        [required]="!viewModelFormNew.get('isCheckedVaccination').value"
+                        [min]="getMinvaccinationEndDate()">
                         <mat-datepicker-toggle matSuffix [for]="vaccinationEndDate"></mat-datepicker-toggle>
                         <mat-datepicker #vaccinationEndDate></mat-datepicker>
                       </mat-form-field>
