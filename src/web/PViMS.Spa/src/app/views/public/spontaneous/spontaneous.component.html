@@ -149,31 +149,28 @@
                       <mat-form-field class="custom-input-field" >
                         <mat-label><h3><b>Age - Year <span *ngIf="viewModelFormNew.get('isChecked').value === false" class="required-mark">*</span></b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container"
-                         formControlName="patientAgeYear" [attr.disabled]="viewModelFormNew.get('isChecked').value === true ? false : null"
-                         [required]="!viewModelFormNew.get('isChecked').value">
+                         formControlName="patientAgeYear">
                       </mat-form-field>
                     </div>
                 
                     <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Age - Month <span *ngIf="viewModelFormNew.get('isChecked').value === false" class="required-mark">*</span></b></h3></mat-label>
+                        <mat-label><h3><b>Age - Month</b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container" 
-                        formControlName="patientAgeMonth" [attr.disabled]="viewModelFormNew.get('isChecked').value === true ? false : null"
-                        [required]="!viewModelFormNew.get('isChecked').value">
+                        formControlName="patientAgeMonth">
                       </mat-form-field>
                     </div>
                 
                     <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Age - Days <span *ngIf="viewModelFormNew.get('isChecked').value === false" class="required-mark">*</span></b></h3></mat-label>
+                        <mat-label><h3><b>Age - Days</b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container" 
-                        formControlName="patientAgeDays" [attr.disabled]="viewModelFormNew.get('isChecked').value === true ? false : null"
-                        [required]="!viewModelFormNew.get('isChecked').value">
+                        formControlName="patientAgeDays" >
                       </mat-form-field>
                     </div>
                     <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                       <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '10%'">
-                        <mat-checkbox formControlName="isChecked">Age Not Available</mat-checkbox>
+                        <mat-checkbox formControlName="isChecked"><b>Age Not Available</b></mat-checkbox>
                       </div>
                     </div>
                   </div>
@@ -309,7 +306,7 @@
                     <div fxFlex="33.33%" fxLayout.lt-md="100%">
                       <!-- <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'"> -->
                       <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '12%'">
-                        <mat-checkbox formControlName="isCheckedEventDate">Event Date Not Available</mat-checkbox>
+                        <mat-checkbox formControlName="isCheckedEventDate"><b>Event Date Not Available</b></mat-checkbox>
                       </div>
                     </div>
                   </div>
@@ -506,7 +503,7 @@
                     </div>
                     <div fxFlex="22%" fxLayout.lt-md="100%">
                       <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'">
-                        <mat-checkbox formControlName="isCheckedVaccination">Date Not Available</mat-checkbox>
+                        <mat-checkbox formControlName="isCheckedVaccination"><b>Date Not Available</b></mat-checkbox>
                       </div>
                     </div>
                   </div>
@@ -555,10 +552,10 @@
             <mat-card-header>
               <div fxLayout="row"  fxLayoutAlign="space-between center" fxLayout.lt-md="column">
                 <div>
-                  <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
+                  <mat-card-title class="mat_card_title"><b>CONCOMITANT MEDICINE/VACCINE INFORMATION</b></mat-card-title>
                 </div>
                 <div style="padding-left: 40px;"> 
-                  <mat-checkbox formControlName="isCheckedConcomutant" (click)="isCheckedConcomutantEvent()">MEDICINE/VACCINE Not Available</mat-checkbox>
+                  <mat-checkbox formControlName="isCheckedConcomutant" (click)="isCheckedConcomutantEvent()"><b>MEDICINE/VACCINE Not Available</b></mat-checkbox>
                 </div>
               </div>
             </mat-card-header>
@@ -658,7 +655,7 @@
               </div>
             </mat-card-content>
             <mat-card-header class="gap_between_header_top">
-              <mat-card-title class="mat_card_title"> Name & Address</mat-card-title>
+              <mat-card-title class="mat_card_title"><b>Name & Address</b></mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <div fxLayout="row"  fxLayout.lt-md="column">
@@ -724,7 +721,7 @@
               </div>
             </mat-card-content>
             <mat-card-header>
-              <mat-card-title class="mat_card_title"> Other information</mat-card-title>
+              <mat-card-title class="mat_card_title"> <b>Other information</b></mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <div fxLayout="row"  fxLayout.lt-md="column">

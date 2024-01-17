@@ -238,3 +238,13 @@ mat-step-header {
 .mat-form-field .mat-form-field-required-marker {
   display: none;
 }
+/* Add this CSS to your component's stylesheet or global stylesheet */
+.mat-label h3 b {
+  color: #00050c; /* Set the color to your preferred color */
+  font-weight: 700;
+  font-size: 22px; /* Adjust the font size if needed */
+  /* Add any other styling properties as needed */
+}
+.egret-navy .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #0c0c0c;
+}

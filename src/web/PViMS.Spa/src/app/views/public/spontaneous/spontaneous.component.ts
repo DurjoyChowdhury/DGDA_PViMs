@@ -191,10 +191,10 @@ export class SpontaneousComponent
       patientName:'',
       patientPhoneNumber:'',
       patientWeight:'',
-      isChecked: true,
-      patientAgeYear:{ disabled: true, value: '' },
-      patientAgeMonth:{ disabled: true, value: '' },
-      patientAgeDays:{ disabled: true, value: '' },
+      isChecked: false,
+      patientAgeYear:[null, []],
+      patientAgeMonth:[null, []],
+      patientAgeDays:[null, []],
       patientGender:'',
       patientPregnantStatus:'',
       patientDivision:'',
@@ -207,7 +207,7 @@ export class SpontaneousComponent
       suspectedLaboratoryResults:'',
       suspectedEventStartDate: [null, []],
       suspectedEventStoppedDate:[null, []],
-      isCheckedEventDate: [true],
+      isCheckedEventDate: false,
       suspectedEventTreated:'',
       suspectedEventTreatedSpecify:{ disabled: true, value: '' },
       suspectedAfterReaction:'',
@@ -227,7 +227,7 @@ export class SpontaneousComponent
       suspectedIndication:'',
       suspectedMedicationStartDate:[null, []],
       suspectedMedicationEndDate:[null, []],
-      isCheckedVaccination:true,
+      isCheckedVaccination:false,
       suspectedDiluentInformation:'',
       suspectedEnterDoseForm:'',
       suspectedFrequencyDailyDose:'',
@@ -248,6 +248,37 @@ export class SpontaneousComponent
       reporterReportType:'',
       reporterSourceOfReporting:''
 
+    });
+
+    this.viewModelFormNew.get('isChecked').valueChanges.subscribe((isChecked) => {
+      const patientAgeYearsControl = this.viewModelFormNew.get('patientAgeYear');
+      const patientAgeMonthsControl = this.viewModelFormNew.get('patientAgeMonth');
+      const patientAgeDaysControl = this.viewModelFormNew.get('patientAgeDays');
+
+      if (isChecked) {
+        // If checkbox is checked, disable and clear validation
+        patientAgeYearsControl.disable();
+        patientAgeMonthsControl.disable();
+        patientAgeDaysControl.disable();
+
+        patientAgeYearsControl.clearValidators();
+        patientAgeMonthsControl.clearValidators();
+        patientAgeDaysControl.clearValidators();
+      } else {
+        // If checkbox is unchecked, enable and set required validation
+        patientAgeYearsControl.enable();
+        patientAgeMonthsControl.enable();
+        patientAgeDaysControl.enable();
+
+         patientAgeYearsControl.setValidators([Validators.required]);
+        // patientAgeMonthsControl.setValidators([Validators.required]);
+       // patientAgeDaysControl.setValidators([Validators.required]);
+      }
+
+      // Update the validation state
+      patientAgeYearsControl.updateValueAndValidity();
+      patientAgeMonthsControl.updateValueAndValidity();
+      patientAgeDaysControl.updateValueAndValidity();
     });
 
     
