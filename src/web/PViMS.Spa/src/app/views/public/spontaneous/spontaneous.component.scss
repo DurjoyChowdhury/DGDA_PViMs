@@ -248,3 +248,10 @@ mat-step-header {
 .egret-navy .mat-form-field-appearance-legacy .mat-form-field-label {
   color: #0c0c0c;
 }
+.mat-card-header-text {
+  margin: 0 6px !important;
+}
+.center {
+  overflow-wrap: break-word; /* Standard property name */
+  word-wrap: break-word; /* Fallback for older browsers */
+}

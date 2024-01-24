@@ -127,6 +127,7 @@ export class SpontaneousComponent
   protected sourceOfReport: string;
   protected reportType: string;
   isMobileView: boolean;
+  usaidLogo= '';
 
   constructor(
     protected _activatedRoute: ActivatedRoute,
@@ -152,6 +153,7 @@ export class SpontaneousComponent
       }
     );
     this.isMobileView = window.innerWidth < 768; 
+    this.usaidLogo = 'assets/images/usaid_blue_hands.png';
   }
 
   currentScreenWidth: string = '';
@@ -233,7 +235,7 @@ export class SpontaneousComponent
       suspectedFrequencyDailyDose:'',
       suspectedBatchLotNumber:'',
       suspectedManufacturer:'',
-      isCheckedConcomutant:true,
+      isCheckedConcomutant:false,
 
 
       reporterCompanyName:'',
@@ -390,6 +392,8 @@ export class SpontaneousComponent
       startDateControl.updateValueAndValidity();
       endDateControl.updateValueAndValidity();
     });
+
+    (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
 
   }
 

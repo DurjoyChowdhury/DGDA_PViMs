@@ -9,7 +9,7 @@
   <!-- Left side with two logos -->
   <div fxLayout="row" fxLayoutAlign="start center">
     <div>
-      <img src="https://pvtracker.jbrsoft.com/build/images/pv-tracker-logo.png" alt="Logo 1" height="40" width="40" (click)="navigateCancelComponent()">
+      <img src="https://pvtracker.jbrsoft.com/build/images/pv-tracker-logo.png" style="padding-top: 10px;" alt="Logo 1" height="55" width="55" (click)="navigateCancelComponent()">
     </div>
     <!-- <div>
       <img src="https://pvtracker.jbrsoft.com/build/images/pvims-microservice-logo.png" alt="Logo 2" height="40" width="40">
@@ -550,9 +550,9 @@
               </div>
             </mat-card-content>
             <mat-card-header>
-              <div fxLayout="row"  fxLayoutAlign="space-between center" fxLayout.lt-md="column">
+              <div fxLayout="row"  fxLayout.lt-md="column">
                 <div>
-                  <mat-card-title class="mat_card_title"><b>CONCOMITANT MEDICINE/VACCINE INFORMATION</b></mat-card-title>
+                  <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
                 </div>
                 <div style="padding-left: 40px;"> 
                   <mat-checkbox formControlName="isCheckedConcomutant" (click)="isCheckedConcomutantEvent()"><b>MEDICINE/VACCINE Not Available</b></mat-checkbox>
@@ -644,7 +644,7 @@
                 </div>
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Initial Report Id
+                    <mat-label><h3><b>Initial Report ID
                       <span *ngIf="viewModelFormNew.get('reporterReportType').value === 'Follow-up report'" class="required-mark">*</span>
                     </b></h3></mat-label>
                     <input matInput placeholder="Enter Initial Report Id" class="white_background_mat_input_container" formControlName="reporterInitialReportId"
@@ -803,7 +803,7 @@
       </div>
     </div>
   </div>
-  <footer style="padding-bottom: 70px;">
+  <!-- <footer style="padding-bottom: 70px;">
     <mat-toolbar color="primary" class="footer-toolbar">
       <div class="footer-content">
         <div class="logo-container">
@@ -814,7 +814,25 @@
         </div>
       </div>
     </mat-toolbar>
-  </footer>
+  </footer> -->
+  <footer style="padding-bottom: 75px;">
+    <mat-toolbar color="primary" class="footer-toolbar">
+      <div class="footer-content" fxLayout="row" fxLayout.xs="column" >
+        <div fxFlex="15"  class="left">
+          <img [src]="usaidLogo" alt="USAID logo" style="max-width: 80%; height: auto;">
+        </div>
+        <div fxFlex="70" class="center">
+          <p style="height: auto;text-wrap: balance;">
+            This portal is made possible by the generous support of the American people through the US Agency for International Development (USAID) contract no.
+             7200AA18C00074. The contents are the responsibility of the authors and do not necessarily reflect the views of USAID or the US Government.
+          </p>
+        </div>
+        <div fxFlex="15" class="right">
+          <p>&copy; Maintained by: <a href="https://jbrsoft.com/" target="_blank">JBRSOFT</a>.</p>
+        </div>
+      </div>
+    </mat-toolbar>
+  </footer>  
 </div>
 
 
