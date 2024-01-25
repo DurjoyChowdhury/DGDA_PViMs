@@ -436,7 +436,7 @@ export class SpontaneousComponent
           self.loadOrganizationName();
           self.loadEventInformation();
           //DC
-          self.prepareFormArray();
+          //self.prepareFormArray();
           
         },
         error => {

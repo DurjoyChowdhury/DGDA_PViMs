@@ -255,3 +255,23 @@ mat-step-header {
   overflow-wrap: break-word; /* Standard property name */
   word-wrap: break-word; /* Fallback for older browsers */
 }
+@media only screen and (max-width: 600px) { /* Adjust the max-width as needed */
+  .mobile-view {
+    height: 300px;
+  }
+
+  .mobile-view mat-toolbar {
+    height: 246px; /* Set the desired height for mat-toolbar in mobile view */
+  }
+}
+.datepikerSize{
+  button{
+    .mat-button-wrapper{
+      svg{
+        display: inline-block !important;
+        width: 20px !important;
+        height: 20px !important;
+      }
+    }
+  }
+}
