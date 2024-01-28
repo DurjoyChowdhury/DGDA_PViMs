@@ -181,6 +181,17 @@ mat-step-header {
   border-radius: 5px; /* Adjust the border-radius value for roundness */
   overflow: hidden; /* Ensure the border-radius is applied to the input */
   height: 62px;
+  div{
+    div{
+      div{
+        span{
+          label{
+            padding-top: 6px;
+          }
+        }
+      }
+    }
+  }
 }
 .custom-input-field-textaria {
   padding: 5px; /* Adjust the padding value as needed */
@@ -188,6 +199,17 @@ mat-step-header {
   box-sizing: border-box; /* Ensure padding is included in the width */
   border-radius: 5px; /* Adjust the border-radius value for roundness */
   overflow: hidden; /* Ensure the border-radius is applied to the input */
+  div{
+    div{
+      div{
+        span{
+          label{
+            padding-top: 6px;
+          }
+        }
+      }
+    }
+  }
 }
 .white_background_mat_input_container_textaria {
   background-color: white !important;
@@ -198,9 +220,9 @@ mat-step-header {
   letter-spacing: 1px;
 }
 
-.mat-form-field-appearance-legacy .mat-form-field-label {
-  top: 1.8em;
-}
+// .mat-form-field-appearance-legacy .mat-form-field-label {
+//   top: 1.8em;
+// }
 .mat-form-field .mat-label {
   font-size: 35px; // Adjust the font size as needed
 }

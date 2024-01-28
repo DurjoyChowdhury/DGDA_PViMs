@@ -760,7 +760,7 @@
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
                     <input matInput [matDatepicker]="reportSubmissionDate" placeholder="Choose a date" class="white_background_mat_input_container" 
-                    formControlName="reporterDateOfReportSubmission" required inputmode="none" >
+                    formControlName="reporterDateOfReportSubmission" required inputmode="none"(keydown)="false" >
                     <mat-datepicker-toggle matSuffix [for]="reportSubmissionDate" class="datepikerSize"></mat-datepicker-toggle>
                     <mat-datepicker #reportSubmissionDate></mat-datepicker>
                   </mat-form-field>
@@ -830,7 +830,7 @@
           </p>
         </div>
         <div fxFlex="15%" fxLayout.lt-md="100%" class="right" fxLayoutAlign.xs="center">
-          <p>&copy; Maintained by: <a href="https://jbrsoft.com/" target="_blank">JBRSOFT</a>.</p>
+          <p style="font-size: medium;">&copy; Maintained by: <a href="https://jbrsoft.com/" target="_blank">JBRSOFT</a>.</p>
         </div>
       </div>
     </mat-toolbar>
