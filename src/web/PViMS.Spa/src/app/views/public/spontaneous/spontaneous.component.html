@@ -145,7 +145,7 @@
                 <!-- First half (50%) -->
                 <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
-                    <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                    <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
                       <mat-form-field class="custom-input-field" >
                         <mat-label><h3><b>Age - Year <span *ngIf="viewModelFormNew.get('isChecked').value === false" class="required-mark">*</span></b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container"
@@ -153,7 +153,7 @@
                       </mat-form-field>
                     </div>
                 
-                    <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                    <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Month</b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container" 
@@ -161,15 +161,15 @@
                       </mat-form-field>
                     </div>
                 
-                    <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                    <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Days</b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container" 
                         formControlName="patientAgeDays" >
                       </mat-form-field>
                     </div>
-                    <div fxFlex.gt-md="25" fxFlex.lt-md="100">
-                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '10%'">
+                    <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '12%'">
                         <mat-checkbox formControlName="isChecked"><b>Age Not Available</b></mat-checkbox>
                       </div>
                     </div>
@@ -818,7 +818,7 @@
       </div>
     </mat-toolbar>
   </footer> -->
-  <footer fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column" style="padding-bottom: 75px;" class="mobile-view">
+  <!-- <footer fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column" style="padding-bottom: 75px;" class="mobile-view">
     <mat-toolbar color="primary" class="footer-toolbar">
       <div class="footer-content" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center">
         <div fxFlex="15%" fxLayout.lt-md="100%" class="left" fxLayoutAlign.xs="center">
@@ -834,8 +834,22 @@
         </div>
       </div>
     </mat-toolbar>
-  </footer>  
+  </footer>   -->
+  <div class="footer">
+    <div fxFlex="20" fxLayoutAlign="center center" class="left">
+      <img [src]="usaidLogo" alt="USAID logo">
+    </div>
+    <div fxFlex="80" fxLayoutAlign="center center" class="middle">
+      <p>
+        This portal is made possible by the generous support of the American people through the US Agency for International Development (USAID) contract no. 7200AA18C00074. The contents are the responsibility of the authors and do not necessarily reflect the views of USAID or the US Government.
+      </p>
+    </div>
+    <!-- <div fxFlex="12" fxLayoutAlign="center center" class="right">
+      <p style="font-size: small;">&copy; Maintained by: <a href="https://jbrsoft.com/" target="_blank">JBRSOFT</a>.</p>
+    </div> -->
+  </div>
 </div>
+
 
 
 

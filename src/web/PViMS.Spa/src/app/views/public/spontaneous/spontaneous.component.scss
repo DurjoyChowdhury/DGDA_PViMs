@@ -300,3 +300,23 @@ mat-step-header {
 .mat-toolbar-single-row {
   white-space: inherit !important;
 }
+.footer {
+  //position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0 0 70px 0;
+
+  .right {
+    p {
+      color: rgb(174, 165, 165);
+    }
+  }
+  .middle{
+    padding-right: 10px;
+
+    p {
+      color: rgb(174, 165, 165);
+    }
+  }
+}
