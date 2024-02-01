@@ -16,7 +16,7 @@ import { PopupService } from 'app/shared/services/popup.service';
 import { AccountService } from 'app/shared/services/account.service';
 import { EventService } from 'app/shared/services/event.service';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
@@ -26,7 +26,7 @@ import { egretAnimations } from 'app/shared/animations/egret-animations';
 import { _routes } from 'app/config/routes';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DatasetService } from 'app/shared/services/dataset.service';
-import { distinctUntilChanged, finalize } from 'rxjs/operators';
+import { distinctUntilChanged, finalize, map, startWith } from 'rxjs/operators';
 import { DatasetCategoryViewModel } from 'app/shared/models/dataset/dataset-category-view.model';
 import { DatasetElementSubViewModel } from 'app/shared/models/dataset/dataset-element-sub-view.model';
 import { SpontaneousTablePopupComponent } from './spontaneous-table/spontaneous-table.popup.component';
@@ -128,6 +128,8 @@ export class SpontaneousComponent
   protected reportType: string;
   isMobileView: boolean;
   usaidLogo= '';
+  filteredCompanyNames: Observable<any[]>;
+  filteredOrganizationNames: Observable<any[]>;
 
   constructor(
     protected _activatedRoute: ActivatedRoute,
@@ -154,6 +156,9 @@ export class SpontaneousComponent
     );
     this.isMobileView = window.innerWidth < 768; 
     this.usaidLogo = 'assets/images/usaid_blue_hands.png';
+
+   // this.filteredOrganizationNames =of(this._filterOrganization(''))
+   
   }
 
   currentScreenWidth: string = '';
@@ -392,6 +397,23 @@ export class SpontaneousComponent
       startDateControl.updateValueAndValidity();
       endDateControl.updateValueAndValidity();
     });
+
+    this.filteredCompanyNames = this.viewModelFormNew.get('reporterCompanyName').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+
+      this.filteredOrganizationNames = this.viewModelFormNew.get('reporterOrganization').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => {
+         console.log(value);
+          return this._filterOrganization(value);
+        }
+          )
+      );
+      //this.filteredOrganizationNames =this._filterOrganization('');
 
     (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
 
@@ -1376,6 +1398,7 @@ export class SpontaneousComponent
   loadOrganizationName():void{
     if(this.datasetCategories !== null){
       this.organaizationNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
+      //this.filteredOrganizationNames = of(this.organaizationNameList);
      }
   }
   
@@ -1464,6 +1487,16 @@ export class SpontaneousComponent
   
     // Return startDate to set it as the minimum date for suspectedMedicationEndDate
     return startDate;
+  }
+  private _filter(value: string):{ selectionKey: string; value: string }[] {
+    const filterValue = value.toLowerCase();
+
+    return this.companyNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
+  }
+  private _filterOrganization(value: string):{ selectionKey: string; value: string }[] {
+    const filterValue = value.toLowerCase();
+    console.log(this.organaizationNameList.length);
+    return this.organaizationNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
   }
   
 }
