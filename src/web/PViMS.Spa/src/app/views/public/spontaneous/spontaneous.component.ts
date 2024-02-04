@@ -129,7 +129,7 @@ export class SpontaneousComponent
   isMobileView: boolean;
   usaidLogo= '';
   filteredCompanyNames: Observable<any[]>;
-  filteredOrganizationNames: Observable<any[]>;
+  // filteredOrganizationNames: Observable<any[]>;
 
   constructor(
     protected _activatedRoute: ActivatedRoute,
@@ -404,15 +404,15 @@ export class SpontaneousComponent
         map(value => this._filter(value))
       );
 
-      this.filteredOrganizationNames = this.viewModelFormNew.get('reporterOrganization').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => {
-         console.log(value);
-          return this._filterOrganization(value);
-        }
-          )
-      );
+      // this.filteredOrganizationNames = this.viewModelFormNew.get('reporterOrganization').valueChanges
+      // .pipe(
+      //   startWith(''),
+      //   map(value => {
+      //    console.log(value);
+      //     return this._filterOrganization(value);
+      //   }
+      //     )
+      // );
       //this.filteredOrganizationNames =this._filterOrganization('');
 
     (this.viewModelFormNew.get('sections') as FormArray).push(this._formBuilder.group({...INITIAL_NEW_SECTION}));
@@ -1493,10 +1493,10 @@ export class SpontaneousComponent
 
     return this.companyNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
   }
-  private _filterOrganization(value: string):{ selectionKey: string; value: string }[] {
-    const filterValue = value.toLowerCase();
-    console.log(this.organaizationNameList.length);
-    return this.organaizationNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
-  }
+  // private _filterOrganization(value: string):{ selectionKey: string; value: string }[] {
+  //   const filterValue = value.toLowerCase();
+  //   console.log(this.organaizationNameList.length);
+  //   return this.organaizationNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
+  // }
   
 }
