@@ -128,6 +128,7 @@ export class SpontaneousComponent
   protected reportType: string;
   isMobileView: boolean;
   usaidLogo= '';
+  pvims_logo='';
   filteredCompanyNames: Observable<any[]>;
   // filteredOrganizationNames: Observable<any[]>;
 
@@ -156,6 +157,7 @@ export class SpontaneousComponent
     );
     this.isMobileView = window.innerWidth < 768; 
     this.usaidLogo = 'assets/images/usaid_blue_hands.png';
+    this.pvims_logo='assets/images/pvims_logo_sm.png';
 
    // this.filteredOrganizationNames =of(this._filterOrganization(''))
    
