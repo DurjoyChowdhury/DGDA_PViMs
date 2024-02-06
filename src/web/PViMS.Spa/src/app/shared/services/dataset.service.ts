@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseService } from '../base/base.service';
 import { EventService } from './event.service';
 import { ParameterKeyValueModel } from '../models/parameter.keyvalue.model';
@@ -236,5 +236,17 @@ export class DatasetService extends BaseService {
       'application/vnd.pvims.identifier.v1+json',
       parameters
     );
+  }
+  postData() {
+    const url = 'https://pvtracker.jbrsoft.com/api/yellow/card';
+    const data = { key: 'value' }; // Your JSON body data
+    
+    // Optional: Define headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Make the HTTP POST request
+    return this.httpClient.post(url, data, { headers });
   }
 }
