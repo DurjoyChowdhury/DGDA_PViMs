@@ -8,6 +8,7 @@ import { DatasetCategoryDetailWrapperModel } from '../models/work/dataset-catego
 import { DatasetInstanceDetailWrapperModel } from '../models/dataset/dataset-instance.detail.model';
 import { DatasetCategoryElementDetailWrapperModel } from '../models/work/dataset-category-element.detail.model';
 import { DatasetCategoryIdentifierModel } from '../models/work/dataset-category.identifier.model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DatasetService extends BaseService {
@@ -237,16 +238,11 @@ export class DatasetService extends BaseService {
       parameters
     );
   }
-  postData() {
+  postData(data: any): Observable<any> {
     const url = 'https://pvtracker.jbrsoft.com/api/yellow/card';
-    const data = { key: 'value' }; // Your JSON body data
     
-    // Optional: Define headers
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+    return this.httpClient.post(url, data);
 
-    // Make the HTTP POST request
-    return this.httpClient.post(url, data, { headers });
+    var result = 0;
   }
 }

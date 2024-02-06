@@ -44,6 +44,7 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { YellowCardData } from 'app/shared/models/dataset/YellowCardData';
+import service from '../../../../../node_modules1/@schematics/angular/service';
 
 const moment = _moment;
 
@@ -1310,54 +1311,54 @@ export class SpontaneousComponent
     var yellowCardData: YellowCardData = {
       YellowCard:{
         id: 1,
-        case_id: param1.elements["103"],
-        patient_name: param1.elements["105"],
-        patient_phone: param1.elements["106"],
-        weight: param1.elements["109"],
-        age_year: param1.elements["107"],
-        age_month: param1.element["295"],
-        age_day: param1.element["296"],
-        gender: param1.elements["110"],
-        pregnancy: param1.elements["111"],
-        patient_division_id: param1.elements["148"],
-        patient_district_id: param1.elements["149"],
-        patient_upazila_id: param1.elements["150"],
-        patient_union_id: 0,
-        patient_address: param1.elements["145"],
-        event_type_id: param1.element["112"],
-        event_detail: param1.elements["298"],
-        event_start: "2023-12-01",
-        event_end: "2023-12-21",
-        event_treated: 1,
-        event_treated_specify: "Test",
-        action_taken: "12",
-        reaction_subside: "44",
-        reaction_appear: "1",
+        case_id: param1.elements["103"] || "", // Using || "" to handle null values
+        patient_name: param1.elements["105"] || "",
+        patient_phone: param1.elements["106"] ? param1.elements["106"].toString() : "", // Ensure patient_phone is converted to string
+        weight: param1.elements["109"] || 0, // Using || 0 to handle null values
+        age_year: param1.elements["107"] || 0,
+        age_month: param1.elements["295"] || 0,
+        age_day: param1.elements["296"] || 0,
+        gender: param1.elements["110"] === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
+        pregnancy: param1.elements["111"] || 0,
+        patient_division_id: param1.elements["148"] || 0,
+        patient_district_id: param1.elements["149"] || 0,
+        patient_upazila_id: param1.elements["150"] || 0,
+        patient_union_id: 0, // Assuming 0 for now
+        patient_address: param1.elements["145"] || "",
+        event_type_id: param2.elements["112"] || "", // Assuming this should be fetched from param1
+        event_detail: param2.elements["298"] || "",
+        event_start: param2.elements["123"].format('YYYY-MM-DD'),
+        event_end: param2.elements["124"].format('YYYY-MM-DD'),
+        event_treated: param2.elements["125"]||0,
+        event_treated_specify: param2.elements["126"]||"",
+        action_taken: param2.elements["127"] ||"",
+        reaction_subside: param2.elements["128"] ||"",
+        reaction_appear: param2.elements["129"] ||"",
         seriousness_status: 1,
         seriousness_type: 15,
-        outcome: 24,
-        outcome_specify: "2023-12-31",
-        relevant_hisotry: "32",
+        outcome: param2.elements["131"] ||"",
+        outcome_specify: param2.elements["156"] ||"",
+        relevant_hisotry: param2.elements["132"] ||"",
         brand_name: "Napa",
         generic_name: "Paracetamol",
         indication: "Test",
-        medication_start: "2023-12-01",
-        medication_end: "2023-12-21",
+        medication_start: param2.elements["116"].format('YYYY-MM-DD')||"",
+        medication_end: param2.elements["117"].format('YYYY-MM-DD')||"",
         doese_form: "Oral",
         frequency: "3",
         batch_no: "B-898677-2023",
         manufacturer: "Beximco",
         diluent_info: "T",
-        reporter_name: "Md. Abul Hasnat",
+        reporter_name: param4.elements["135"] ||"",
         reporter_division_id: 2,
         reporter_district_id: 13,
         reporter_upazila_id: 14,
         reporter_union_id: 15,
-        reporter_address: "H-18, R-17, Nikunja-2, Dhaka.",
-        reporter_email: "abulhasnat.test@gmail.com",
-        reporter_phone: "01717582414",
-        reporter_occupation: "Engineer",
-        submission_date: "2023-12-14",
+        reporter_address: param4.elements["151"] ||"",
+        reporter_email: param4.elements["137"] ||"",
+        reporter_phone: param4.elements["136"] ||"",
+        reporter_occupation: param4.elements["138"] ||"",
+        submission_date: param4.elements["140"] ? moment(param4.elements["140"]).format('YYYY-MM-DD') : "",
         signature: "20231214053541.jpg",
         created_by: 1,
         updated_by: 0,
@@ -1402,7 +1403,14 @@ export class SpontaneousComponent
       updated_at: ""
       }
     };
-    return yellowCardData;
+    this.datasetService.postData(yellowCardData).subscribe(
+      response => {
+        console.log('Response from server:', response);
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   navigateLogInComponent() {
