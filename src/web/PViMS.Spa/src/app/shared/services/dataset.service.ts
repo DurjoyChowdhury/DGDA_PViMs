@@ -239,7 +239,7 @@ export class DatasetService extends BaseService {
     );
   }
   postData(data: any): Observable<any> {
-    const url = 'https://pvtracker.jbrsoft.com/api/yellow/card';
+    const url = 'https://pvims.jbrsoft.com/api/yellow/card';
     
     return this.httpClient.post(url, data);
 

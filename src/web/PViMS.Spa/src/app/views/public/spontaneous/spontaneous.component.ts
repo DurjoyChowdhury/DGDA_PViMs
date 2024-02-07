@@ -44,7 +44,6 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { YellowCardData } from 'app/shared/models/dataset/YellowCardData';
-import service from '../../../../../node_modules1/@schematics/angular/service';
 
 const moment = _moment;
 
@@ -1308,101 +1307,106 @@ export class SpontaneousComponent
   }
 
   processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any){
-    var yellowCardData: YellowCardData = {
-      YellowCard:{
-        id: 1,
-        case_id: param1.elements["103"] || "", // Using || "" to handle null values
-        patient_name: param1.elements["105"] || "",
-        patient_phone: param1.elements["106"] ? param1.elements["106"].toString() : "", // Ensure patient_phone is converted to string
-        weight: param1.elements["109"] || 0, // Using || 0 to handle null values
-        age_year: param1.elements["107"] || 0,
-        age_month: param1.elements["295"] || 0,
-        age_day: param1.elements["296"] || 0,
-        gender: param1.elements["110"] === "Male" ? 1 : 2, // Assuming 1 for Male and 2 for Female
-        pregnancy: param1.elements["111"] || 0,
-        patient_division_id: param1.elements["148"] || 0,
-        patient_district_id: param1.elements["149"] || 0,
-        patient_upazila_id: param1.elements["150"] || 0,
-        patient_union_id: 0, // Assuming 0 for now
-        patient_address: param1.elements["145"] || "",
-        event_type_id: param2.elements["112"] || "", // Assuming this should be fetched from param1
-        event_detail: param2.elements["298"] || "",
-        event_start: param2.elements["123"].format('YYYY-MM-DD'),
-        event_end: param2.elements["124"].format('YYYY-MM-DD'),
-        event_treated: param2.elements["125"]||0,
-        event_treated_specify: param2.elements["126"]||"",
-        action_taken: param2.elements["127"] ||"",
-        reaction_subside: param2.elements["128"] ||"",
-        reaction_appear: param2.elements["129"] ||"",
-        seriousness_status: 1,
-        seriousness_type: 15,
-        outcome: param2.elements["131"] ||"",
-        outcome_specify: param2.elements["156"] ||"",
-        relevant_hisotry: param2.elements["132"] ||"",
-        brand_name: "Napa",
-        generic_name: "Paracetamol",
-        indication: "Test",
-        medication_start: param2.elements["116"].format('YYYY-MM-DD')||"",
-        medication_end: param2.elements["117"].format('YYYY-MM-DD')||"",
-        doese_form: "Oral",
-        frequency: "3",
-        batch_no: "B-898677-2023",
-        manufacturer: "Beximco",
-        diluent_info: "T",
-        reporter_name: param4.elements["135"] ||"",
-        reporter_division_id: 2,
-        reporter_district_id: 13,
-        reporter_upazila_id: 14,
-        reporter_union_id: 15,
-        reporter_address: param4.elements["151"] ||"",
-        reporter_email: param4.elements["137"] ||"",
-        reporter_phone: param4.elements["136"] ||"",
-        reporter_occupation: param4.elements["138"] ||"",
-        submission_date: param4.elements["140"] ? moment(param4.elements["140"]).format('YYYY-MM-DD') : "",
-        signature: "20231214053541.jpg",
-        created_by: 1,
-        updated_by: 0,
-        deleted_by: 0,
-        created_at: "2023-12-01T11:35:41.000000Z",
-        updated_at: "2023-12-14T11:35:41.000000Z"
+   // console.log(JSON.parse(param1));
+    //console.log(param1.elements["103"]);
+    var yellowCardData = {
+      "YellowCard": {
+        "id": 1,
+        "case_id": param1.elements["103"] || "",
+        "patient_name": param1.elements["105"] || "",
+        "patient_phone": param1.elements["106"] ? param1.elements["106"].toString() : "",
+        "weight": param1.elements["109"] || 0,
+        "age_year": param1.elements["107"] || 0,
+        "age_month": param1.elements["295"] || 0,
+        "age_day": param1.elements["296"] || 0,
+        "gender": param1.elements["110"] === "Male" ? 1 : 2,
+        "pregnancy": param1.elements["111"] || 0,
+        "patient_division_id": param1.elements["148"] || 0,
+        "patient_district_id": param1.elements["149"] || 0,
+        "patient_upazila_id": param1.elements["150"] || 0,
+        "patient_union_id": 0,
+        "patient_address": param1.elements["145"] || "",
+        "event_type_id": "",
+        "event_detail": param2.elements["298"] || "",
+        "event_start": param2.elements["123"] ? param2.elements["123"].format('YYYY-MM-DD') : "",
+        "event_end": param2.elements["124"] ? param2.elements["124"].format('YYYY-MM-DD') : "",
+        "event_treated": param2.elements["125"] || 0,
+        "event_treated_specify": param2.elements["126"] || "",
+        "action_taken": param2.elements["127"] || "",
+        "reaction_subside": param2.elements["128"] || "",
+        "reaction_appear": param2.elements["129"] || "",
+        "seriousness_status": 1,
+        "seriousness_type": 15,
+        //"outcome": param2.elements["131"] || "",
+        "outcome": 0,
+        "outcome_specify": param2.elements["156"] || "",
+        // "relevant_hisotry": param2.elements["132"] || "",
+         "relevant_hisotry": "",
+        "brand_name": param2.elements["113"] || "",
+        "generic_name": param2.elements["114"] || "",
+        "indication": param2.elements["115"] || "",
+        "medication_start": param2.elements["116"] ? param2.elements["116"].format('YYYY-MM-DD') : "",
+        "medication_end": param2.elements["117"] ? param2.elements["117"].format('YYYY-MM-DD') : "",
+        "doese_form": param2.elements["118"] || "",
+        "frequency": param2.elements["119"] || "",
+        "batch_no": param2.elements["120"] || "",
+        "manufacturer": param2.elements["121"] || "",
+        "diluent_info": param2.elements["299"] || "",
+        "reporter_name": param4.elements["135"] || "",
+        "reporter_division_id": 2,
+        "reporter_district_id": 13,
+        "reporter_upazila_id": 14,
+        "reporter_union_id": 15,
+        "reporter_address": param4.elements["151"] || "",
+        "reporter_email": param4.elements["137"] || "",
+        "reporter_phone": param1.elements["136"] ? param1.elements["136"].toString() : "",
+        "reporter_occupation": param4.elements["138"] || "",
+        "submission_date": moment(param4.elements["140"]).format('YYYY-MM-DD') ||"",
+        "signature": "20231214053541.jpg",
+        "created_by": 1,
+        "updated_by": 0,
+        "deleted_by": 0,
+        "created_at": "2023-12-01T11:35:41.000000Z",
+        "updated_at": "2023-12-14T11:35:41.000000Z"
       },
-      YellowCardMedicines: [
+      "YellowCardMedicines": [
         {
-          id: 1,
-          case_id: 1,
-          brand_name: "Napa",
-          generic_name: "Paracetamol",
-          indication:"",
-          dose_form:"",
-          strength:"",
-          created_by:1,
-          updated_by:1,
-          deleted_by:1,
-          created_at:"",
-          updated_at:""
+          "id": 1,
+            "case_id": 1,
+            "brand_name": "Napa",
+            "generic_name": "Paracetamol",
+            "indication": "Test",
+            "doese_form": "Oral",
+            "strength": "500 mg",
+            "created_by": 1,
+            "updated_by": 0,
+            "deleted_by": 0,
+            "created_at": "2023-12-14T11:35:41.000000Z",
+            "updated_at": "2023-12-14T11:35:41.000000Z"
         }
       ],
-      YellowCardManagement: {
-        id: 1,
-      case_id: 1,
-      status: 1,
-      user_type: 1,
-      platform: 1,
-      classification: 1,
-      adrm_user: 1,
-      tsc_status: 1,
-      tsc_user: 1,
-      tsc_comment: "string",
-      tsc_date: "string",
-      adrac_status: 1,
-      adrac_user: 1,
-      adrac_comment: "string",
-      adrac_date:"",
-      vigiflow_status: 1,
-      created_at: "",
-      updated_at: ""
+      "YellowCardManagement": {
+        "id": 1,
+        "case_id": 1,
+        "status": 1,
+        "user_type": 39,
+        "platform": 0,
+        "classification": 1,
+        "adrm_user": 1,
+        "tsc_status": 33,
+        "tsc_user": 1,
+        "tsc_comment": null,
+        "tsc_date": "2023-12-14",
+        "adrac_status": 0,
+        "adrac_user": 0,
+        "adrac_comment": null,
+        "adrac_date": null,
+        "vigiflow_status": 0,
+        "created_at": "2023-12-14T11:35:41.000000Z",
+        "updated_at": "2023-12-14T09:28:00.000000Z"
       }
     };
+    console.log(JSON.stringify(yellowCardData))
     this.datasetService.postData(yellowCardData).subscribe(
       response => {
         console.log('Response from server:', response);
