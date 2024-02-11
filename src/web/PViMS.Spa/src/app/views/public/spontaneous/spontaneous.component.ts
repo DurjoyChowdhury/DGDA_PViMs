@@ -1311,7 +1311,7 @@ export class SpontaneousComponent
     //console.log(param1.elements["103"]);
     var yellowCardData = {
       "YellowCard": {
-        "id": 1,
+        "id": 100,
         "case_id": param1.elements["103"] || "",
         "patient_name": param1.elements["105"] || "",
         "patient_phone": param1.elements["106"] ? param1.elements["106"].toString() : "",
@@ -1362,17 +1362,29 @@ export class SpontaneousComponent
         "reporter_phone": param1.elements["136"] ? param1.elements["136"].toString() : "",
         "reporter_occupation": param4.elements["138"] || "",
         "submission_date": moment(param4.elements["140"]).format('YYYY-MM-DD') ||"",
-        "signature": "20231214053541.jpg",
+        "signature": "",
         "created_by": 1,
         "updated_by": 0,
         "deleted_by": 0,
-        "created_at": "2023-12-01T11:35:41.000000Z",
-        "updated_at": "2023-12-14T11:35:41.000000Z"
+        "created_at": "",
+        "updated_at": ""
       },
       "YellowCardMedicines": [
         {
-          "id": 1,
-            "case_id": 1,
+            "case_id": 100,
+            "brand_name": "Napa",
+            "generic_name": "Paracetamol",
+            "indication": "Test",
+            "doese_form": "Oral",
+            "strength": "500 mg",
+            "created_by": 1,
+            "updated_by": 0,
+            "deleted_by": 0,
+            "created_at": "2023-12-14T11:35:41.000000Z",
+            "updated_at": "2023-12-14T11:35:41.000000Z"
+        },
+        {
+            "case_id": 100,
             "brand_name": "Napa",
             "generic_name": "Paracetamol",
             "indication": "Test",
@@ -1386,24 +1398,23 @@ export class SpontaneousComponent
         }
       ],
       "YellowCardManagement": {
-        "id": 1,
-        "case_id": 1,
-        "status": 1,
-        "user_type": 39,
-        "platform": 0,
-        "classification": 1,
-        "adrm_user": 1,
-        "tsc_status": 33,
-        "tsc_user": 1,
-        "tsc_comment": null,
-        "tsc_date": "2023-12-14",
-        "adrac_status": 0,
-        "adrac_user": 0,
-        "adrac_comment": null,
-        "adrac_date": null,
-        "vigiflow_status": 0,
-        "created_at": "2023-12-14T11:35:41.000000Z",
-        "updated_at": "2023-12-14T09:28:00.000000Z"
+      "case_id":100,
+      "status":0,
+      "user_type":1,
+      "platform":1,
+      "classification":0,
+      "adrm_user":0,
+      "tsc_status":0,
+      "tsc_user":0,
+      "tsc_comment":"",
+      "tsc_date":"",
+      "adrac_status":0,
+      "adrac_user":0,
+      "adrac_comment":"",
+      "adrac_date":null,
+      "vigiflow_status":0,
+      "created_at":null,
+      "updated_at":null
       }
     };
     console.log(JSON.stringify(yellowCardData))
