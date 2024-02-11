@@ -765,16 +765,7 @@
                     <mat-datepicker #reportSubmissionDate></mat-datepicker>
                   </mat-form-field>
                 </div>
-                <div fxFlex="33.33%" fxLayout.lt-md="100%" *ngIf="viewModelFormNew.get('reporterSourceOfReporting').value != 'Marketing authorization holder'">
-                  <!-- <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Organization</b></h3></mat-label>
-                    <input matInput formControlName="reporterOrganization" [matAutocomplete]="auto" class="white_background_mat_input_container">
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let orgName of filteredOrganizationNames | async" [value]="orgName.selectionKey">
-                        {{ orgName.value }}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </mat-form-field> -->
+                <div fxFlex="33.33%" fxLayout.lt-md="100%" [hidden]="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Organization
                       <span class="required-mark">*</span>
@@ -787,10 +778,7 @@
                 <div fxFlex="33.33%" fxLayout.lt-md="100%" *ngIf="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Company Name</b></h3></mat-label>
-                    <!-- <mat-select class="white_background_mat_input_container" formControlName="reporterCompanyName">
-                      <mat-option *ngFor="let cmpName of companyNameList" [value]="cmpName.selectionKey">{{cmpName.value}}</mat-option>
-                    </mat-select> -->
-                    <input matInput formControlName="reporterCompanyName" [matAutocomplete]="auto" class="white_background_mat_input_container">
+                    <input matInput formControlName="reporterCompanyName" [matAutocomplete]="auto" class="white_background_mat_input_container" required>
                     <mat-autocomplete #auto="matAutocomplete">
                       <mat-option *ngFor="let cmpName of filteredCompanyNames | async" [value]="cmpName.selectionKey">
                         {{ cmpName.value }}

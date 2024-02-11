@@ -1103,7 +1103,7 @@ export class SpontaneousComponent
       var processRepoterInformationResult = this.processRepoterInformation()
       allModels.push(processRepoterInformationResult);
 
-      var extrlnalJson = this.processExtrelnalApiCall(porcessPatientInformationResult,processSuspectedInformationResult,processMedicineVaccineInformationResult,processRepoterInformationResult);
+      
      
       self.datasetService
           .saveSpontaneousInstance(self.datasetId, allModels)
@@ -1118,6 +1118,7 @@ export class SpontaneousComponent
                   workflowId: '4096D0A3-45F7-4702-BDA1-76AEDE41B986',
                 },
               });
+             this.processExtrelnalApiCall(porcessPatientInformationResult,processSuspectedInformationResult,processMedicineVaccineInformationResult,processRepoterInformationResult,result.report_id);
             },
             error => {
               self.handleError(error, 'Error saving spontaneous report');
@@ -1306,12 +1307,28 @@ export class SpontaneousComponent
     
   }
 
-  processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any){
-   // console.log(JSON.parse(param1));
-    //console.log(param1.elements["103"]);
+  processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any,id: number){
+   
+    const yellowCardMedicines = param3.elements["134"].map((medicine: any) => {
+      return {
+          "case_id": id,
+          "brand_name": medicine["1"] || "", // Adjust these accordingly based on the structure of staticPatient
+          "generic_name": medicine["2"] || "",
+          "indication": medicine["4"] || "",
+          "doese_form": medicine["3"] || "",
+          "strength": medicine["5"] || "", // Adjust this according to your data
+          "created_by": 1,
+          "updated_by": 0,
+          "deleted_by": 0,
+          "created_at": "2023-12-14T11:35:41.000000Z",
+          "updated_at": "2023-12-14T11:35:41.000000Z"
+      };
+  });
+
+
     var yellowCardData = {
       "YellowCard": {
-        "id": 100,
+        "id": id,
         "case_id": param1.elements["103"] || "",
         "patient_name": param1.elements["105"] || "",
         "patient_phone": param1.elements["106"] ? param1.elements["106"].toString() : "",
@@ -1369,34 +1386,7 @@ export class SpontaneousComponent
         "created_at": "",
         "updated_at": ""
       },
-      "YellowCardMedicines": [
-        {
-            "case_id": 100,
-            "brand_name": "Napa",
-            "generic_name": "Paracetamol",
-            "indication": "Test",
-            "doese_form": "Oral",
-            "strength": "500 mg",
-            "created_by": 1,
-            "updated_by": 0,
-            "deleted_by": 0,
-            "created_at": "2023-12-14T11:35:41.000000Z",
-            "updated_at": "2023-12-14T11:35:41.000000Z"
-        },
-        {
-            "case_id": 100,
-            "brand_name": "Napa",
-            "generic_name": "Paracetamol",
-            "indication": "Test",
-            "doese_form": "Oral",
-            "strength": "500 mg",
-            "created_by": 1,
-            "updated_by": 0,
-            "deleted_by": 0,
-            "created_at": "2023-12-14T11:35:41.000000Z",
-            "updated_at": "2023-12-14T11:35:41.000000Z"
-        }
-      ],
+      "YellowCardMedicines": yellowCardMedicines,
       "YellowCardManagement": {
       "case_id":100,
       "status":0,
@@ -1417,7 +1407,6 @@ export class SpontaneousComponent
       "updated_at":null
       }
     };
-    console.log(JSON.stringify(yellowCardData))
     this.datasetService.postData(yellowCardData).subscribe(
       response => {
         console.log('Response from server:', response);
