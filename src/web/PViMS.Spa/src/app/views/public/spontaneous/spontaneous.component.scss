@@ -223,6 +223,13 @@ mat-step-header {
 // .mat-form-field-appearance-legacy .mat-form-field-label {
 //   top: 1.8em;
 // }
+.white_background_mat_input_container{
+  div{
+    .mat-select-value {
+      transform: translateY(0.60em); /* Adjust the translateY value as needed */
+    }
+  }
+}
 .mat-form-field .mat-label {
   font-size: 35px; // Adjust the font size as needed
 }
