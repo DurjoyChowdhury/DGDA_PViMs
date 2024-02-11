@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   //apiURL: 'http://180.211.137.74:8088/pvims/api',
-  apiURL: 'https://localhost:44380/api',
+  //apiURL: 'http://localhost:9028/api',//http://localhost:9028/
+  apiURL: 'https://localhost:44380/api',//http://localhost:9028/
   //apiURL: 'http://172.29.10.90:9028/api',
   //apiURL: 'https://pvims-training-api.doh.gov.ph/api',
   apiURLBase: 'http://localhost:44380',

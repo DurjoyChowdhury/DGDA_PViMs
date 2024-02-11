@@ -1763,7 +1763,11 @@ namespace PVIMS.API.Controllers
 
                             data.Add("ReportInstanceId", patient_identifier.Id.ToString());
                             lineReportResponseViewModelsData.reportInstanceId = data["ReportInstanceId"].ToString();
-                            lineReportResponseViewModelsData.age = data["Age"].ToString();
+                                if (data.ContainsKey("Age"))
+                                {
+									lineReportResponseViewModelsData.age = data["Age"].ToString()??string.Empty;
+								}
+                
                             lineReportResponseViewModelsData.gender = data["Gender"].ToString();
                             lineReportResponseViewModelsData.genericNameWithStrength = data["Generic Name With Strength"].ToString();
                             lineReportResponseViewModelsData.indication = data["Indication"].ToString();
@@ -1782,7 +1786,7 @@ namespace PVIMS.API.Controllers
 
                             lineReportResponseViewModelsData.slno = Convert.ToString(counter);
                             lineReportResponseViewModelsData.patientIdentifier = patient_identifier.PatientIdentifier;
-                            lineReportResponseViewModelsData.submissionDate = item.Created.ToString("yyyy-MM-dd");
+                            lineReportResponseViewModelsData.submissionDate = item.Created.ToString();
                             lineReportResponseViewModelsList.value.Add(lineReportResponseViewModelsData);
 
 
@@ -1814,7 +1818,7 @@ namespace PVIMS.API.Controllers
                 return Ok(lineReportResponseViewModelsList);
             }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -1916,8 +1920,11 @@ namespace PVIMS.API.Controllers
 
                         data.Add("ReportInstanceId", patient_identifier.Id.ToString());
                         lineReportResponseViewModelsData.reportInstanceId = data["ReportInstanceId"].ToString();
-                        lineReportResponseViewModelsData.age = data["Age"].ToString();
-                        lineReportResponseViewModelsData.gender = data["Gender"].ToString();
+						if (data.ContainsKey("Age"))
+						{
+							lineReportResponseViewModelsData.medicationstartdate = data["Age"].ToString() ?? string.Empty;
+						}
+						lineReportResponseViewModelsData.gender = data["Gender"].ToString();
                         lineReportResponseViewModelsData.genericNameWithStrength = data["Generic Name With Strength"].ToString();
                         lineReportResponseViewModelsData.indication = data["Indication"].ToString();
                         if (data.ContainsKey("Medication start date"))
