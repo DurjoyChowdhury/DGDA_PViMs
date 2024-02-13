@@ -1316,12 +1316,7 @@ export class SpontaneousComponent
           "generic_name": medicine["2"] || "",
           "indication": medicine["4"] || "",
           "doese_form": medicine["3"] || "",
-          "strength": medicine["5"] || "", // Adjust this according to your data
-          "created_by": 1,
-          "updated_by": 0,
-          "deleted_by": 0,
-          "created_at": "2023-12-14T11:35:41.000000Z",
-          "updated_at": "2023-12-14T11:35:41.000000Z"
+          "strength": medicine["5"] || ""// Adjust this according to your data
       };
   });
 
@@ -1351,6 +1346,8 @@ export class SpontaneousComponent
         "event_treated_specify": param2.elements["126"] || "",
         "action_taken": param2.elements["127"] || "",
         "reaction_subside": param2.elements["128"] || "",
+        "event_info": "", //event information
+        "event_info_other": "", //event information others
         "reaction_appear": param2.elements["129"] || "",
         "seriousness_status": 1,
         "seriousness_type": 15,
@@ -1370,27 +1367,22 @@ export class SpontaneousComponent
         "manufacturer": param2.elements["121"] || "",
         "diluent_info": param2.elements["299"] || "",
         "reporter_name": param4.elements["135"] || "",
-        "reporter_division_id": 2,
-        "reporter_district_id": 13,
-        "reporter_upazila_id": 14,
-        "reporter_union_id": 15,
+        "reporter_division_id": 0,
+        "reporter_district_id": 0,
+        "reporter_upazila_id": 0,
+        "reporter_union_id": 0,
         "reporter_address": param4.elements["151"] || "",
         "reporter_email": param4.elements["137"] || "",
         "reporter_phone": param1.elements["136"] ? param1.elements["136"].toString() : "",
         "reporter_occupation": param4.elements["138"] || "",
         "submission_date": moment(param4.elements["140"]).format('YYYY-MM-DD') ||"",
-        "signature": "",
-        "created_by": 1,
-        "updated_by": 0,
-        "deleted_by": 0,
-        "created_at": "",
-        "updated_at": ""
+        "signature": ""
       },
       "YellowCardMedicines": yellowCardMedicines,
       "YellowCardManagement": {
-      "case_id":100,
-      "status":0,
-      "user_type":1,
+      "case_id":id,
+      "completeness_status":0,
+      "user_type":0, // source of reporting
       "platform":1,
       "classification":0,
       "adrm_user":0,
@@ -1402,9 +1394,7 @@ export class SpontaneousComponent
       "adrac_user":0,
       "adrac_comment":"",
       "adrac_date":null,
-      "vigiflow_status":0,
-      "created_at":null,
-      "updated_at":null
+      "vigiflow_status":0
       }
     };
     this.datasetService.postData(yellowCardData).subscribe(
