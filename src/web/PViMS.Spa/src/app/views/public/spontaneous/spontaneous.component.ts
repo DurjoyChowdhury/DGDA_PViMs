@@ -44,6 +44,8 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { YellowCardData } from 'app/shared/models/dataset/YellowCardData';
+import { string } from '../../../../../node_modules1/postcss-selector-parser/postcss-selector-parser';
+import { el } from 'date-fns/locale';
 
 const moment = _moment;
 
@@ -248,6 +250,7 @@ export class SpontaneousComponent
 
       reporterCompanyName:'',
       reporterOrganization:'',
+      reporterIfOtherOrganization:'',
       reporterDateOfReportSubmission:{disabled: false, value: new Date()},
       reporterOccupation:'',
       reporterPhoneNumber:'',
@@ -345,6 +348,23 @@ export class SpontaneousComponent
         specifyControl.disable(); // Disable the control
       }
     });
+    
+    this.viewModelFormNew.get('reporterOrganization').valueChanges.subscribe((selectedValues) => {
+      const specifyControl = this.viewModelFormNew.get('reporterIfOtherOrganization');
+    
+      // Check if 'Others' is included in the selected values array
+      const isOthersSelected = selectedValues.includes('Others');
+    
+      if (isOthersSelected) {
+        specifyControl.enable(); // Enable the control
+        specifyControl.setValidators([Validators.required]); // Add the required validator
+      } else {
+        specifyControl.disable(); // Disable the control
+        specifyControl.clearValidators(); // Clear any validators
+      }
+    
+      specifyControl.updateValueAndValidity(); // Update the control's validation state
+    });
 
     this.viewModelFormNew.get('suspectedEventInformation').valueChanges.subscribe((selectedValues) => {
       const specifyControl = this.viewModelFormNew.get('suspectedEventInformationSpecify');
@@ -399,6 +419,26 @@ export class SpontaneousComponent
       // Update the validity of the controls
       startDateControl.updateValueAndValidity();
       endDateControl.updateValueAndValidity();
+    });
+
+    this.viewModelFormNew.get('reporterSourceOfReporting').valueChanges.subscribe(value => {
+      if (value === 'Marketing authorization holder') {
+        this.viewModelFormNew.get('reporterOrganization').disable();
+        this.viewModelFormNew.get('reporterOrganization').clearValidators();
+        this.viewModelFormNew.get('reporterCompanyName').enable();
+        this.viewModelFormNew.get('reporterIfOtherOrganization').disable();
+        this.viewModelFormNew.get('reporterIfOtherOrganization').clearValidators();
+      } else {
+        this.viewModelFormNew.get('reporterOrganization').enable();
+        this.viewModelFormNew.get('reporterCompanyName').disable();
+        if(this.viewModelFormNew.get('reporterOrganization').value.includes('Others')){
+          this.viewModelFormNew.get('reporterIfOtherOrganization').enable();
+        }
+        else{
+          this.viewModelFormNew.get('reporterIfOtherOrganization').disable();
+        this.viewModelFormNew.get('reporterIfOtherOrganization').clearValidators();
+        }
+      }
     });
 
     this.filteredCompanyNames = this.viewModelFormNew.get('reporterCompanyName').valueChanges
@@ -1050,13 +1090,13 @@ export class SpontaneousComponent
 
   private generateSerialId(): string {
     const year = moment().format('YYYY');
-    const uuid = uuidv4();
-    const serial = `DGDA_BD_${year}_${uuid}`;
-
+    //const uuid = uuidv()4();
+    const result = moment(new Date()).format("MMDDHHmmss");
+    const serial = `DGDA_BD_${year}_${result}`;
     return serial;
   }
   //DC
-  isGeneralInstructionsOpen: boolean = true;
+  isGeneralInstructionsOpen: boolean = false;
   isSubmitReportOpen: boolean = false;
 
   currentYear: number = new Date().getFullYear();
@@ -1073,23 +1113,23 @@ export class SpontaneousComponent
   toggleGeneralInstructions() {
     this.isGeneralInstructionsOpen = !this.isGeneralInstructionsOpen;
     // Close other accordions if needed
-    this.isSubmitReportOpen = true;
+    //this.isSubmitReportOpen = true;
   }
-  toggleSubmitReport() {
-    this.isSubmitReportOpen = !this.isSubmitReportOpen;
-    // Close other accordions if needed
-    this.isGeneralInstructionsOpen = true;
-  }
+  // toggleSubmitReport() {
+  //   this.isSubmitReportOpen = !this.isSubmitReportOpen;
+  //   // Close other accordions if needed
+  //   this.isGeneralInstructionsOpen = true;
+  // }
  
 
   submitReport(){
-    if (
-      confirm(
-        'The information provided here are true to the best of my knowledge'
-      ) == true
-    ) 
+    if (this.viewModelFormNew.valid) 
     {
-      if (this.viewModelFormNew.valid){
+      if (
+        confirm(
+          'The information provided here are true to the best of my knowledge'
+        ) == true
+      ){
         let self = this;
       self.setBusy(true);
         let allModels: any[] = [];
@@ -1309,13 +1349,32 @@ export class SpontaneousComponent
 
   processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any,id: number){
    
+    let selectedKeyDivision = this.viewModelFormNew.get('patientDivision').value;
+    let selectedKeyDistrict = this.viewModelFormNew.get('patientDistrict').value;
+    let selectedKeyThana = this.viewModelFormNew.get('patientUpazila').value;
+    let seriousStatusValue = "";
+    let value= param4.elements["152"] || "";
+    let companyOranizationValue ="";
+    if(value === ""){
+      companyOranizationValue = param4.elements["305"] || "";
+    }
+    else{
+      companyOranizationValue = param4.elements["152"];
+    }
+    if(this.viewModelFormNew.get('suspectedAdverseEvent').value =='Not Serious'){
+      seriousStatusValue="No";
+    }
+    else{
+      seriousStatusValue="Yes";
+    }
+
     const yellowCardMedicines = param3.elements["134"].map((medicine: any) => {
       return {
           "case_id": id,
           "brand_name": medicine["1"] || "", // Adjust these accordingly based on the structure of staticPatient
           "generic_name": medicine["2"] || "",
           "indication": medicine["4"] || "",
-          "doese_form": medicine["3"] || "",
+          "dose_form": medicine["3"] || "",
           "strength": medicine["5"] || ""// Adjust this according to your data
       };
   });
@@ -1323,7 +1382,7 @@ export class SpontaneousComponent
 
     var yellowCardData = {
       "YellowCard": {
-        "id": id,
+        //"id": id,
         "case_id": param1.elements["103"] || "",
         "patient_name": param1.elements["105"] || "",
         "patient_phone": param1.elements["106"] ? param1.elements["106"].toString() : "",
@@ -1331,41 +1390,44 @@ export class SpontaneousComponent
         "age_year": param1.elements["107"] || 0,
         "age_month": param1.elements["295"] || 0,
         "age_day": param1.elements["296"] || 0,
-        "gender": param1.elements["110"] === "Male" ? 1 : 2,
-        "pregnancy": param1.elements["111"] || 0,
-        "patient_division_id": param1.elements["148"] || 0,
-        "patient_district_id": param1.elements["149"] || 0,
-        "patient_upazila_id": param1.elements["150"] || 0,
-        "patient_union_id": 0,
+        "gender": param1.elements["110"] === "Male" ? 2 : 1,
+        "pregnancy": param1.elements && param1.elements["111"] ? param1.elements["111"] : "",
+        "patient_division_id": selectedKeyDivision ? (this.divisionList.find(division => division.selectedkey === selectedKeyDivision)?.selectedValue || "") : "",
+    "patient_district_id": selectedKeyDistrict ? (this.districtList.find(district => district.selectedkey === selectedKeyDistrict)?.selectedValue || "") : "",
+    "patient_upazila_id": selectedKeyThana ? (this.thanaList.find(thana => thana.selectedkey === selectedKeyThana)?.selectedValue || "") : "",
+        "patient_union_id": "",
         "patient_address": param1.elements["145"] || "",
-        "event_type_id": "",
-        "event_detail": param2.elements["298"] || "",
+        "event_type_id": param2.elements && param2.elements["112"] ? param2.elements["112"] : [],
+        "event_other": param2.elements && param2.elements["298"] ? param2.elements["298"] : "" , 
+        "event_detail": param2.elements["122"] || "",
         "event_start": param2.elements["123"] ? param2.elements["123"].format('YYYY-MM-DD') : "",
         "event_end": param2.elements["124"] ? param2.elements["124"].format('YYYY-MM-DD') : "",
         "event_treated": param2.elements["125"] || 0,
         "event_treated_specify": param2.elements["126"] || "",
         "action_taken": param2.elements["127"] || "",
         "reaction_subside": param2.elements["128"] || "",
-        "event_info": "", //event information
-        "event_info_other": "", //event information others
+        "event_info": param2.elements && param2.elements["301"] ? param2.elements["301"] : [], //event information
+        "event_info_other": param2.elements && param2.elements["302"] ? param2.elements["302"] : "" , //event information others
         "reaction_appear": param2.elements["129"] || "",
-        "seriousness_status": 1,
-        "seriousness_type": 15,
-        //"outcome": param2.elements["131"] || "",
-        "outcome": 0,
-        "outcome_specify": param2.elements["156"] || "",
-        // "relevant_hisotry": param2.elements["132"] || "",
-         "relevant_hisotry": "",
+        "seriousness_status": seriousStatusValue,
+        "seriousness_type": this.viewModelFormNew.get('suspectedIfSerious').value || [],
+        "outcome": param2.elements && param2.elements["131"] ? param2.elements["131"] : "",
+        "outcome_specify": param2.elements["156"] ? param2.elements["156"].format('YYYY-MM-DD') : "",
+        "relevant_history": param2.elements && param2.elements["132"] ? param2.elements["132"] : [],
+        "relevant_history_other": param2.elements && param2.elements["153"] ? param2.elements["153"] : "",
         "brand_name": param2.elements["113"] || "",
         "generic_name": param2.elements["114"] || "",
         "indication": param2.elements["115"] || "",
         "medication_start": param2.elements["116"] ? param2.elements["116"].format('YYYY-MM-DD') : "",
         "medication_end": param2.elements["117"] ? param2.elements["117"].format('YYYY-MM-DD') : "",
-        "doese_form": param2.elements["118"] || "",
+        "dose_form": param2.elements["118"] || "",
         "frequency": param2.elements["119"] || "",
         "batch_no": param2.elements["120"] || "",
         "manufacturer": param2.elements["121"] || "",
         "diluent_info": param2.elements["299"] || "",
+        "reporting_source": param4.elements["300"] || "",
+        "reporting_type": param2.elements && param2.elements["303"] ? param2.elements["303"] : "", 
+        "initial_id": param2.elements && param2.elements["304"] ? param2.elements["304"] : "", 
         "reporter_name": param4.elements["135"] || "",
         "reporter_division_id": 0,
         "reporter_district_id": 0,
@@ -1373,9 +1435,10 @@ export class SpontaneousComponent
         "reporter_union_id": 0,
         "reporter_address": param4.elements["151"] || "",
         "reporter_email": param4.elements["137"] || "",
-        "reporter_phone": param1.elements["136"] ? param1.elements["136"].toString() : "",
+        "reporter_phone": param4.elements["136"] ? param4.elements["136"].toString() : "",
         "reporter_occupation": param4.elements["138"] || "",
         "submission_date": moment(param4.elements["140"]).format('YYYY-MM-DD') ||"",
+        "company_name": companyOranizationValue,
         "signature": ""
       },
       "YellowCardMedicines": yellowCardMedicines,

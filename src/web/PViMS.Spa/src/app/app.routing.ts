@@ -4,7 +4,7 @@ import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/aut
 import { AuthGuard } from './shared/services/auth/auth.guard';
 
 export const rootRouterConfig: Routes = [
-  { path: '', redirectTo: 'security/landing', pathMatch: 'full' },
+  { path: '', redirectTo: 'public/spontaneous', pathMatch: 'full' },
   { path: '', 
     component: AuthLayoutComponent, 
     children: [ 

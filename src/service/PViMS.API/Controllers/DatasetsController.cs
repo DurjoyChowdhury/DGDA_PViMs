@@ -1701,7 +1701,8 @@ namespace PVIMS.API.Controllers
                     from_date = DateTime.Today.AddDays(-60);
                     to_date = DateTime.Today.AddDays(60);
                 }
-                var total_record_count = await _dbContext.DatasetInstances.Where(x => x.Created >= tenDaysAgo && x.Created >= from_date && x.Created <= to_date).Select(x => new { x.Id, x.DatasetInstanceGuid }).ToListAsync();
+                //var total_record_count = await _dbContext.DatasetInstances.Where(x => x.Created >= tenDaysAgo && x.Created >= from_date && x.Created <= to_date).Select(x => new { x.Id, x.DatasetInstanceGuid }).ToListAsync();
+                var total_record_count = await _dbContext.DatasetInstances.Select(x => new { x.Id, x.DatasetInstanceGuid }).ToListAsync();
 
                 var instance = await _dbContext.DatasetInstances.Where(x => x.Created >= tenDaysAgo && x.Created >= from_date && x.Created <= to_date).OrderByDescending(x => x.Id).Select(x => new { x.Id, x.DatasetInstanceGuid, x.Created }).Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                                    .Take(validFilter.PageSize).ToListAsync();
@@ -1869,91 +1870,111 @@ namespace PVIMS.API.Controllers
 				from_date = DateTime.Today.AddDays(-60);
 				to_date = DateTime.Today.AddDays(60);
 
-				var instance = await _dbContext.DatasetInstances.Where(x => x.Created >= tenDaysAgo && x.Created >= from_date && x.Created <= to_date).Select(x => new { x.Id, x.DatasetInstanceGuid, x.Created }).ToListAsync();
+				//var instance = await _dbContext.DatasetInstances.Where(x => x.Created >= tenDaysAgo && x.Created >= from_date && x.Created <= to_date).Select(x => new { x.Id, x.DatasetInstanceGuid, x.Created }).ToListAsync();
+				var instance = await _dbContext.DatasetInstances.Select(x => new { x.Id, x.DatasetInstanceGuid, x.Created }).ToListAsync();
 
 				#region Model Build         
 				if (instance.Count > 0)
 				{
-					foreach (var item in instance)
-					{
-						counter++; ;
-						var patient_identifier = await _dbContext.ReportInstances.Where(x => x.ContextGuid == item.DatasetInstanceGuid).Select(x => new { x.PatientIdentifier, x.Id }).FirstOrDefaultAsync();
-						var instance_value = await _dbContext.DatasetInstanceValues.Where(x => x.DatasetInstanceId == item.Id && ids.Contains(x.DatasetElementId)).ToListAsync();
+                    try
+                    {
+                        foreach (var item in instance)
+                        {
+                            counter++; ;
+                            var patient_identifier = await _dbContext.ReportInstances.Where(x => x.ContextGuid == item.DatasetInstanceGuid).Select(x => new { x.PatientIdentifier, x.Id }).FirstOrDefaultAsync();
+                            var instance_value = await _dbContext.DatasetInstanceValues.Where(x => x.DatasetInstanceId == item.Id && ids.Contains(x.DatasetElementId)).ToListAsync();
 
-						var query =
-								   from post in _dbContext.DatasetInstanceValues
-								   join meta in _dbContext.DatasetElements on post.DatasetElementId equals meta.Id
-								   where post.DatasetInstanceId == item.Id && ids.Contains(post.DatasetElementId)
-								   orderby post.DatasetInstanceId descending
-								   select new { meta, post };
-						var list = await query.ToListAsync();
-
-
-						if (list.Count > 0)
-						{
-							Dictionary<string, string?> data = new Dictionary<string, string?>();
-							LineReportResponseViewModel.Datum lineReportResponseViewModelsData = new();
-
-							var activity_instance = await _dbContext.ActivityInstances.Where(x => x.ReportInstanceId == patient_identifier.Id).ToListAsync();
-							foreach (var activity in activity_instance)
-							{
-								var activity_status = await _dbContext.ActivityExecutionStatuses.Where(x => x.Id == activity.CurrentStatusId).FirstOrDefaultAsync();
-								switch (activity.QualifiedName)
-								{
-									case "ADRM":
-										lineReportResponseViewModelsData.adrmStatus = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
-										break;
-									case "TSC":
-										lineReportResponseViewModelsData.opinionTsc = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
-										break;
-									case "ADRAC":
-										lineReportResponseViewModelsData.opinionAdrac = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
-										break;
-
-								}
-							}
-
-							//Describe event including relevant tests and laboratory results'
-							foreach (var l in list)
-							{
-
-								data.Add(l.meta.ElementName, l.post.InstanceValue.ToString());
-							}
-
-							data.Add("ReportInstanceId", patient_identifier.Id.ToString());
-							lineReportResponseViewModelsData.reportInstanceId = data["ReportInstanceId"].ToString();
-							if (data.ContainsKey("Age"))
-							{
-								lineReportResponseViewModelsData.medicationstartdate = data["Age"].ToString() ?? string.Empty;
-							}
-							lineReportResponseViewModelsData.gender = data["Gender"].ToString();
-							lineReportResponseViewModelsData.genericNameWithStrength = data["Generic Name With Strength"].ToString();
-							lineReportResponseViewModelsData.indication = data["Indication"].ToString();
-							if (data.ContainsKey("Medication start date"))
-							{
-								lineReportResponseViewModelsData.medicationstartdate = data["Medication start date"].ToString() ?? string.Empty;
-							}
-							lineReportResponseViewModelsData.frequencyDailyDose = data["Frequency(Daily Dose)"].ToString();
-							if (data.ContainsKey("Describe event including relevant tests and laboratory results"))
-							{
-								lineReportResponseViewModelsData.describeeventincludingrelevanttestsandlaboratoryresults = data["Describe event including relevant tests and laboratory results"].ToString()??string.Empty;
-							}
-							
-							if (data.ContainsKey("Event start date"))
-							{
-								lineReportResponseViewModelsData.eventstartdate = data["Event start date"].ToString();
-							}
-							lineReportResponseViewModelsData.slno = Convert.ToString(counter);
-							lineReportResponseViewModelsData.patientIdentifier = patient_identifier.PatientIdentifier;
-							lineReportResponseViewModelsData.submissionDate = item.Created.ToString("yyyy-MM-dd");
-							lineReportResponseViewModelsList.value.Add(lineReportResponseViewModelsData);
+                            var query =
+                                       from post in _dbContext.DatasetInstanceValues
+                                       join meta in _dbContext.DatasetElements on post.DatasetElementId equals meta.Id
+                                       where post.DatasetInstanceId == item.Id && ids.Contains(post.DatasetElementId)
+                                       orderby post.DatasetInstanceId descending
+                                       select new { meta, post };
+                            var list = await query.ToListAsync();
 
 
-						}
-						lineReportResponseViewModelsList.pageCount = 0;
-						lineReportResponseViewModelsList.recordCount = 0;
-					}
+                            if (list.Count > 0)
+                            {
+                                Dictionary<string, string?> data = new Dictionary<string, string?>();
+                                LineReportResponseViewModel.Datum lineReportResponseViewModelsData = new();
 
+                                var activity_instance = await _dbContext.ActivityInstances.Where(x => x.ReportInstanceId == patient_identifier.Id).ToListAsync();
+                                foreach (var activity in activity_instance)
+                                {
+                                    var activity_status = await _dbContext.ActivityExecutionStatuses.Where(x => x.Id == activity.CurrentStatusId).FirstOrDefaultAsync();
+                                    switch (activity.QualifiedName)
+                                    {
+                                        case "ADRM":
+                                            lineReportResponseViewModelsData.adrmStatus = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
+                                            break;
+                                        case "TSC":
+                                            lineReportResponseViewModelsData.opinionTsc = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
+                                            break;
+                                        case "ADRAC":
+                                            lineReportResponseViewModelsData.opinionAdrac = "(" + activity_status.Description + ")-" + activity_status.FriendlyDescription ?? string.Empty;
+                                            break;
+
+                                    }
+                                }
+
+                                //Describe event including relevant tests and laboratory results'
+                                foreach (var l in list)
+                                {
+
+                                    data.Add(l.meta.ElementName, l.post.InstanceValue.ToString());
+                                }
+
+                                data.Add("ReportInstanceId", patient_identifier.Id.ToString());
+                                lineReportResponseViewModelsData.reportInstanceId = data["ReportInstanceId"].ToString();
+                                if (data.ContainsKey("Age"))
+                                {
+                                    lineReportResponseViewModelsData.medicationstartdate = data["Age"].ToString() ?? string.Empty;
+                                }
+                                if (data.ContainsKey("Gender"))
+                                {
+                                    lineReportResponseViewModelsData.gender = data["Gender"].ToString();
+                                }
+                                if (data.ContainsKey("Generic Name With Strength"))
+                                {
+                                    lineReportResponseViewModelsData.genericNameWithStrength = data["Generic Name With Strength"].ToString();
+                                }
+                                if (data.ContainsKey("Indication"))
+                                {
+                                    lineReportResponseViewModelsData.indication = data["Indication"].ToString();
+                                }
+                                if (data.ContainsKey("Medication start date"))
+                                {
+                                    lineReportResponseViewModelsData.medicationstartdate = data["Medication start date"].ToString() ?? string.Empty;
+                                }
+                                if (data.ContainsKey("Frequency(Daily Dose)"))
+                                {
+                                    lineReportResponseViewModelsData.frequencyDailyDose = data["Frequency(Daily Dose)"].ToString();
+                                }
+                                if (data.ContainsKey("Describe event including relevant tests and laboratory results"))
+                                {
+                                    lineReportResponseViewModelsData.describeeventincludingrelevanttestsandlaboratoryresults = data["Describe event including relevant tests and laboratory results"].ToString() ?? string.Empty;
+                                }
+
+                                if (data.ContainsKey("Event start date"))
+                                {
+                                    lineReportResponseViewModelsData.eventstartdate = data["Event start date"].ToString();
+                                }
+                                lineReportResponseViewModelsData.slno = Convert.ToString(counter);
+                                lineReportResponseViewModelsData.patientIdentifier = patient_identifier.PatientIdentifier;
+                                lineReportResponseViewModelsData.submissionDate = item.Created.ToString("yyyy-MM-dd");
+                                lineReportResponseViewModelsList.value.Add(lineReportResponseViewModelsData);
+
+
+                            }
+                            lineReportResponseViewModelsList.pageCount = 0;
+                            lineReportResponseViewModelsList.recordCount = 0;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        var mes = ex.Message;
+                        var a = 1;
+                    }
 				}
 				else
 				{

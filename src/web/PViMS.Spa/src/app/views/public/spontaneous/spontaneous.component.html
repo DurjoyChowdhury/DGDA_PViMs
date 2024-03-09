@@ -9,6 +9,10 @@
   <!-- Left side with two logos -->
   <div fxLayout="row" fxLayoutAlign="start center">
     <div>
+      <!-- <img [src]="pvims_logo" style="padding-top: 10px;" alt="Logo 1" height="55" width="55" (click)="navigateCancelComponent()"> -->
+      <img alt="Logo 1" height="55" width="55" style="padding-top: 10px;" class="ng-tns-c264-0" src="https://pvims.jbrsoft.com/build/images/dgda-logo.png">
+    </div>
+    <div>
       <img [src]="pvims_logo" style="padding-top: 10px;" alt="Logo 1" height="55" width="55" (click)="navigateCancelComponent()">
     </div>
     <!-- <div>
@@ -20,10 +24,13 @@
   <span fxFlex></span>
 
   <!-- Logout button on the right -->
-  <button mat-icon-button (click)="navigateLogInComponent()">
-    <mat-icon>login</mat-icon>
-    <span>LogIn</span>
-  </button>
+  <a href="https://pvims.jbrsoft.com/login" target="_blank"> 
+    <button mat-icon-button>
+      <mat-icon>login</mat-icon>
+      <span>LogIn</span>
+    </button>
+  </a>
+  
 </mat-toolbar>
 
 <div class="form-wrap">
@@ -51,23 +58,11 @@
             </mat-expansion-panel-header>
             <div *ngIf="isGeneralInstructionsOpen">
               <ul>
-                <li>Detailed information about each field can be found in the instructions available in the DGDA website. (www.dgda.gov.bd). </li>
+                <li>Detailed information about each field can be found here: 
+                  <a href="https://pvims.jbrsoft.com/yc/user/guideline" target="_blank" style="color: blue; text-decoration: underline;">
+                    https://pvims.jbrsoft.com/yc/user/guideline</a>.</li>
                 <li>Fill in as much information as possible. Do not leave anything blank. If unknown, write "unknown" or "n/a" if not applicable.</li>
               </ul>
-            </div>
-          </mat-expansion-panel>
-        </div>
-        <div class="accordion-item">
-          <mat-expansion-panel [(expanded)]="isSubmitReportOpen">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <h2>
-                  <span (click)="toggleSubmitReport()">How to fill and submit the report?</span>
-                </h2>
-              </mat-panel-title>
-              <!-- <mat-icon class="dropdown-icon">{{ isAccordion1Open ? 'expand_less' : 'expand_more' }}</mat-icon> -->
-            </mat-expansion-panel-header>
-            <div *ngIf="isSubmitReportOpen">
               <b> What to report: </b>
               <ul>
                 <li> Adverse drug reactions/AEFI </li>
@@ -85,8 +80,8 @@
               </ul>
               <b> ঔষধ ব্যবহারকারীদের নির্দেশনা: </b>
               <ul>
-                <li> ১। নিবন্ধনকৃত চিকিৎসকের ব্যবস্থাপত্র অনুযায়ী সঠিক মাত্রায়, সঠিক পদ্ধতিতে পূর্ণকোর্স এন্টিবায়োটিক ব্যবহার করুন।  </li>
-                <li> ২। কোন ঔষধ ব্যবহার বিরূপ প্রতিক্রিয়া দেখা দিলে ঔষধ প্রশাসন অধিদপ্তরকে অবহিত করুন। </li>
+                <li> নিবন্ধনকৃত চিকিৎসকের ব্যবস্থাপত্র অনুযায়ী সঠিক মাত্রায়, সঠিক পদ্ধতিতে পূর্ণকোর্স এন্টিবায়োটিক ব্যবহার করুন।  </li>
+                <li> কোন ঔষধ ব্যবহার বিরূপ প্রতিক্রিয়া দেখা দিলে ঔষধ প্রশাসন অধিদপ্তরকে অবহিত করুন। </li>
               </ul>
               <b> Postal Address:</b>
               <ul>
@@ -100,10 +95,25 @@
                 <li> Tel: 02222-280803 </li>
                 <li> Cell No.: +8801728-349503</li>
                 <li> E-mail: adrmcell.dgda@gmail.com </li>
+                <li> Live Support: You can reach us using the Live ChatBot on the right bottom from 10:00 AM to 4:00 PM, Sunday to Thursday.</li>
               </ul>
             </div>
           </mat-expansion-panel>
         </div>
+        <!-- <div class="accordion-item">
+          <mat-expansion-panel [(expanded)]="isSubmitReportOpen">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2>
+                  <span (click)="toggleSubmitReport()">How to fill and submit the report?</span>
+                </h2>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="isSubmitReportOpen">
+              
+            </div>
+          </mat-expansion-panel>
+        </div> -->
         <mat-card class="yellow-card">
           <form [formGroup]="viewModelFormNew">
             <mat-card-header class="title-background">
@@ -127,9 +137,9 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Contact Number
-                          <span class="required-mark">*</span>
+                          <!-- <span class="required-mark">*</span> -->
                         </b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Contact Number" class="input-25 white_background_mat_input_container" formControlName="patientPhoneNumber" required>
+                        <input matInput type="number" placeholder="Enter Contact Number" class="input-25 white_background_mat_input_container" formControlName="patientPhoneNumber">
                       </mat-form-field>
                     </div>
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
@@ -149,7 +159,7 @@
                       <mat-form-field class="custom-input-field" >
                         <mat-label><h3><b>Age - Year <span *ngIf="viewModelFormNew.get('isChecked').value === false" class="required-mark">*</span></b></h3></mat-label>
                         <input matInput type="number" placeholder="Enter Age - Year" class="white_background_mat_input_container"
-                         formControlName="patientAgeYear">
+                         formControlName="patientAgeYear"required>
                       </mat-form-field>
                     </div>
                 
@@ -286,7 +296,8 @@
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="eventStartDate" placeholder="Choose a date" inputmode="none"  (keydown)="false"
                           class="white_background_mat_input_container" formControlName="suspectedEventStartDate"
-                          [disabled]="viewModelFormNew.get('isCheckedEventDate').value">
+                          [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
+                          [required]="!viewModelFormNew.get('isCheckedEventDate').value">
                         <mat-datepicker-toggle matSuffix [for]="eventStartDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #eventStartDate></mat-datepicker>
                       </mat-form-field>
@@ -299,6 +310,7 @@
                         <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" inputmode="none"  (keydown)="false"
                           class="white_background_mat_input_container" formControlName="suspectedEventStoppedDate"
                           [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
+                          [required]="!viewModelFormNew.get('isCheckedEventDate').value"
                           [min]="getMinEventStoppedDate()">
                         <mat-datepicker-toggle matSuffix [for]="eventStoppedDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #eventStoppedDate></mat-datepicker>
@@ -786,6 +798,16 @@
                     </mat-autocomplete>
                   </mat-form-field>
                 </div>
+                <div fxFlex="33.33%" fxLayout.lt-md="100%" [hidden]="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>If Others, Please Specify Organization
+                      <span *ngIf="viewModelFormNew.get('reporterOrganization').value === 'Others'" class="required-mark">*</span>
+                    </b></h3></mat-label>
+                    <input matInput placeholder="If Others, Please Specify Organization" class="white_background_mat_input_container" formControlName="reporterIfOtherOrganization"
+                    [disabled]="!viewModelFormNew.get('reporterOrganization').value.includes('Others')"
+                    [required]="viewModelFormNew.get('reporterOrganization').value.includes('Others')">
+                  </mat-form-field>
+                </div>
               </div>
             </mat-card-content>
             <hr>
@@ -794,7 +816,7 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <div fxLayout="row">
                     <div>
-                      <button mat-raised-button color="primary" type="submit" [disabled]="!viewModelFormNew.valid" (click)="submitReport()">Submit Report</button>
+                      <button mat-raised-button color="primary" type="submit"  (click)="submitReport()">Submit Report</button>
                     </div>
                     <div style="padding-left: 10px;">
                       <button mat-raised-button color="warn" (click)="navigateCancelComponent()">Cancel</button>
