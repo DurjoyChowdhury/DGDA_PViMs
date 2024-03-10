@@ -22,16 +22,19 @@
       </mat-card>
     </div>
     <div fxFlex.gt-sm="49" fxFlex.lt-md="100" class="container m-2">
-      <mat-card class="grey-100 text-center" style="min-height: 60px;" (click)="navigateToLogin()">
-        <mat-card-title class="text-center">
-          <h2 class="title font-weight-bold">{{'DGDA Panel' | translate}}</h2>
-        </mat-card-title>
-        <mat-card-content>
-          <div class="pt-8 pb-16">
-            <p class="m-8">{{'Case Management, Line Reports, Dashboard' | translate}}</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <a href="https://pvims.jbrsoft.com/login" target="_blank">
+        <!-- <mat-card class="grey-100 text-center" style="min-height: 60px;" (click)="navigateToLogin()"> -->
+        <mat-card class="grey-100 text-center" style="min-height: 60px;">
+          <mat-card-title class="text-center">
+            <h2 class="title font-weight-bold">{{'DGDA Panel' | translate}}</h2>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="pt-8 pb-16">
+              <p class="m-8">{{'Case Management, Line Reports, Dashboard and Microservice' | translate}}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
     </div>
 
     <div fxFlex="100" class="text-center">

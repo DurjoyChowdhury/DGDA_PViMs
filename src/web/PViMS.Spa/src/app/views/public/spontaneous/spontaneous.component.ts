@@ -200,6 +200,7 @@ export class SpontaneousComponent
       //sections: this._formBuilder.array([this._formBuilder.group({...INITIAL_NEW_SECTION})]),
       sections: this._formBuilder.array([]),
 
+      aefiType:'',
       patientName:'',
       patientPhoneNumber:'',
       patientWeight:'',
@@ -1349,6 +1350,7 @@ export class SpontaneousComponent
 
   processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any,id: number){
    
+    let selectedAEFIType = this.viewModelFormNew.get('aefiType').value;
     let selectedKeyDivision = this.viewModelFormNew.get('patientDivision').value;
     let selectedKeyDistrict = this.viewModelFormNew.get('patientDistrict').value;
     let selectedKeyThana = this.viewModelFormNew.get('patientUpazila').value;
@@ -1384,6 +1386,7 @@ export class SpontaneousComponent
       "YellowCard": {
         //"id": id,
         "case_id": param1.elements["103"] || "",
+        "aefi_type": selectedAEFIType || "",
         "patient_name": param1.elements["105"] || "",
         "patient_phone": param1.elements["106"] ? param1.elements["106"].toString() : "",
         "weight": param1.elements["109"] || 0,

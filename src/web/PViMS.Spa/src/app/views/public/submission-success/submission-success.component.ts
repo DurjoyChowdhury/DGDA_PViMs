@@ -73,7 +73,7 @@ export class SubmissionSuccessComponent
 
               a.setAttribute('style', 'display:none;');
               document.body.appendChild(a);
-              a.download = '';
+              a.download = this.serialId+'.htm';
               a.href = URL.createObjectURL(downloadedFile);
               a.target = '_blank';
               a.click();

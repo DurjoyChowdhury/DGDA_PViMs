@@ -24,13 +24,13 @@
   <span fxFlex></span>
 
   <!-- Logout button on the right -->
-  <a href="https://pvims.jbrsoft.com/login" target="_blank"> 
+  <a href="https://pvims.jbrsoft.com/login" target="_blank">
     <button mat-icon-button>
       <mat-icon>login</mat-icon>
       <span>LogIn</span>
     </button>
   </a>
-  
+
 </mat-toolbar>
 
 <div class="form-wrap">
@@ -58,7 +58,7 @@
             </mat-expansion-panel-header>
             <div *ngIf="isGeneralInstructionsOpen">
               <ul>
-                <li>Detailed information about each field can be found here: 
+                <li>Detailed information about each field can be found here:
                   <a href="https://pvims.jbrsoft.com/yc/user/guideline" target="_blank" style="color: blue; text-decoration: underline;">
                     https://pvims.jbrsoft.com/yc/user/guideline</a>.</li>
                 <li>Fill in as much information as possible. Do not leave anything blank. If unknown, write "unknown" or "n/a" if not applicable.</li>
@@ -110,7 +110,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div *ngIf="isSubmitReportOpen">
-              
+
             </div>
           </mat-expansion-panel>
         </div> -->
@@ -122,7 +122,20 @@
             <mat-card-content>
               <div fxLayout="row" fxLayout.lt-md="column">
                 <!-- First input field taking up 50% -->
-                <div fxFlex.gt-md="50" fxFlex.lt-md="100">
+                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                  <div fxLayout="row" fxLayout.lt-md="column">
+                    <div fxFlex.gt-md="100" fxFlex.lt-md="100">
+                      <mat-form-field class="custom-input-field">
+                        <mat-label><h3><b>Adverse Event Report for<span class="required-mark">*</span></b></h3></mat-label>
+                        <mat-select class="white_background_mat_input_container"  formControlName="aefiType" required>
+                          <mat-option [value]="1">Drug</mat-option>
+                          <mat-option [value]="2">Vaccine</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="100" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
@@ -162,19 +175,19 @@
                          formControlName="patientAgeYear"required>
                       </mat-form-field>
                     </div>
-                
+
                     <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Month</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container" 
+                        <input matInput type="number" placeholder="Enter Age - Month" class="white_background_mat_input_container"
                         formControlName="patientAgeMonth">
                       </mat-form-field>
                     </div>
-                
+
                     <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Age - Days</b></h3></mat-label>
-                        <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container" 
+                        <input matInput type="number" placeholder="Enter Age - Days" class="white_background_mat_input_container"
                         formControlName="patientAgeDays" >
                       </mat-form-field>
                     </div>
@@ -185,7 +198,7 @@
                     </div>
                   </div>
                 </div>
-              
+
                 <!-- Second half (50%) -->
                 <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
@@ -200,7 +213,7 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Select Pregnant Status <span *ngIf="viewModelFormNew.get('patientGender').value === 'Female'" class="required-mark">*</span></b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('patientGender').value !== 'Female'" 
+                        <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('patientGender').value !== 'Female'"
                         formControlName="patientPregnantStatus" [required]="viewModelFormNew.get('patientGender').value === 'Female'">
                           <mat-option *ngFor="let pregnant of pregnantList" [value]="pregnant.selectionKey">{{pregnant.value}}</mat-option>
                         </mat-select>
@@ -210,16 +223,16 @@
                 </div>
               </div>
               <div fxLayout="row" fxLayout.lt-md="column">
-                <div fxFlex="25%" fxLayout.lt-md="100%">
+                <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Division</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDivision($event)" 
+                    <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDivision($event)"
                     formControlName="patientDivision" >
                       <mat-option *ngFor="let division of divisionList" [value]="division.selectedkey">{{ division.selectedValue }}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div fxFlex="25%" fxLayout.lt-md="100%">
+                <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select District</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container" (selectionChange)="onChangeDistrict($event)" formControlName="patientDistrict">
@@ -227,7 +240,7 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div fxFlex="25%" fxLayout.lt-md="100%">
+                <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Upazila</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container" formControlName="patientUpazila">
@@ -235,18 +248,18 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div fxFlex="25%" fxLayout.lt-md="100%">
+                <!-- <div fxFlex="25%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Select Union</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container">
                     </mat-select>
                   </mat-form-field>
-                </div>
+                </div> -->
               </div>
               <div fxLayout="column">
                 <mat-form-field class="custom-input-field">
-                  <mat-label><h3><b>Post Office/ Village/ Road / House information</b></h3></mat-label>
-                  <input matInput placeholder="Post Office/ Village/ Road / House information" 
+                  <mat-label><h3><b>Union/ Post Office/ Village/ Road / House information</b></h3></mat-label>
+                  <input matInput placeholder="Post Office/ Village/ Road / House information"
                   class="white_background_mat_input_container" formControlName="patientAddress">
                 </mat-form-field>
               </div>
@@ -269,8 +282,8 @@
                     <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>If others, Please Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedType').value.includes('Others')">*</span></b></h3></mat-label>
-                        <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
-                        [disabled]="!viewModelFormNew.get('suspectedType').value.includes('Others')" 
+                        <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container"
+                        [disabled]="!viewModelFormNew.get('suspectedType').value.includes('Others')"
                         formControlName="suspectedTypeSpecify" [required]="viewModelFormNew.get('suspectedType').value.includes('Others')">
                       </mat-form-field>
                     </div>
@@ -281,7 +294,7 @@
                     <mat-label><h3><b>Describe event including relevant tests and laboratory results
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results" 
+                    <textarea matInput placeholder="Enter Describe event including relevant tests and laboratory results"
                     class="white_background_mat_input_container_textaria" formControlName="suspectedLaboratoryResults" required></textarea>
                   </mat-form-field>
                 </div>
@@ -314,7 +327,7 @@
                           [min]="getMinEventStoppedDate()">
                         <mat-datepicker-toggle matSuffix [for]="eventStoppedDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #eventStoppedDate></mat-datepicker>
-                      </mat-form-field>                      
+                      </mat-form-field>
                     </div>
                     <div fxFlex="33.33%" fxLayout.lt-md="100%">
                       <!-- <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'"> -->
@@ -351,7 +364,7 @@
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Action taken after reaction</b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container" formControlName="suspectedAfterReaction">
-                      <mat-option *ngFor="let acTakenAfterRc of actionTakenAfterReactionList" 
+                      <mat-option *ngFor="let acTakenAfterRc of actionTakenAfterReactionList"
                       [value]="acTakenAfterRc.selectionKey">{{acTakenAfterRc.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -377,8 +390,8 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>If others, Please Specify <span class="required-mark"  *ngIf="viewModelFormNew.get('suspectedEventInformation').value.includes('Others')">*</span></b></h3></mat-label>
-                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
-                    [disabled]="!viewModelFormNew.get('suspectedEventInformation').value.includes('Others')" 
+                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container"
+                    [disabled]="!viewModelFormNew.get('suspectedEventInformation').value.includes('Others')"
                     formControlName="suspectedEventInformationSpecify" [required]="viewModelFormNew.get('suspectedEventInformation').value.includes('Others')">
                   </mat-form-field>
                 </div>
@@ -406,7 +419,7 @@
                     <mat-label><h3><b>If serious, please select
                      <span *ngIf="viewModelFormNew.get('suspectedAdverseEvent').value === 'Serious'" class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" 
+                    <mat-select class="white_background_mat_input_container"
                      [disabled]="viewModelFormNew.get('suspectedAdverseEvent').value !== 'Serious'" formControlName="suspectedIfSerious" multiple>
                       <mat-option *ngFor="let seriousnessAdv of seriousnessAdverseList" [value]="seriousnessAdv.selectionKey" >{{seriousnessAdv.value}}</mat-option>
                     </mat-select>
@@ -429,14 +442,14 @@
                     <mat-label><h3><b>If fatal, please select date of death
                       <span *ngIf="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal'" class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date" 
-                      class="white_background_mat_input_container" 
-                      [disabled]="viewModelFormNew.get('suspectedAttributedEvent').value !== 'Fatal'" 
+                    <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date"
+                      class="white_background_mat_input_container"
+                      [disabled]="viewModelFormNew.get('suspectedAttributedEvent').value !== 'Fatal'"
                       formControlName="suspectedDateOfDeath" [required]="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal'"
                       inputmode="none"  (keydown)="false">
                     <mat-datepicker-toggle matSuffix [for]="dateOfDeath" class="datepikerSize"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfDeath></mat-datepicker>
-                  </mat-form-field>                                   
+                  </mat-form-field>
                 </div>
               </div>
               <div fxLayout="row"  fxLayout.lt-md="column">
@@ -453,7 +466,7 @@
                     <mat-label><h3><b>If others, Please Specify
                       <span *ngIf="viewModelFormNew.get('suspectedOtherRevevant').value.includes('Others (Please specify)')" class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container" 
+                    <input matInput placeholder="If others, Please Specify" class="white_background_mat_input_container"
                    [disabled]="!viewModelFormNew.get('suspectedOtherRevevant').value.includes('Others (Please specify)')"  formControlName="suspectedOtherRevevantSpecify"
                    [required]="viewModelFormNew.get('suspectedOtherRevevant').value.includes('Others (Please specify)')">
                   </mat-form-field>
@@ -482,9 +495,9 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Indication
-                      <span class="required-mark">*</span>
+                      <!-- <span class="required-mark">*</span> -->
                     </b></h3></mat-label>
-                    <input matInput placeholder="Enter Indication" class="white_background_mat_input_container" formControlName="suspectedIndication" required>
+                    <input matInput placeholder="Enter Indication" class="white_background_mat_input_container" formControlName="suspectedIndication">
                   </mat-form-field>
                 </div>
               </div>
@@ -501,7 +514,7 @@
                           [required]="!viewModelFormNew.get('isCheckedVaccination').value">
                         <mat-datepicker-toggle matSuffix [for]="vaccinationStartDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #vaccinationStartDate></mat-datepicker>
-                      </mat-form-field>                      
+                      </mat-form-field>
                     </div>
                     <div fxFlex="35%" fxLayout.lt-md="100%">
                       <mat-form-field class="custom-input-field">
@@ -534,9 +547,9 @@
                     <div fxFlex="50%" fxLayout.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Frequency (Daily Dose)
-                          <span class="required-mark">*</span>
+                          <!-- <span class="required-mark">*</span> -->
                         </b></h3></mat-label>
-                        <input matInput placeholder="Enter Frequency (Daily Dose)" class="white_background_mat_input_container" formControlName="suspectedFrequencyDailyDose" required>
+                        <input matInput placeholder="Enter Frequency (Daily Dose)" class="white_background_mat_input_container" formControlName="suspectedFrequencyDailyDose">
                       </mat-form-field>
                     </div>
                   </div>
@@ -556,9 +569,9 @@
                   </mat-form-field>
                 </div>
                 <div fxFlex="25%" fxLayout.lt-md="100%">
-                  <mat-form-field class="custom-input-field"> 
+                  <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Diluent Information for vaccine</b></h3></mat-label>
-                    <input matInput placeholder="Enter Diluent Information for vaccine" class="white_background_mat_input_container" 
+                    <input matInput placeholder="Enter Diluent Information for vaccine" class="white_background_mat_input_container"
                     formControlName="suspectedDiluentInformation">
                   </mat-form-field>
                 </div>
@@ -569,7 +582,7 @@
                 <div>
                   <mat-card-title class="mat_card_title">CONCOMITANT MEDICINE/VACCINE INFORMATION</mat-card-title>
                 </div>
-                <div style="padding-left: 40px;"> 
+                <div style="padding-left: 40px;">
                   <mat-checkbox formControlName="isCheckedConcomutant" (click)="isCheckedConcomutantEvent()"><b>MEDICINE/VACCINE Not Available</b></mat-checkbox>
                 </div>
               </div>
@@ -579,7 +592,7 @@
             <mat-card-content *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value">
               <div formArrayName="sections">
                 <div fxLayout="row" fxLayout.lt-md="column"  *ngFor="let section of sectionsFormArray.controls; let i = index" [formGroupName]="i">
-              
+
                   <div fxFlex="18%" fxLayout.lt-md="100%">
                     <mat-form-field class="custom-input-field">
                       <mat-label><h3><b>Brand/ Trade Name
@@ -603,7 +616,7 @@
                       <mat-label><h3><b>Dosage Form
                         <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
                       </b></h3></mat-label>
-                      <input matInput placeholder="Enter Dosage Form" formControlName="doseForm" class="white_background_mat_input_container" 
+                      <input matInput placeholder="Enter Dosage Form" formControlName="doseForm" class="white_background_mat_input_container"
                       [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
@@ -612,7 +625,7 @@
                       <mat-label><h3><b>Indication
                         <span *ngIf="!viewModelFormNew.get('isCheckedConcomutant').value" class="required-mark">*</span>
                       </b></h3></mat-label>
-                      <input matInput placeholder="Enter Indication" formControlName="indication" class="white_background_mat_input_container" 
+                      <input matInput placeholder="Enter Indication" formControlName="indication" class="white_background_mat_input_container"
                       [required]="!viewModelFormNew.get('isCheckedConcomutant').value">
                     </mat-form-field>
                   </div>
@@ -636,7 +649,7 @@
             <mat-card-header class="title-background">
               <mat-card-title class="mat_card_title"> D. REPORTER INFORMATION</mat-card-title>
             </mat-card-header>
-            <mat-card-content>
+            <mat-card-content style="margin-bottom: 0px;">
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
@@ -651,7 +664,7 @@
                     <mat-label><h3><b>Reporting Type
                       <span *ngIf="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'" class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('reporterSourceOfReporting').value !== 'Marketing authorization holder'" 
+                    <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('reporterSourceOfReporting').value !== 'Marketing authorization holder'"
                      formControlName="reporterReportType" [required]="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
                       <mat-option *ngFor="let rptType of reportingTypeList" [value]="rptType.selectionKey">{{rptType.value}}</mat-option>
                     </mat-select>
@@ -669,10 +682,10 @@
                 </div>
               </div>
             </mat-card-content>
-            <mat-card-header class="gap_between_header_top">
+            <!-- <mat-card-header class="gap_between_header_top">
               <mat-card-title class="mat_card_title"><b>Name & Address</b></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+            </mat-card-header> -->
+            <mat-card-content style="margin-bottom: 0px;">
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="100%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
@@ -726,18 +739,18 @@
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="100%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Post Office/ Village/ Road / House information
+                    <mat-label><h3><b>Reporter Address: Division, District, Upazila, Union, Post Office, Village, House Information
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <input matInput placeholder="Enter Post Office/ Village/ Road / House information" class="white_background_mat_input_container" 
+                    <input matInput placeholder="Enter Reporter Address: Division, District, Upazila, Union, Post Office, Village, House Information" class="white_background_mat_input_container"
                     formControlName="reporterAddress" required>
                   </mat-form-field>
                 </div>
               </div>
             </mat-card-content>
-            <mat-card-header>
+            <!-- <mat-card-header>
               <mat-card-title class="mat_card_title"> <b>Other information</b></mat-card-title>
-            </mat-card-header>
+            </mat-card-header> -->
             <mat-card-content>
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
@@ -771,7 +784,7 @@
                     <mat-label><h3><b>Date of this report submission
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <input matInput [matDatepicker]="reportSubmissionDate" placeholder="Choose a date" class="white_background_mat_input_container" 
+                    <input matInput [matDatepicker]="reportSubmissionDate" placeholder="Choose a date" class="white_background_mat_input_container"
                     formControlName="reporterDateOfReportSubmission" required inputmode="none"(keydown)="false" >
                     <mat-datepicker-toggle matSuffix [for]="reportSubmissionDate" class="datepikerSize"></mat-datepicker-toggle>
                     <mat-datepicker #reportSubmissionDate></mat-datepicker>
@@ -885,7 +898,7 @@
 
 
 
-  
+
 
 
 
