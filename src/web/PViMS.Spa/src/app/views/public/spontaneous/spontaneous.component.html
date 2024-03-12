@@ -10,7 +10,7 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <div>
       <!-- <img [src]="pvims_logo" style="padding-top: 10px;" alt="Logo 1" height="55" width="55" (click)="navigateCancelComponent()"> -->
-      <img alt="Logo 1" height="55" width="55" style="padding-top: 10px;" class="ng-tns-c264-0" src="https://pvims.jbrsoft.com/build/images/dgda-logo.png">
+      <img alt="Logo 1" height="55" width="55" style="padding-top: 10px;" class="ng-tns-c264-0" src="https://pvimsdashboard.com/build/images/dgda-logo.png">
     </div>
     <div>
       <img [src]="pvims_logo" style="padding-top: 10px;" alt="Logo 1" height="55" width="55" (click)="navigateCancelComponent()">
@@ -24,7 +24,7 @@
   <span fxFlex></span>
 
   <!-- Logout button on the right -->
-  <a href="https://pvims.jbrsoft.com/login" target="_blank">
+  <a href="https://pvimsdashboard.com/login" target="_blank">
     <button mat-icon-button>
       <mat-icon>login</mat-icon>
       <span>LogIn</span>
@@ -43,6 +43,7 @@
         <h1 class="title center font-weight">
           {{ 'Yellow Card' | translate }}
         </h1>
+        <h6>{{'SUSPECTED ADVERSE EVENT REPORTING FORM' | translate }}</h6>
       </div>
       <hr>
       <div class="accordion">
@@ -59,8 +60,8 @@
             <div *ngIf="isGeneralInstructionsOpen">
               <ul>
                 <li>Detailed information about each field can be found here:
-                  <a href="https://pvims.jbrsoft.com/yc/user/guideline" target="_blank" style="color: blue; text-decoration: underline;">
-                    https://pvims.jbrsoft.com/yc/user/guideline</a>.</li>
+                  <a href="https://pvimsdashboard.com/yc/user/guideline" target="_blank" style="color: blue; text-decoration: underline;">
+                    https://pvimsdashboard.com/yc/user/guideline</a>.</li>
                 <li>Fill in as much information as possible. Do not leave anything blank. If unknown, write "unknown" or "n/a" if not applicable.</li>
               </ul>
               <b> What to report: </b>
@@ -116,26 +117,44 @@
         </div> -->
         <mat-card class="yellow-card">
           <form [formGroup]="viewModelFormNew">
+            <mat-card-content>
+              <div fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlex.gt-md="23.33" fxFlex.lt-md="100">
+                  <mat-form-field class="custom-input-field">
+                    <mat-label><h3><b>Select Adverse Event Report for<span class="required-mark">*</span></b></h3></mat-label>
+                    <mat-select class="white_background_mat_input_container"  formControlName="aefiType" required>
+                      <mat-option [value]="1">Drug</mat-option>
+                      <mat-option [value]="2">Vaccine</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-md="33.33" fxFlex.lt-md="100"></div>
+                <div fxFlex.gt-md="43.33" fxFlex.lt-md="100"></div>
+              </div>
+              <!-- <div fxLayout="column">
+                <mat-form-field class="custom-input-field">
+                  <mat-label><h3><b>Adverse Event Report for<span class="required-mark">*</span></b></h3></mat-label>
+                  <mat-select class="white_background_mat_input_container"  formControlName="aefiType" required>
+                    <mat-option [value]="1">Drug</mat-option>
+                    <mat-option [value]="2">Vaccine</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div> -->
+            </mat-card-content>
             <mat-card-header class="title-background">
               <mat-card-title class="mat_card_title">A. PATIENT INFORMATION</mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <div fxLayout="row" fxLayout.lt-md="column">
                 <!-- First input field taking up 50% -->
-                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                <!-- <div fxFlex.gt-md="25" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="100" fxFlex.lt-md="100">
-                      <mat-form-field class="custom-input-field">
-                        <mat-label><h3><b>Adverse Event Report for<span class="required-mark">*</span></b></h3></mat-label>
-                        <mat-select class="white_background_mat_input_container"  formControlName="aefiType" required>
-                          <mat-option [value]="1">Drug</mat-option>
-                          <mat-option [value]="2">Vaccine</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                      
                     </div>
                   </div>
-                </div>
-                <div fxFlex.gt-md="25" fxFlex.lt-md="100">
+                </div> -->
+                <div fxFlex.gt-md="50" fxFlex.lt-md="100">
                   <div fxLayout="row" fxLayout.lt-md="column">
                     <div fxFlex.gt-md="100" fxFlex.lt-md="100">
                       <mat-form-field class="custom-input-field">
@@ -192,7 +211,7 @@
                       </mat-form-field>
                     </div>
                     <div fxFlex.gt-md="25%" fxFlex.lt-md="100%">
-                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '12%'">
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '1%' : '18%'">
                         <mat-checkbox formControlName="isChecked"><b>Age Not Available</b></mat-checkbox>
                       </div>
                     </div>
@@ -315,24 +334,30 @@
                         <mat-datepicker #eventStartDate></mat-datepicker>
                       </mat-form-field>
                     </div>
+                    <div fxFlex="16.67%" fxLayout.lt-md="100%">
+                      <!-- <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'"> -->
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '1%' : '24%'">
+                        <mat-checkbox formControlName="isCheckedEventDate"><b>N/A</b></mat-checkbox>
+                      </div>
+                    </div>
                     <div fxFlex="33.33%" fxLayout.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>Event Stopped date
-                          <span *ngIf="viewModelFormNew.get('isCheckedEventDate').value === false" class="required-mark">*</span>
+                          <span *ngIf="viewModelFormNew.get('isCheckedEventEndDate').value === false" class="required-mark">*</span>
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="eventStoppedDate" placeholder="Choose a date" inputmode="none"  (keydown)="false"
                           class="white_background_mat_input_container" formControlName="suspectedEventStoppedDate"
-                          [disabled]="viewModelFormNew.get('isCheckedEventDate').value"
-                          [required]="!viewModelFormNew.get('isCheckedEventDate').value"
+                          [disabled]="viewModelFormNew.get('isCheckedEventEndDate').value"
+                          [required]="!viewModelFormNew.get('isCheckedEventEndDate').value"
                           [min]="getMinEventStoppedDate()">
                         <mat-datepicker-toggle matSuffix [for]="eventStoppedDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #eventStoppedDate></mat-datepicker>
                       </mat-form-field>
                     </div>
-                    <div fxFlex="33.33%" fxLayout.lt-md="100%">
+                    <div fxFlex="16.67%" fxLayout.lt-md="100%">
                       <!-- <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'"> -->
-                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '12%'">
-                        <mat-checkbox formControlName="isCheckedEventDate"><b>Event Date Not Available</b></mat-checkbox>
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '1%' : '24%'">
+                        <mat-checkbox formControlName="isCheckedEventEndDate"><b>N/A</b></mat-checkbox>
                       </div>
                     </div>
                   </div>
@@ -440,12 +465,12 @@
                 <div fxFlex="50%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>If fatal, please select date of death
-                      <span *ngIf="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal'" class="required-mark">*</span>
+                      <span *ngIf="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal/ Death'" class="required-mark">*</span>
                     </b></h3></mat-label>
                     <input matInput [matDatepicker]="dateOfDeath" placeholder="Choose a date"
                       class="white_background_mat_input_container"
-                      [disabled]="viewModelFormNew.get('suspectedAttributedEvent').value !== 'Fatal'"
-                      formControlName="suspectedDateOfDeath" [required]="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal'"
+                      [disabled]="viewModelFormNew.get('suspectedAttributedEvent').value !== 'Fatal/ Death'"
+                      formControlName="suspectedDateOfDeath" [required]="viewModelFormNew.get('suspectedAttributedEvent').value === 'Fatal/ Death'"
                       inputmode="none"  (keydown)="false">
                     <mat-datepicker-toggle matSuffix [for]="dateOfDeath" class="datepikerSize"></mat-datepicker-toggle>
                     <mat-datepicker #dateOfDeath></mat-datepicker>
@@ -516,22 +541,27 @@
                         <mat-datepicker #vaccinationStartDate></mat-datepicker>
                       </mat-form-field>
                     </div>
+                    <div fxFlex="11%" fxLayout.lt-md="100%">
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '1%' : '27%'">
+                        <mat-checkbox formControlName="isCheckedVaccination"><b>N/A</b></mat-checkbox>
+                      </div>
+                    </div>
                     <div fxFlex="35%" fxLayout.lt-md="100%">
                       <mat-form-field class="custom-input-field">
                         <mat-label><h3><b>End Date/Vaccination Time
-                          <span *ngIf="!viewModelFormNew.get('isCheckedVaccination').value" class="required-mark">*</span>
+                          <span *ngIf="!viewModelFormNew.get('isCheckedEndVaccination').value" class="required-mark">*</span>
                         </b></h3></mat-label>
                         <input matInput [matDatepicker]="vaccinationEndDate" placeholder="Choose a date" class="white_background_mat_input_container" formControlName="suspectedMedicationEndDate"
-                        [disabled]="viewModelFormNew.get('isCheckedVaccination').value" inputmode="none"  (keydown)="false"
-                        [required]="!viewModelFormNew.get('isCheckedVaccination').value"
+                        [disabled]="viewModelFormNew.get('isCheckedEndVaccination').value" inputmode="none"  (keydown)="false"
+                        [required]="!viewModelFormNew.get('isCheckedEndVaccination').value"
                         [min]="getMinvaccinationEndDate()">
                         <mat-datepicker-toggle matSuffix [for]="vaccinationEndDate" class="datepikerSize"></mat-datepicker-toggle>
                         <mat-datepicker #vaccinationEndDate></mat-datepicker>
                       </mat-form-field>
                     </div>
-                    <div fxFlex="22%" fxLayout.lt-md="100%">
-                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '8%' : '16%'">
-                        <mat-checkbox formControlName="isCheckedVaccination"><b>Date Not Available</b></mat-checkbox>
+                    <div fxFlex="11%" fxLayout.lt-md="100%">
+                      <div class="custom-input-field" [style.paddingTop]="isMobileView ? '1%' : '27%'">
+                        <mat-checkbox formControlName="isCheckedEndVaccination"><b>N/A</b></mat-checkbox>
                       </div>
                     </div>
                   </div>
@@ -653,8 +683,10 @@
               <div fxLayout="row"  fxLayout.lt-md="column">
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Source of reporting</b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" formControlName="reporterSourceOfReporting">
+                    <mat-label><h3><b>Source of reporting
+                      <span class="required-mark">*</span>
+                    </b></h3></mat-label>
+                    <mat-select class="white_background_mat_input_container" formControlName="reporterSourceOfReporting" required>
                       <mat-option *ngFor="let srcOfReport of sourceOfReportingList" [value]="srcOfReport.selectionKey">{{srcOfReport.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -662,10 +694,10 @@
                 <div fxFlex="33.33%" fxLayout.lt-md="100%">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>Reporting Type
-                      <span *ngIf="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'" class="required-mark">*</span>
+                      <span class="required-mark">*</span>
                     </b></h3></mat-label>
-                    <mat-select class="white_background_mat_input_container" [disabled]="viewModelFormNew.get('reporterSourceOfReporting').value !== 'Marketing authorization holder'"
-                     formControlName="reporterReportType" [required]="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
+                    <mat-select class="white_background_mat_input_container" formControlName="reporterReportType" 
+                    (ngModelChange)="clearInitialReportId()" required>
                       <mat-option *ngFor="let rptType of reportingTypeList" [value]="rptType.selectionKey">{{rptType.value}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -796,29 +828,31 @@
                       <span class="required-mark">*</span>
                     </b></h3></mat-label>
                     <mat-select class="white_background_mat_input_container" formControlName="reporterOrganization" required>
-                      <mat-option *ngFor="let orgName of organaizationNameList" [value]="orgName.selectionKey">{{orgName.value}}</mat-option>
+                      <mat-option *ngFor="let orgName of organaizationNameList" [value]="orgName.name">{{orgName.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div fxFlex="33.33%" fxLayout.lt-md="100%" *ngIf="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
                   <mat-form-field class="custom-input-field">
-                    <mat-label><h3><b>Company Name</b></h3></mat-label>
+                    <mat-label><h3><b>Company Name
+                      <span class="required-mark">*</span>
+                    </b></h3></mat-label>
                     <input matInput formControlName="reporterCompanyName" [matAutocomplete]="auto" class="white_background_mat_input_container" required>
                     <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let cmpName of filteredCompanyNames | async" [value]="cmpName.selectionKey">
-                        {{ cmpName.value }}
+                      <mat-option *ngFor="let cmpName of filteredCompanyNames | async" [value]="cmpName.name">
+                        {{ cmpName.name }}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
                 </div>
-                <div fxFlex="33.33%" fxLayout.lt-md="100%" [hidden]="viewModelFormNew.get('reporterSourceOfReporting').value === 'Marketing authorization holder'">
+                <div fxFlex="33.33%" fxLayout.lt-md="100%" [hidden]="!isOtherForCompanyOrganization()">
                   <mat-form-field class="custom-input-field">
                     <mat-label><h3><b>If Others, Please Specify Organization
-                      <span *ngIf="viewModelFormNew.get('reporterOrganization').value === 'Others'" class="required-mark">*</span>
+                      <span *ngIf="viewModelFormNew.get('reporterOrganization').value === 'Others (Facility)' || viewModelFormNew.get('reporterCompanyName').value === 'Others (MAH)'" 
+                      class="required-mark">*</span>
                     </b></h3></mat-label>
                     <input matInput placeholder="If Others, Please Specify Organization" class="white_background_mat_input_container" formControlName="reporterIfOtherOrganization"
-                    [disabled]="!viewModelFormNew.get('reporterOrganization').value.includes('Others')"
-                    [required]="viewModelFormNew.get('reporterOrganization').value.includes('Others')">
+                    required>
                   </mat-form-field>
                 </div>
               </div>

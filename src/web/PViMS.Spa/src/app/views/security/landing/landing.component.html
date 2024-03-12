@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="middle" fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="0.1%" fxLayoutAlign="center center">
-    <div fxFlex.gt-sm="49" fxFlex.lt-md="100" class="container m-2">
+    <div fxFlex.gt-sm="32" fxFlex.lt-md="100" class="container m-2">
       <mat-card class="yellow-200 text-center" style="min-height: 60px;" (click)="navigateToSpontaneous()">
         <mat-card-title>
           <h2 class="title font-weight-bold">{{'SUSPECTED ADVERSE EVENT REPORTING FORM' | translate}} </h2>
@@ -21,8 +21,23 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div fxFlex.gt-sm="49" fxFlex.lt-md="100" class="container m-2">
-      <a href="https://pvims.jbrsoft.com/login" target="_blank">
+    <div fxFlex.gt-sm="32" fxFlex.lt-md="100" class="container m-2">
+      <a href="https://pvimsdashboard.com/yc/download" target="_blank">
+        <!-- <mat-card class="grey-100 text-center" style="min-height: 60px;" (click)="navigateToLogin()"> -->
+        <mat-card class="grey-100 text-center" style="min-height: 60px;">
+          <mat-card-title class="text-center">
+            <h2 class="title font-weight-bold">{{'Yellow Card Download' | translate}}</h2>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="pt-8 pb-16">
+              <p class="m-8">{{'You can download Yellow Card by using the reporter phone number.' | translate}}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+    <div fxFlex.gt-sm="32" fxFlex.lt-md="100" class="container m-2">
+      <a href="https://pvimsdashboard.com/login" target="_blank">
         <!-- <mat-card class="grey-100 text-center" style="min-height: 60px;" (click)="navigateToLogin()"> -->
         <mat-card class="grey-100 text-center" style="min-height: 60px;">
           <mat-card-title class="text-center">
@@ -36,7 +51,6 @@
         </mat-card>
       </a>
     </div>
-
     <div fxFlex="100" class="text-center">
       <button mat-button color="primary" (click)="openAboutPopUp()">{{'About PViMS' | translate}}</button>
     </div>

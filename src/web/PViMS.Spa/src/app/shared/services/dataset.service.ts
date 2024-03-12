@@ -239,10 +239,14 @@ export class DatasetService extends BaseService {
     );
   }
   postData(data: any): Observable<any> {
-    const url = 'https://pvims.jbrsoft.com/api/yellow/card';
+    const url = 'https://pvimsdashboard.com/api/yellow/card';
     
     return this.httpClient.post(url, data);
-
-    var result = 0;
+  }
+  getOrganizationList(): Observable<any[]> {
+    return this.httpClient.get<any[]>('https://pvimsdashboard.com/api/company/list/2');
+  }
+  getCompanyList(): Observable<any[]> {
+    return this.httpClient.get<any[]>('https://pvimsdashboard.com/api/company/list/3');
   }
 }

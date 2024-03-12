@@ -120,8 +120,8 @@ export class SpontaneousComponent
   public sourceOfReportingList: { selectionKey: string; value: string }[];
   public reportingTypeList: { selectionKey: string; value: string }[];
   public occupationList: { selectionKey: string; value: string }[];
-  public companyNameList: { selectionKey: string; value: string }[];
-  public organaizationNameList: { selectionKey: string; value: string }[];
+  public companyNameList: { id: number; name: string }[];
+  public organaizationNameList: { id: number; name: string }[];
 
   protected isMedDateNotAvailable: string;
   protected isEventDateNotAvailable: string;
@@ -132,7 +132,7 @@ export class SpontaneousComponent
   isMobileView: boolean;
   usaidLogo= '';
   pvims_logo='';
-  filteredCompanyNames: Observable<{ selectionKey: string; value: string }[]>;
+  filteredCompanyNames: Observable<{ id: number; name: string }[]>;
   // filteredOrganizationNames: Observable<any[]>;
 
   constructor(
@@ -221,6 +221,7 @@ export class SpontaneousComponent
       suspectedEventStartDate: [null, []],
       suspectedEventStoppedDate:[null, []],
       isCheckedEventDate: false,
+      isCheckedEventEndDate: false,
       suspectedEventTreated:'',
       suspectedEventTreatedSpecify:{ disabled: true, value: '' },
       suspectedAfterReaction:'',
@@ -241,6 +242,7 @@ export class SpontaneousComponent
       suspectedMedicationStartDate:[null, []],
       suspectedMedicationEndDate:[null, []],
       isCheckedVaccination:false,
+      isCheckedEndVaccination:false,
       suspectedDiluentInformation:'',
       suspectedEnterDoseForm:'',
       suspectedFrequencyDailyDose:'',
@@ -349,23 +351,6 @@ export class SpontaneousComponent
         specifyControl.disable(); // Disable the control
       }
     });
-    
-    this.viewModelFormNew.get('reporterOrganization').valueChanges.subscribe((selectedValues) => {
-      const specifyControl = this.viewModelFormNew.get('reporterIfOtherOrganization');
-    
-      // Check if 'Others' is included in the selected values array
-      const isOthersSelected = selectedValues.includes('Others');
-    
-      if (isOthersSelected) {
-        specifyControl.enable(); // Enable the control
-        specifyControl.setValidators([Validators.required]); // Add the required validator
-      } else {
-        specifyControl.disable(); // Disable the control
-        specifyControl.clearValidators(); // Clear any validators
-      }
-    
-      specifyControl.updateValueAndValidity(); // Update the control's validation state
-    });
 
     this.viewModelFormNew.get('suspectedEventInformation').valueChanges.subscribe((selectedValues) => {
       const specifyControl = this.viewModelFormNew.get('suspectedEventInformationSpecify');
@@ -386,39 +371,61 @@ export class SpontaneousComponent
 
     this.viewModelFormNew.get('isCheckedEventDate').valueChanges.subscribe((isChecked) => {
       const startDateControl = this.viewModelFormNew.get('suspectedEventStartDate');
-      const endDateControl = this.viewModelFormNew.get('suspectedEventStoppedDate');
 
       if (!isChecked) {
         // If checkbox is unchecked, set validators
         startDateControl.setValidators([Validators.required, this.validatesuspectedEventStartDate.bind(this)]);
-        endDateControl.setValidators([Validators.required, this.validatesuspectedEventStoppedDate.bind(this)]);
       } else {
         // If checkbox is checked, clear validators
         startDateControl.clearValidators();
-        endDateControl.clearValidators();
       }
 
       // Update the validity of the controls
       startDateControl.updateValueAndValidity();
+    });
+
+    this.viewModelFormNew.get('isCheckedEventEndDate').valueChanges.subscribe((isChecked) => {
+      const endDateControl = this.viewModelFormNew.get('suspectedEventStoppedDate');
+
+      if (!isChecked) {
+        // If checkbox is unchecked, set validators
+        endDateControl.setValidators([Validators.required, this.validatesuspectedEventStoppedDate.bind(this)]);
+      } else {
+        // If checkbox is checked, clear validators
+        endDateControl.clearValidators();
+      }
+
+      // Update the validity of the controls
       endDateControl.updateValueAndValidity();
     });
 
     this.viewModelFormNew.get('isCheckedVaccination').valueChanges.subscribe((isChecked) => {
       const startDateControl = this.viewModelFormNew.get('suspectedMedicationStartDate');
-      const endDateControl = this.viewModelFormNew.get('suspectedMedicationEndDate');
 
       if (!isChecked) {
         // If checkbox is unchecked, set validators
         startDateControl.setValidators([Validators.required, this.validatesuspectedMedicationStartDate.bind(this)]);
-        endDateControl.setValidators([Validators.required, this.validatesuspectedMedicationEndDate.bind(this)]);
       } else {
         // If checkbox is checked, clear validators
         startDateControl.clearValidators();
-        endDateControl.clearValidators();
       }
 
       // Update the validity of the controls
       startDateControl.updateValueAndValidity();
+    });
+
+    this.viewModelFormNew.get('isCheckedEndVaccination').valueChanges.subscribe((isChecked) => {
+      const endDateControl = this.viewModelFormNew.get('suspectedMedicationEndDate');
+
+      if (!isChecked) {
+        // If checkbox is unchecked, set validators
+        endDateControl.setValidators([Validators.required, this.validatesuspectedMedicationEndDate.bind(this)]);
+      } else {
+        // If checkbox is checked, clear validators
+        endDateControl.clearValidators();
+      }
+
+      // Update the validity of the controls
       endDateControl.updateValueAndValidity();
     });
 
@@ -1351,17 +1358,18 @@ export class SpontaneousComponent
   processExtrelnalApiCall(param1: any, param2: any, param3: any, param4: any,id: number){
    
     let selectedAEFIType = this.viewModelFormNew.get('aefiType').value;
+    let companyOrganizationOther = this.viewModelFormNew.get('reporterIfOtherOrganization').value;
     let selectedKeyDivision = this.viewModelFormNew.get('patientDivision').value;
     let selectedKeyDistrict = this.viewModelFormNew.get('patientDistrict').value;
     let selectedKeyThana = this.viewModelFormNew.get('patientUpazila').value;
     let seriousStatusValue = "";
-    let value= param4.elements["152"] || "";
-    let companyOranizationValue ="";
+    let value= param4.elements["305"] || "";
+    let companyOranizationValue = 0;
     if(value === ""){
-      companyOranizationValue = param4.elements["305"] || "";
+      companyOranizationValue = param4.elements["152"];
     }
     else{
-      companyOranizationValue = param4.elements["152"];
+      companyOranizationValue = param4.elements["305"];
     }
     if(this.viewModelFormNew.get('suspectedAdverseEvent').value =='Not Serious'){
       seriousStatusValue="No";
@@ -1442,6 +1450,7 @@ export class SpontaneousComponent
         "reporter_occupation": param4.elements["138"] || "",
         "submission_date": moment(param4.elements["140"]).format('YYYY-MM-DD') ||"",
         "company_name": companyOranizationValue,
+        "company_other": companyOrganizationOther,
         "signature": ""
       },
       "YellowCardMedicines": yellowCardMedicines,
@@ -1555,15 +1564,32 @@ export class SpontaneousComponent
      }
   }
   loadcompanyName(): void{
-    if(this.datasetCategories !== null){
-      this.companyNameList = this.datasetCategories[3].datasetElements[9].selectionDataItems;
-     }
+    // if(this.datasetCategories !== null){
+    //   this.companyNameList = this.datasetCategories[3].datasetElements[9].selectionDataItems;
+    //  }
+    this.datasetService.getCompanyList()
+      .subscribe(
+        response => {
+          this.companyNameList = response;
+        },
+        error => {
+          console.error('Error fetching organization names:', error);
+        }
+      );
   }
   loadOrganizationName():void{
-    if(this.datasetCategories !== null){
-      this.organaizationNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
-      //this.filteredOrganizationNames = of(this.organaizationNameList);
-     }
+    // if(this.datasetCategories !== null){
+    //   this.organaizationNameList = this.datasetCategories[3].datasetElements[8].selectionDataItems;
+    //  }
+    this.datasetService.getOrganizationList()
+      .subscribe(
+        response => {
+          this.organaizationNameList = response;
+        },
+        error => {
+          console.error('Error fetching organization names:', error);
+        }
+      );
   }
   
   
@@ -1652,15 +1678,34 @@ export class SpontaneousComponent
     // Return startDate to set it as the minimum date for suspectedMedicationEndDate
     return startDate;
   }
-  private _filter(value: string):{ selectionKey: string; value: string }[] {
+  private _filter(value: string):{ id: number; name: string }[] {
     const filterValue = value.toLowerCase();
 
-    return this.companyNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
+    return this.companyNameList.filter(cmp => cmp.name.toLowerCase().includes(filterValue));
   }
   // private _filterOrganization(value: string):{ selectionKey: string; value: string }[] {
   //   const filterValue = value.toLowerCase();
   //   console.log(this.organaizationNameList.length);
   //   return this.organaizationNameList.filter(cmp => cmp.value.toLowerCase().includes(filterValue));
   // }
-  
+  clearInitialReportId() {
+    if (this.viewModelFormNew.get('reporterReportType').value !== 'Follow-up report') {
+        this.viewModelFormNew.get('reporterInitialReportId').reset();
+    }
+  }
+  // isOthersSelected(): boolean {
+  //   const selectedValue = this.viewModelFormNew.get('reporterOrganization').value;
+  //   return Array.isArray(selectedValue) && selectedValue.includes('Others');
+  // }
+  isOtherForCompanyOrganization():boolean{
+    if(this.viewModelFormNew.get('reporterOrganization').value ==='Others (Facility)'){
+      return true;
+    }
+    else if(this.viewModelFormNew.get('reporterCompanyName').value ==='Others (MAH)'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
